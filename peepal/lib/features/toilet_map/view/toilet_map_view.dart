@@ -64,11 +64,11 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
             );
           }
 
-          return _buildToiletMap(context);
+          return _buildToiletMap(snapshot.data!, context);
         });
   }
 
-  Widget _buildToiletMap(BuildContext context) {
+  Widget _buildToiletMap(PPLocation location, BuildContext context) {
     return Stack(
       children: [
         GoogleMap(
@@ -80,7 +80,17 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
             zoom: 20,
           ),
           onMapCreated: (GoogleMapController controller) async {
-            _controller.complete(controller);
+            if (!_controller.isCompleted) {
+              _controller.complete(controller);
+            }
+
+            final CameraPosition cameraPosition = CameraPosition(
+              target: LatLng(location.latitude, location.longitude),
+              zoom: 20,
+            );
+
+            controller
+                .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
           },
         ),
         SafeArea(

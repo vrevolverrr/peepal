@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 @immutable
-class PPLocation extends Equatable {
+abstract class PPLocation extends Equatable {
   final double latitude;
   final double longitude;
 
@@ -14,6 +14,7 @@ class PPLocation extends Equatable {
     required this.longitude,
   });
 
+  /// Default implementation of distance calculation using Haversine formula
   double distanceTo(PPLocation other) {
     // Earth's radius in meters
     const double earthRadius = 6371000;
@@ -37,10 +38,17 @@ class PPLocation extends Equatable {
   List<Object?> get props => [latitude, longitude];
 }
 
+/// Adapter class to convert [Position] of [Geolocator] to [PPLocation]
 class PPLocationAdapter extends PPLocation {
   PPLocationAdapter(Position position)
       : super(
           latitude: position.latitude,
           longitude: position.longitude,
         );
+
+  @override
+  double distanceTo(PPLocation other) {
+    return Geolocator.distanceBetween(
+        latitude, longitude, other.latitude, other.longitude);
+  }
 }

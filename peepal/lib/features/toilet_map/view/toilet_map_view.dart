@@ -1,43 +1,44 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:peepal/shared/location/model/location.dart';
+import 'package:peepal/shared/location/repository/location_repository.dart';
 
 class ToiletMapPage extends StatefulWidget {
-  const ToiletMapPage({super.key});
+  final LocationRepository locationRepository;
+
+  const ToiletMapPage({super.key, required this.locationRepository});
 
   @override
   State<ToiletMapPage> createState() => _ToiletMapPageState();
 }
 
 class _ToiletMapPageState extends State<ToiletMapPage> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  late final LocationRepository locationRepository = widget.locationRepository;
 
-  late final Position _currentPosition;
+  late Completer<GoogleMapController> _controller;
+
+  Future<PPLocation> _getCurrentLocation() async {
+    final bool hasPermission = await locationRepository.checkPermission();
+
+    if (hasPermission) {
+      return await locationRepository.getCurrentLocation();
+    }
+
+    final bool granted = await locationRepository.requestPermission();
+
+    if (granted) {
+      return await locationRepository.getCurrentLocation();
+    }
+
+    throw Exception("Location permission is not granted");
+  }
 
   @override
   void initState() {
-    _getCurrentLocation();
+    _controller = Completer();
     super.initState();
-  }
-
-  void _getCurrentLocation() async {
-    if (await Geolocator.checkPermission() == LocationPermission.denied) {
-      Geolocator.requestPermission();
-    }
-
-    _currentPosition = await Geolocator.getCurrentPosition();
-
-    debugPrint("Current Position: $_currentPosition");
-
-    final GoogleMapController controller = await _controller.future;
-
-    await controller.animateCamera(CameraUpdate.newLatLng(LatLng(
-      _currentPosition.latitude,
-      _currentPosition.longitude,
-    )));
   }
 
   @override
@@ -48,6 +49,26 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _getCurrentLocation(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+
+          return _buildToiletMap(context);
+        });
+  }
+
+  Widget _buildToiletMap(BuildContext context) {
     return Stack(
       children: [
         GoogleMap(

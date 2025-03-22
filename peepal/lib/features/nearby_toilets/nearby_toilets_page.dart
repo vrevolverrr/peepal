@@ -10,7 +10,7 @@ class NearbyToiletsPage extends StatefulWidget {
 
 class NearbyToiletsPageState extends State<NearbyToiletsPage> {
   final PageController _pageController = PageController(viewportFraction: 0.7, initialPage: 5000);
-  final int _totalCards = 5;
+  final int _totalCards = 4;
 
   @override
   Widget build(BuildContext context) {

@@ -552,6 +552,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  scroll_snap_list:
+    dependency: "direct main"
+    description:
+      name: scroll_snap_list
+      sha256: "6503e1a5616bf93e214cc5f4d8f60c4403c1237c4ca31097842a953bc1d23832"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   shared_preferences:
     dependency: transitive
     description:

@@ -1,35 +1,28 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:peepal/features/toilet_map/bloc/map_bloc.dart';
-import 'package:peepal/shared/app/bloc/app_bloc.dart';
-import 'package:peepal/features/home/home_page.dart';
+import 'package:logging/logging.dart';
+import 'package:peepal/features/app/app.dart';
+
 import 'package:peepal/shared/location/repository/location_repository.dart';
 
-void main() => runApp(const MyApp());
-// test
+void main() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    log('[${record.loggerName}] ${record.level.name}: ${record.time}: ${record.message}');
+  });
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  runApp(const App());
+}
 
-  // This widget is the root of your application.
+class App extends StatelessWidget {
+  const App({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "PeePal",
-      theme: ThemeData(
-          scaffoldBackgroundColor: Color(0xffF4F6F8), fontFamily: "MazzardH"),
-      home: MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider(create: (context) => LocationRepository())
-          ],
-          child: Builder(
-              builder: (context) => MultiBlocProvider(providers: [
-                    BlocProvider(create: (context) => AppPageCubit()),
-                    BlocProvider(
-                        create: (context) => ToiletMapBloc(
-                            locationRepository:
-                                context.read<LocationRepository>()))
-                  ], child: const HomePage()))),
-    );
-  }
+  Widget build(BuildContext context) => MultiRepositoryProvider(providers: [
+        /// Provide all the repositories here
+        RepositoryProvider(
+            create: (context) => LocationRepository()..checkPermission())
+      ], child: PeePalApp());
 }

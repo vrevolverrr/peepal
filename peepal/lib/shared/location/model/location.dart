@@ -35,6 +35,11 @@ class PPLocation extends Equatable {
   }
 
   @override
+  String toString() {
+    return "($latitude, $longitude)";
+  }
+
+  @override
   List<Object?> get props => [latitude, longitude];
 }
 

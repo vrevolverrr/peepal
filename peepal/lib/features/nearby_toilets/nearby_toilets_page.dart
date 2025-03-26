@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class NearbyToiletsPage extends StatefulWidget {
   const NearbyToiletsPage({super.key});
 
@@ -9,7 +8,8 @@ class NearbyToiletsPage extends StatefulWidget {
 }
 
 class NearbyToiletsPageState extends State<NearbyToiletsPage> {
-  final PageController _pageController = PageController(viewportFraction: 0.7, initialPage: 5000);
+  final PageController _pageController =
+      PageController(viewportFraction: 0.7, initialPage: 5000);
   final int _totalCards = 5;
 
   @override
@@ -28,10 +28,7 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                   width: 40.0,
                   height: 40.0,
                   decoration:
-                      BoxDecoration(
-                        shape: BoxShape.circle, 
-                        color: Colors.red
-                      ),
+                      BoxDecoration(shape: BoxShape.circle, color: Colors.red),
                 )
               ],
             ),
@@ -58,11 +55,11 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 5.0),
-             Expanded(
+            Expanded(
               child: PageView.builder(
                 controller: _pageController,
                 itemBuilder: (context, index) {
-                   int cardNumber = (index % _totalCards) + 1;
+                  int cardNumber = (index % _totalCards) + 1;
                   return AnimatedBuilder(
                     animation: _pageController,
                     builder: (context, child) {
@@ -84,14 +81,15 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
                         ),
-
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                              child: Image.asset('assets/images/toilet.jpeg'), // Replace with your image
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16)),
+                              child: Image.asset(
+                                  'assets/images/toilet.jpeg'), // Replace with your image
                             ),
                             Padding(
                               padding: const EdgeInsets.all(12.0),
@@ -100,13 +98,21 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text('60 Yuan Ching Rd', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                      Text('60 Yuan Ching Rd',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold)),
                                       Row(
                                         children: [
-                                          Icon(Icons.star, color: Colors.yellow),
-                                          Text('5', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                          Icon(Icons.star,
+                                              color: Colors.yellow),
+                                          Text('5',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold)),
                                         ],
                                       ),
                                     ],
@@ -119,7 +125,8 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Icon(Icons.circle, color: Colors.green, size: 12),
+                                          Icon(Icons.circle,
+                                              color: Colors.green, size: 12),
                                           SizedBox(width: 4),
                                           Text('High Vacancy'),
                                         ],
@@ -127,7 +134,8 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Icon(Icons.check, color: Colors.black, size: 12),
+                                          Icon(Icons.check,
+                                              color: Colors.black, size: 12),
                                           SizedBox(width: 4),
                                           Text('Bidet available'),
                                         ],
@@ -135,40 +143,48 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Icon(Icons.accessible, color: Colors.black, size: 12),
+                                          Icon(Icons.accessible,
+                                              color: Colors.black, size: 12),
                                           SizedBox(width: 4),
                                           Text('OKU friendly'),
                                         ],
-                                      ), 
+                                      ),
                                     ],
-                                  ), 
+                                  ),
                                   SizedBox(height: 18),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text('500m', style: TextStyle(fontSize: 16)),
+                                      Text('500m',
+                                          style: TextStyle(fontSize: 16)),
                                       ElevatedButton(
                                         onPressed: () {},
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.blueGrey, // Background color
+                                          backgroundColor: Colors
+                                              .blueGrey, // Background color
                                           foregroundColor: Colors.white,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(16),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
                                           ),
                                         ),
                                         child: Text('Navigate'),
-                                      ), 
-                                  ],
-                                ),
-                                Text('Card $cardNumber', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                      ),
+                                    ],
+                                  ),
+                                  Text('Card $cardNumber',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
                                 ],
                               ),
                             ),
-                        ],
-                      ),
+                          ],
+                        ),
                       ),
                     ),
-                    );      
+                  );
                 },
               ),
             ),

@@ -30,7 +30,7 @@ class NearbyToiletCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('60 Yuan Ching Rd', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text('60 Yuan Ching Rd', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
                       Row(
                         children: [
                           Icon(Icons.star, color: const Color.fromARGB(255, 244, 223, 34)),
@@ -49,7 +49,9 @@ class NearbyToiletCard extends StatelessWidget {
                         children: [
                           Icon(Icons.circle, color: Colors.green, size: 12),
                           SizedBox(width: 4),
-                          Text('High Vacancy'),
+                          Text('High Vacancy',
+                            style: TextStyle(fontSize: 16)
+                          ),
                         ],
                       ),
                       Row(
@@ -57,7 +59,9 @@ class NearbyToiletCard extends StatelessWidget {
                         children: [
                           Icon(Icons.check, color: Colors.black, size: 12),
                           SizedBox(width: 4),
-                          Text('Bidet available'),
+                          Text('Bidet available',
+                            style: TextStyle(fontSize: 16)
+                            ),
                         ],
                       ),
                       Row(
@@ -65,7 +69,9 @@ class NearbyToiletCard extends StatelessWidget {
                         children: [
                           Icon(Icons.accessible, color: Colors.black, size: 12),
                           SizedBox(width: 4),
-                          Text('OKU friendly'),
+                          Text('OKU friendly',
+                            style: TextStyle(fontSize: 16)
+                            ),
                         ],
                       ),
                     ],
@@ -74,17 +80,26 @@ class NearbyToiletCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('500m', style: TextStyle(fontSize: 16)),
+                      Text('500m', style: TextStyle(fontSize: 20,)),
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueGrey, // Background color
+                          backgroundColor: Color.fromARGB(255, 91, 100, 134), // Background color
                           foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        child: Text('Navigate'),
+                        child: Text(
+                          'Navigate',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "MazzardH",
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 225, 222, 222),
+                            ),
+                        )
                       ),
                     ],
                   ),

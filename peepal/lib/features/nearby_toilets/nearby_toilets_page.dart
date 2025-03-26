@@ -10,7 +10,7 @@ class NearbyToiletsPage extends StatefulWidget {
 
 class NearbyToiletsPageState extends State<NearbyToiletsPage> {
   final PageController _pageController =
-      PageController(viewportFraction: 0.7, initialPage: 5000);
+      PageController(viewportFraction: 1.0, initialPage: 5000);
   final int _totalCards = 5;
 
   @override
@@ -50,12 +50,19 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                 Text("Jurong West St. 42"),
               ],
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 10.0),
+            Divider(
+              color: Colors.grey,
+              thickness: 1.0,
+              indent: 1,
+              endIndent: 1,
+            ),
+            SizedBox(height: 10.0),
             Text(
               "Nearest Toilet",
-              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 35.0, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 5.0),
+            SizedBox(height: 1.0),
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
@@ -72,12 +79,16 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                       return Center(
                         child: Transform.scale(
                           scale: value,
-                          child: child,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                            child: child,
+                          ),
                         ),
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: SizedBox(
+                      width: double.infinity, // 80% of the screen width,
+                      //padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: NearbyToiletCard(
                       cardNumber: cardNumber)
                      ),

@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:peepal/features/nearby_toilets/view/widgets/nearby_toilet_card.dart'; // Import the new widget
+
+class NearbyToiletsPage extends StatefulWidget {
+  const NearbyToiletsPage({super.key});
+
+  @override
+  State<NearbyToiletsPage> createState() => NearbyToiletsPageState();
+}
+
+class NearbyToiletsPageState extends State<NearbyToiletsPage> {
+  final PageController _pageController = PageController(viewportFraction: 0.7, initialPage: 5000);
+  final int _totalCards = 5;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      bottom: false,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 40.0,
+                  height: 40.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              "Good afternoon",
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8.0),
+            Row(
+              children: [
+                Icon(
+                  Icons.location_on,
+                  size: 18.0,
+                ),
+                SizedBox(width: 5.0),
+                Text("Jurong West St. 42"),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              "Nearest Toilet",
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 5.0),
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                itemBuilder: (context, index) {
+                  int cardNumber = (index % _totalCards) + 1;
+                  return NearbyToiletCard(cardNumber: cardNumber); // Use the new widget
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

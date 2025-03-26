@@ -1,16 +1,27 @@
-# app/db.py
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from fastapi import FastAPI
-import mysql.connector
 
-def get_db_connection():
-    connection = mysql.connector.connect(
-        host='127.0.0.1',
-        user='root',
-        password='3239778',
-        database='peepal',
-        unix_socket="/tmp/mysql.sock"
-    )
-    return connection
+# Define your database URL (for MySQL in this case)
+SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:3239778@127.0.0.1/peepal"
+
+# Create engine for the database connection
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+# Create a base class for your models
+Base = declarative_base()
+
+# Create sessionmaker to handle database sessions
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Dependency to get the database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 '''
 To check if connected to database.

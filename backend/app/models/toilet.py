@@ -1,4 +1,18 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declarative_base
 
-from 
+Base = declarative_base()
+
+class Toilet(Base):
+    __tablename__ = "toilets"
+
+    toilet_id = Column(Integer, primary_key=True, index=True, autoincrement=True)  # AUTO_INCREMENT for MySQL
+    name = Column(String)
+    address = Column(String)
+    latitude = Column(String) #
+    longitude = Column(String) #
+    toilet_avail = Column(Boolean)
+    handicap_avail = Column(Boolean)
+    bidet_avail = Column(Boolean)
+    baby_changing_avail = Column(Boolean)
+    rating = Column(Integer) #

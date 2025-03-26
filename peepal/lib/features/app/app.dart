@@ -5,7 +5,7 @@ import 'package:peepal/features/nearby_toilets/nearby_toilets_page.dart';
 import 'package:peepal/features/toilet_map/toilet_map_page.dart';
 import 'package:peepal/shared/location/bloc/location_bloc.dart';
 import 'package:peepal/shared/location/repository/location_repository.dart';
-import 'package:peepal/shared/toilet/bloc/nearby_toilet_bloc.dart';
+import 'package:peepal/shared/nearby/bloc/nearby_toilet_bloc.dart';
 import 'package:peepal/shared/toilet/repository/toilet_repository.dart';
 
 class PeePalApp extends StatefulWidget {

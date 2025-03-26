@@ -1,9 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import DeclarativeBase
 
-Base = declarative_base()
-
-class Toilet(Base):
+class Toilet(DeclarativeBase):
     __tablename__ = "toilets"
 
     toilet_id = Column(Integer, primary_key=True, index=True, autoincrement=True)  # AUTO_INCREMENT for MySQL

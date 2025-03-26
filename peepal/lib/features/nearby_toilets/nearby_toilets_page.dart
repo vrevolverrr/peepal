@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/features/nearby_toilets/view/widgets/nearby_toilet_card.dart'; // Import the new widget
+import 'package:peepal/features/nearby_toilets/widgets/nearby_toilet_card.dart'; // Import the new widget
 
 class NearbyToiletsPage extends StatefulWidget {
   const NearbyToiletsPage({super.key});
@@ -9,7 +9,8 @@ class NearbyToiletsPage extends StatefulWidget {
 }
 
 class NearbyToiletsPageState extends State<NearbyToiletsPage> {
-  final PageController _pageController = PageController(viewportFraction: 0.7, initialPage: 5000);
+  final PageController _pageController =
+      PageController(viewportFraction: 0.7, initialPage: 5000);
   final int _totalCards = 5;
 
   @override
@@ -60,7 +61,8 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                 controller: _pageController,
                 itemBuilder: (context, index) {
                   int cardNumber = (index % _totalCards) + 1;
-                  return NearbyToiletCard(cardNumber: cardNumber); // Use the new widget
+                  return NearbyToiletCard(
+                      cardNumber: cardNumber); // Use the new widget
                 },
               ),
             ),

@@ -19,7 +19,7 @@ class NearbyToiletCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-              child: Image.asset('assets/images/toilet.jpeg', height: 150, fit: BoxFit.cover), // Replace with your image
+              child: Image.asset('assets/images/toilet.jpeg'), 
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),

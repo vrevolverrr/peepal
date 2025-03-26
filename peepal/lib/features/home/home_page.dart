@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:peepal/features/nearby_toilets/nearby_toilets_page.dart';
+import 'package:peepal/features/nearby_toilets/view/nearby_toilets_page.dart';
 import 'package:peepal/shared/app/bloc/app_bloc.dart';
 import 'package:peepal/features/toilet_map/view/toilet_map_view.dart';
 import 'package:peepal/shared/location/repository/location_repository.dart';

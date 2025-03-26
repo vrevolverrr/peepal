@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peepal/features/favourites/view/favourites_page.dart';
 import 'package:peepal/features/nearby_toilets/nearby_toilets_page.dart';
 import 'package:peepal/shared/app/bloc/app_bloc.dart';
 import 'package:peepal/features/toilet_map/view/toilet_map_view.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               NearbyToiletsPage(),
               ToiletMapPage(
                   locationRepository: context.read<LocationRepository>()),
-              Center(child: Text("Favorite Page")),
+              FavouritesPage(),
               Center(child: Text("Profile Page")),
             ],
           )),

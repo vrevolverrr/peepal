@@ -4,9 +4,7 @@ from sqlalchemy.orm import Session
 from app.db import engine, Base, get_db
 from sqlalchemy import text
 
-
 app = FastAPI()
-
 
 @app.get("/")
 def read_root():

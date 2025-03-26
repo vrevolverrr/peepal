@@ -16,3 +16,5 @@ class Toilet(Base):
     bidet_avail = Column(Boolean)
     baby_changing_avail = Column(Boolean)
     rating = Column(Float) #
+    image_url = Column(String)
+    report_count = Column(String)

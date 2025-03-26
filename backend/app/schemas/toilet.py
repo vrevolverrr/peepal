@@ -10,6 +10,8 @@ class ToiletBase(BaseModel):
     bidet_avail: bool
     baby_changing_avail: bool
     rating: float
+    image_url: str
+    report_count: int
 
 class ToiletCreate(ToiletBase):
     pass  # In this case, we can just inherit ToiletBase as we don't need to add anything extra for creation

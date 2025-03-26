@@ -16,7 +16,9 @@ def createToilet(db: Session, toilet: toilet_schemas.ToiletCreate):
         handicap_avail = toilet.handicap_avail,
         bidet_avail = toilet.bidet_avail,
         baby_changing_avail = toilet.baby_changing_avail,
-        rating = toilet.rating
+        rating = toilet.rating,
+        image_url = toilet.image_url,
+        report_count = toilet.report_count
     )
 
     db.add(db_toilet)

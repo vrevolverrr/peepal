@@ -61,8 +61,27 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                 controller: _pageController,
                 itemBuilder: (context, index) {
                   int cardNumber = (index % _totalCards) + 1;
-                  return NearbyToiletCard(
-                      cardNumber: cardNumber); // Use the new widget
+                  return AnimatedBuilder(
+                    animation: _pageController,
+                    builder: (context, child) {
+                      double value = 1;
+                      if (_pageController.position.haveDimensions) {
+                        value = _pageController.page! - index;
+                        value = (1 - (value.abs() * 0.3)).clamp(0.8, 1.0);
+                      }
+                      return Center(
+                        child: Transform.scale(
+                          scale: value,
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: NearbyToiletCard(
+                      cardNumber: cardNumber)
+                     ),
+                   ); // Use the new widget
                 },
               ),
             ),

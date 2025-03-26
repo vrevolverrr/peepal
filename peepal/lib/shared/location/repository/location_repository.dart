@@ -5,6 +5,7 @@ abstract interface class LocationRepository {
   Future<bool> checkPermission();
   Future<bool> requestPermission();
   Future<PPLocation> getCurrentLocation();
+  Future<Stream<PPLocation>> getLocationStream();
 
   factory LocationRepository() => LocationRepositoryImpl();
 }
@@ -43,5 +44,17 @@ class LocationRepositoryImpl implements LocationRepository {
     final position = await Geolocator.getCurrentPosition();
 
     return PPLocationAdapter(position);
+  }
+
+  @override
+  Future<Stream<PPLocation>> getLocationStream() async {
+    final hasPermission = await checkPermission();
+
+    if (!hasPermission) {
+      throw Exception("Location permission is not granted");
+    }
+
+    return Geolocator.getPositionStream()
+        .map((event) => PPLocationAdapter(event));
   }
 }

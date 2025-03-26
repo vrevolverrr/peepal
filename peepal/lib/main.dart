@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peepal/features/toilet_map/bloc/map_bloc.dart';
 import 'package:peepal/shared/app/bloc/app_bloc.dart';
 import 'package:peepal/features/home/home_page.dart';
 import 'package:peepal/shared/location/repository/location_repository.dart';
@@ -21,8 +22,14 @@ class MyApp extends StatelessWidget {
           providers: [
             RepositoryProvider(create: (context) => LocationRepository())
           ],
-          child: BlocProvider(
-              create: (context) => AppPageCubit(), child: HomePage())),
+          child: Builder(
+              builder: (context) => MultiBlocProvider(providers: [
+                    BlocProvider(create: (context) => AppPageCubit()),
+                    BlocProvider(
+                        create: (context) => ToiletMapBloc(
+                            locationRepository:
+                                context.read<LocationRepository>()))
+                  ], child: const HomePage()))),
     );
   }
 }

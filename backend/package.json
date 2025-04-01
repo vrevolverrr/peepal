@@ -25,7 +25,8 @@
     "drizzle-orm": "^0.41.0",
     "hono": "^4.7.5",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.14.1"
+    "pg": "^8.14.1",
+    "pino": "^9.6.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.15",

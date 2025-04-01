@@ -36,11 +36,11 @@ auth.post('/register', async (c) => {
       return c.json({ error: 'User already exists' }, 400)
     }
 
-    // Hash password
+    /// Hash the user's password
     const salt = await bcrypt.genSalt(10)
     const passwordHash = await bcrypt.hash(password, salt)
 
-    // Create user
+    // Create user in DB
     console.log('Creating user with:', { username, email })
     const [newUser] = await db.insert(users).values({
       username,

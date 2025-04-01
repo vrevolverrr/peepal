@@ -1,8 +1,10 @@
+CREATE TYPE "public"."gender" AS ENUM('male', 'female', 'others');--> statement-breakpoint
 CREATE TABLE "users" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"username" text NOT NULL,
 	"email" text NOT NULL,
 	"password_hash" text NOT NULL,
+	"gender" "gender",
 	"created_at" timestamp DEFAULT now(),
 	CONSTRAINT "users_username_unique" UNIQUE("username"),
 	CONSTRAINT "users_email_unique" UNIQUE("email")
@@ -26,7 +28,7 @@ CREATE TABLE "toilets" (
 --> statement-breakpoint
 CREATE TABLE "reviews" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user_id" integer,
+	"user_id" uuid,
 	"toilet_id" integer,
 	"rating" integer NOT NULL,
 	"review_text" text,
@@ -37,21 +39,21 @@ CREATE TABLE "reviews" (
 --> statement-breakpoint
 CREATE TABLE "favorites" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user_id" integer,
+	"user_id" uuid,
 	"toilet_id" integer,
 	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
 CREATE TABLE "history" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user_id" integer,
+	"user_id" uuid,
 	"toilet_id" integer,
 	"visited_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
 CREATE TABLE "notifications" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user_id" integer,
+	"user_id" uuid,
 	"message" text NOT NULL,
 	"is_read" boolean DEFAULT false,
 	"created_at" timestamp DEFAULT now()

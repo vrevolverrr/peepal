@@ -13,6 +13,7 @@ interface RegisterBody {
   username: string
   email: string
   password: string
+  gender?: 'male' | 'female' | 'others'
 }
 
 interface LoginBody {
@@ -20,34 +21,37 @@ interface LoginBody {
   password: string
 }
 
-// Register new user
-auth.post('/register', async (c) => {
+auth.post('/signup', async (c) => {
+  const log = c.get('logger')
+
   try {
     const body = await c.req.json<RegisterBody>()
-    console.log('Registration request:', body)
-    const { username, email, password } = body
+    const { username, email, password, gender } = body
 
     // Check if user already exists
-    const existingUser = await db.select().from(users).where(eq(users.email, email)).limit(1)
-    console.log('Existing user check:', existingUser)
+    const [ existingUser ] = await db.select().from(users).where(eq(users.email, email)).limit(1)
     
-    if (existingUser.length > 0) {
-      console.log('User exists, returning 400')
+    if (existingUser != undefined) {
+      // Bad request, user already exists
+      log.info(`User ${existingUser.id} exists, returning 400`)
       return c.json({ error: 'User already exists' }, 400)
     }
+
+    log.info('Creating user with', { username, email })
 
     /// Hash the user's password
     const salt = await bcrypt.genSalt(10)
     const passwordHash = await bcrypt.hash(password, salt)
 
     // Create user in DB
-    console.log('Creating user with:', { username, email })
-    const [newUser] = await db.insert(users).values({
+    const [ newUser ] = await db.insert(users).values({
       username,
       email,
-      passwordHash
-    }).returning({ id: users.id, username: users.username, email: users.email })
-    console.log('Created user:', newUser)
+      passwordHash,
+      gender
+    }).returning({ id: users.id, username: users.username, email: users.email, gender: users.gender })
+    
+    log.info('Succesfully created user', newUser.id)
 
     // Generate JWT token
     const payload: JWTPayload = { id: newUser.id, username: newUser.username }
@@ -55,18 +59,18 @@ auth.post('/register', async (c) => {
 
     return c.json({ user: newUser, token }, 200)
   } catch (error) {
-    console.error('Registration error:', error)
+    console.log(error)
+    log.error('Error registering user', error)
     return c.json({ error: 'Internal server error' }, 500)
   }
 })
 
-// Login user
 auth.post('/login', async (c) => {
   try {
     const { email, password } = await c.req.json<LoginBody>()
 
-    // Find user
-    const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1)
+    // Fetch user from DB
+    const [ user ] = await db.select().from(users).where(eq(users.email, email)).limit(1)
     if (!user) {
       return c.json({ error: 'Invalid credentials' }, 401)
     }
@@ -91,34 +95,6 @@ auth.post('/login', async (c) => {
     })
   } catch (error) {
     console.error('Login error:', error)
-    return c.json({ error: 'Internal server error' }, 500)
-  }
-})
-
-// Get current user
-auth.get('/me', async (c) => {
-  try {
-    const user = c.get('user')
-    if (!user) {
-      return c.json({ error: 'Not authenticated' }, 401)
-    }
-
-    const [userData] = await db.select({
-      id: users.id,
-      username: users.username,
-      email: users.email
-    })
-    .from(users)
-    .where(eq(users.id, user.id))
-    .limit(1)
-
-    if (!userData) {
-      return c.json({ error: 'User not found' }, 404)
-    }
-
-    return c.json({ user: userData })
-  } catch (error) {
-    console.error('Get user error:', error)
     return c.json({ error: 'Internal server error' }, 500)
   }
 })

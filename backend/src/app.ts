@@ -1,12 +1,17 @@
 import { Hono } from "hono";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { cors } from "hono/cors";
-import auth from './routes/auth';
-import { authMiddleware } from './middleware/auth';
 import { logger } from './middleware/logger';
 import { pool } from "./db/db";
+import { authMiddleware } from './middleware/auth';
+import auth from './routes/auth';
+import toiletApi from "./routes/api/toilet";
+import userApi from "./routes/api/user";
 
+// Create a `db` instance with the default connection pool
 export const db = drizzle(pool);
+
+// The root `Hono` application
 export const app = new Hono();
 
 // Use CORS middleware
@@ -15,15 +20,16 @@ app.use("/*", cors());
 // Use logger middleware
 app.use("/*", logger);
 
-
-// Public routes
-app.get("/", (c) => {
-  return c.json({ message: "Hello from Hono!" });
-});
-
 // Auth routes
 app.route('/auth', auth);
 
 // API routes are routed through the `authMiddleware` to ensure
 // that only authenticated users with valid `JWT` can access
 app.use('/api/*', authMiddleware);
+
+app.get('/api', async (c) => {
+    return c.json({ message: 'Protected route', user: c.get('user') }, 200)
+})
+/// API Routes
+app.route('/api/users', userApi);
+app.route('/api/toilet', toiletApi);

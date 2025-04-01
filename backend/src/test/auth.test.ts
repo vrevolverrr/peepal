@@ -1,25 +1,25 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { setup, cleanup } from './setup'
 import { app } from '../app'
 import { AuthResponse, ErrorResponse, ProtectedResponse } from '../types/responses'
+import { db } from '../app'
+import { users } from '../db/schema'
+import { eq } from 'drizzle-orm'
 
-describe('Test Authentication', () => {
-  beforeAll(async () => {
-    await setup()
-  })
-
+describe('Test Auth API', () => {
+  // Delete the test user after all tests
   afterAll(async () => {
-    await cleanup()
+    await db.delete(users).where(eq(users.email, 'test@example.com'))
   })
-
-  describe('POST /auth/register', () => {
+  
+  describe('POST /auth/signup', () => {
     it('should register a new user', async () => {
-      const res = await app.request('/auth/register', {
+      const res = await app.request('/auth/signup', {
         method: 'POST',
         body: JSON.stringify({
         username: 'testuser',
         email: 'test@example.com',
-        password: 'password123'
+        password: 'password123',
+        gender: 'male'
       }),
         headers: {
           'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ describe('Test Authentication', () => {
     })
 
     it('should not register a user with existing email', async () => {
-      const res = await app.request('/auth/register', {
+      const res = await app.request('/auth/signup', {
         method: 'POST',
         body: JSON.stringify({
         username: 'testuser2',
@@ -128,7 +128,7 @@ describe('Test Authentication', () => {
     })
 
     it('should access protected route with valid token', async () => {
-      const res = await app.request('/api/protected', {
+      const res = await app.request('/api', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -141,7 +141,7 @@ describe('Test Authentication', () => {
     })
 
     it('should not access protected route without token', async () => {
-      const res = await app.request('/api/protected')
+      const res = await app.request('/api')
 
       expect(res.status).toBe(401)
       const body = await res.json() as ErrorResponse
@@ -149,7 +149,7 @@ describe('Test Authentication', () => {
     })
 
     it('should not access protected route with invalid token', async () => {
-      const res = await app.request('/api/protected', {
+      const res = await app.request('/api', {
         headers: {
           'Authorization': 'Bearer invalid-token'
         }

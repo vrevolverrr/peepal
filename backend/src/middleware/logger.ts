@@ -2,9 +2,19 @@ import { Context, Next } from "hono"
 import pino from "pino"
 
 export async function logger(c: Context, next: Next) {
-  const logger = pino({name: c.req.routePath})
+  const logger = pino({
+    name: c.req.url.split('/').slice(-2).join('/'),
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+      },
+    },
+  })
 
-  logger.info('Request received', { method: c.req.method, url: c.req.url })
+  logger.info({ method: c.req.method, url: c.req.url })
 
   c.set('logger', logger)
   

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/features/favourites/view/favourites_page.dart';
 import 'package:peepal/features/nearby_toilets/nearby_toilets_page.dart';
-import 'package:peepal/shared/app/bloc/app_bloc.dart';
-import 'package:peepal/features/toilet_map/view/toilet_map_view.dart';
-import 'package:peepal/shared/location/repository/location_repository.dart';
+import 'package:peepal/features/app/bloc/app_bloc.dart';
+import 'package:peepal/features/toilet_map/toilet_map_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,8 +24,7 @@ class _HomePageState extends State<HomePage> {
             controller: _pageController,
             children: [
               NearbyToiletsPage(),
-              ToiletMapPage(
-                  locationRepository: context.read<LocationRepository>()),
+              ToiletMapPage(),
               FavouritesPage(),
               Center(child: Text("Profile Page")),
             ],

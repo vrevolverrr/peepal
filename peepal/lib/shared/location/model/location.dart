@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 @immutable
-abstract class PPLocation extends Equatable {
+class PPLocation extends Equatable {
   final double latitude;
   final double longitude;
 
@@ -32,6 +32,11 @@ abstract class PPLocation extends Equatable {
     final distance = earthRadius * c;
 
     return distance;
+  }
+
+  @override
+  String toString() {
+    return "($latitude, $longitude)";
   }
 
   @override

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/features/nearby_toilets/widgets/nearby_toilet_card.dart'; // Import the new widget
+import 'package:peepal/features/app/bloc/app_bloc.dart';
+import 'package:peepal/features/nearby_toilets/mock_toilet_data.dart';
+
 
 class NearbyToiletsPage extends StatefulWidget {
   const NearbyToiletsPage({super.key});
@@ -11,7 +15,6 @@ class NearbyToiletsPage extends StatefulWidget {
 class NearbyToiletsPageState extends State<NearbyToiletsPage> {
   final PageController _pageController =
       PageController(viewportFraction: 1.0, initialPage: 5000);
-  final int _totalCards = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +28,17 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  width: 40.0,
-                  height: 40.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.red,
+                 GestureDetector(
+                  onTap: () {
+                    context.read<AppPageCubit>().changeToProfile();
+                  },
+                  child: Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
               ],
@@ -66,8 +74,10 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
+                itemCount: null,
                 itemBuilder: (context, index) {
-                  int cardNumber = (index % _totalCards) + 1;
+                  final actualIndex = index % toilets.length;
+                  final toilet = toilets[actualIndex];
                   return AnimatedBuilder(
                     animation: _pageController,
                     builder: (context, child) {
@@ -86,12 +96,14 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                         ),
                       );
                     },
-                    child: SizedBox(
-                      width: double.infinity, // 80% of the screen width,
-                      //padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: NearbyToiletCard(
-                      cardNumber: cardNumber)
-                     ),
+                    child: NearbyToiletCard(
+                      address: toilet['address'],
+                      rating: toilet['rating'],
+                      distance: toilet['distance'],
+                      highVacancy: toilet['highVacancy'],
+                      bidetAvailable: toilet['bidetAvailable'],
+                      okuFriendly: toilet['okuFriendly'],
+                    ),
                    ); // Use the new widget
                 },
               ),

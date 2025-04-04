@@ -32,7 +32,7 @@ class ProfilePageState extends State<ProfilePage> {
                 // Profile Picture
                 CircleAvatar(
                   radius: 70.0,
-                  backgroundImage: AssetImage('assets/images/profile_picture.jpg'), // Replace with your image
+                  backgroundImage: AssetImage('assets/images/profile_pic.jpeg'), // Replace with your image
                 ),
                 const SizedBox(height: 20.0),
                 // Name

@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 
 class NearbyToiletCard extends StatelessWidget {
-  final int cardNumber;
+  final String address;
+  final double rating;
+  final String distance;
+  final bool highVacancy;
+  final bool bidetAvailable;
+  final bool okuFriendly;
 
-  const NearbyToiletCard({Key? key, required this.cardNumber}) : super(key: key);
+  const NearbyToiletCard({
+    Key? key,
+    required this.address,
+    required this.rating,
+    required this.distance,
+    required this.highVacancy,
+    required this.bidetAvailable,
+    required this.okuFriendly,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +32,7 @@ class NearbyToiletCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-              child: Image.asset('assets/images/toilet.jpeg'), 
+              child: Image.asset('assets/images/toilet.jpeg'), // Replace with your image
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -30,11 +43,11 @@ class NearbyToiletCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('60 Yuan Ching Rd', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                      Text(address, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       Row(
                         children: [
                           Icon(Icons.star, color: const Color.fromARGB(255, 244, 223, 34)),
-                          Text('5', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text(rating.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ],
@@ -44,43 +57,40 @@ class NearbyToiletCard extends StatelessWidget {
                     spacing: 16.0,
                     runSpacing: 8.0,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.circle, color: Colors.green, size: 12),
-                          SizedBox(width: 4),
-                          Text('High Vacancy',
-                            style: TextStyle(fontSize: 16)
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.check, color: Colors.black, size: 12),
-                          SizedBox(width: 4),
-                          Text('Bidet available',
-                            style: TextStyle(fontSize: 16)
-                            ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.accessible, color: Colors.black, size: 12),
-                          SizedBox(width: 4),
-                          Text('OKU friendly',
-                            style: TextStyle(fontSize: 16)
-                            ),
-                        ],
-                      ),
+                      if (highVacancy)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.circle, color: Colors.green, size: 12),
+                            SizedBox(width: 4),
+                            Text('High Vacancy', style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                      if (bidetAvailable)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.check, color: Colors.black, size: 12),
+                            SizedBox(width: 4),
+                            Text('Bidet available', style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                      if (okuFriendly)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.accessible, color: Colors.black, size: 12),
+                            SizedBox(width: 4),
+                            Text('OKU friendly', style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
                     ],
                   ),
                   SizedBox(height: 18),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('500m', style: TextStyle(fontSize: 20,)),
+                      Text(distance, style: TextStyle(fontSize: 20)),
                       ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
@@ -98,13 +108,11 @@ class NearbyToiletCard extends StatelessWidget {
                             fontFamily: "MazzardH",
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 225, 222, 222),
-                            ),
-                        )
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
-                  Text('Card $cardNumber', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),

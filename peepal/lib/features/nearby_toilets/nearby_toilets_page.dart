@@ -72,39 +72,44 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
             ),
             SizedBox(height: 1.0),
             Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: null,
-                itemBuilder: (context, index) {
-                  final actualIndex = index % toilets.length;
-                  final toilet = toilets[actualIndex];
-                  return AnimatedBuilder(
-                    animation: _pageController,
-                    builder: (context, child) {
-                      double value = 1;
-                      if (_pageController.position.haveDimensions) {
-                        value = _pageController.page! - index;
-                        value = (1 - (value.abs() * 0.3)).clamp(0.8, 1.0);
-                      }
-                      return Center(
-                        child: Transform.scale(
-                          scale: value,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 7.0),
-                            child: child,
-                          ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return PageView.builder(
+                    controller: _pageController,
+                    itemCount: null,
+                    itemBuilder: (context, index) {
+                      final actualIndex = index % toilets.length;
+                      final toilet = toilets[actualIndex];
+                      return AnimatedBuilder(
+                        animation: _pageController,
+                        builder: (context, child) {
+                          double value = 1;
+                          if (_pageController.position.haveDimensions) {
+                            value = _pageController.page! - index;
+                            value = (1 - (value.abs() * 0.3)).clamp(0.8, 1.0);
+                          }
+                          return Center(
+                            child: Transform.scale(
+                              scale: value,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                                child: child,
+                              ),
+                            ),
+                          );
+                        },
+                        child: NearbyToiletCard(
+                          address: toilet['address'],
+                          rating: toilet['rating'],
+                          distance: toilet['distance'],
+                          highVacancy: toilet['highVacancy'],
+                          bidetAvailable: toilet['bidetAvailable'],
+                          okuFriendly: toilet['okuFriendly'],
+                          height: 400, // Dynamically set card height
                         ),
                       );
                     },
-                    child: NearbyToiletCard(
-                      address: toilet['address'],
-                      rating: toilet['rating'],
-                      distance: toilet['distance'],
-                      highVacancy: toilet['highVacancy'],
-                      bidetAvailable: toilet['bidetAvailable'],
-                      okuFriendly: toilet['okuFriendly'],
-                    ),
-                   ); // Use the new widget
+                  );
                 },
               ),
             ),

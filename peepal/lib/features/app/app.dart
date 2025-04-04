@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/features/app/bloc/app_bloc.dart';
+import 'package:peepal/features/favourites/view/favourites_page.dart';
 import 'package:peepal/features/nearby_toilets/nearby_toilets_page.dart';
+import 'package:peepal/features/profile_page/profile_page.dart';
 import 'package:peepal/features/toilet_map/toilet_map_page.dart';
 import 'package:peepal/shared/location/bloc/location_bloc.dart';
 import 'package:peepal/shared/location/repository/location_repository.dart';
-import 'package:peepal/shared/nearby/bloc/nearby_toilet_bloc.dart';
-import 'package:peepal/shared/toilet/repository/toilet_repository.dart';
 
 class PeePalApp extends StatefulWidget {
   const PeePalApp({super.key});
@@ -36,10 +36,6 @@ class _PeePalAppState extends State<PeePalApp> {
           providers: [
             BlocProvider(create: (context) => AppPageCubit()),
             BlocProvider(
-              create: (context) => NearbyToiletCubit(
-                  toiletRepository: context.read<ToiletRepository>()),
-            ),
-            BlocProvider(
               lazy: false,
               create: (context) =>
                   LocationCubit(context.read<LocationRepository>())..init(),
@@ -55,8 +51,8 @@ class _PeePalAppState extends State<PeePalApp> {
                   children: [
                     NearbyToiletsPage(),
                     ToiletMapPage(),
-                    Center(child: Text("Favorite Page")),
-                    Center(child: Text("Profile Page")),
+                    FavouritesPage(),
+                    ProfilePage(),
                   ],
                 )),
             bottomNavigationBar: BlocBuilder<AppPageCubit, AppPageState>(

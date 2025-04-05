@@ -8,6 +8,7 @@ import auth from './routes/auth';
 import toiletApi from "./routes/api/toilet";
 import userApi from "./routes/api/user";
 import reviewApi from "./routes/api/reviews";
+import favoritesApi from "./routes/api/favorites";
 
 // Create a `db` instance with the default connection pool
 export const db = drizzle(pool);
@@ -35,3 +36,4 @@ app.get('/api', async (c) => {
 app.route('/api/users', userApi);
 app.route('/api/toilet', toiletApi);
 app.route('/api/reviews', reviewApi);
+app.route('/api/favorites', favoritesApi);

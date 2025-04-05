@@ -123,6 +123,41 @@ reviewApi.put('/:id', async (c) => {
   }
 })
 
+// DELETE /api/reviews/:id - Delete review
+reviewApi.delete('/:id', async (c) => {
+  // Verify auth token
+  const user = c.get('user')
+  if (!user) {
+    return c.json({ error: 'Unauthorized' }, 401)
+  }
+  const reviewId = Number(c.req.param('id'))
+  if (isNaN(reviewId)) {
+    return c.json({ error: 'Invalid review ID' }, 400)
+  }
+  const logger = c.get('logger')
+
+  try {
+    // Check if review exists and belongs to user
+    const [existing] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
+
+    if (!existing) {
+      return c.json({ error: 'Review not found' }, 404)
+    }
+
+    if (existing.userId !== user.id) {
+      return c.json({ error: 'Not authorized' }, 403)
+    }
+
+    // Delete the review
+    await db.delete(reviews).where(eq(reviews.id, reviewId))
+    logger.info(`Review ${reviewId} deleted by user ${user.id}`)
+    return c.json({ message: 'Review deleted successfully' }, 200)
+  } catch (err) {
+    logger.error('Error deleting review', err)
+    return c.json({ error: 'Failed to delete review' }, 500)
+  }
+})
+
 // POST /api/reviews/:id/report - Report a review
 reviewApi.post('/:id/report', async (c) => {
   // Verify auth token

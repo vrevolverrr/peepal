@@ -285,4 +285,80 @@ describe('Test Reviews API', () => {
       expect(data.error).toBe('Review not found')
     })
   })
+
+  describe('DELETE /api/reviews/:id', () => {
+    it('should delete a review', async () => {
+      // Create a test review to delete
+      const res = await app.request('/api/reviews', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          toiletId: testToilet.id,
+          rating: 4,
+          reviewText: 'Test review to delete'
+        })
+      })
+
+      expect(res.status).toBe(201)
+      const data = await res.json() as ReviewResponse
+      const reviewId = data.review.id
+
+      // Delete the review
+      const deleteRes = await app.request(`/api/reviews/${reviewId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
+      })
+
+      expect(deleteRes.status).toBe(200)
+      const deleteData = await deleteRes.json() as MessageResponse
+      expect(deleteData.message).toBe('Review deleted successfully')
+
+      // Verify review is deleted
+      const [deletedReview] = await db
+        .select()
+        .from(reviews)
+        .where(eq(reviews.id, reviewId))
+      expect(deletedReview).toBeUndefined()
+    })
+
+    it('should not allow deleting another user\'s review', async () => {
+      // Create another user and their review
+      const passwordHash = await bcrypt.hash('otherpassword', 10)
+      const [otherUser] = await db.insert(users).values({
+        username: 'otheruser' + Date.now(),
+        email: 'other' + Date.now() + '@example.com',
+        passwordHash
+      }).returning()
+      const otherToken = jwt.sign({ id: otherUser.id }, process.env.JWT_SECRET || 'your-secret-key')
+
+      // Create a review for the other user
+      const [otherReview] = await db.insert(reviews).values({
+        toiletId: testToilet.id,
+        userId: otherUser.id,
+        rating: 4,
+        reviewText: 'Other user\'s review'
+      }).returning()
+
+      // Try to delete other user's review
+      const res = await app.request(`/api/reviews/${otherReview.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
+      })
+
+      expect(res.status).toBe(403)
+      const data = await res.json() as ErrorResponse
+      expect(data.error).toBe('Not authorized')
+
+      // Clean up other user and their review
+      await db.delete(reviews).where(eq(reviews.id, otherReview.id))
+      await db.delete(users).where(eq(users.id, otherUser.id))
+    })
+  })
 })

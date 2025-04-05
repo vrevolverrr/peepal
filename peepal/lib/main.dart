@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:peepal/features/app/app.dart';
-
 import 'package:peepal/shared/location/repository/location_repository.dart';
 
 void main() {

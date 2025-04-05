@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/features/favourites/repository/favourites_respository.dart';
+import 'package:peepal/features/favourites/repository/favourites_repository.dart';
 import 'package:peepal/shared/toilet/model/toilet.dart';
 import 'package:peepal/features/favourites/widget/toilet_card.dart';
 

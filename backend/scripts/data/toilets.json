@@ -1,0 +1,2719 @@
+[
+  {
+    "region": "NORTH-EAST",
+    "location": "212 Social - Kovan",
+    "address": "212 Hougang St 21, #01-337, Singapore 530212",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3594594,
+      "lng": 103.8882559
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Buangkok Hawker Centre",
+    "address": "70 Compassvale Bow, Singapore 544692",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3825507,
+      "lng": 103.8921989
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Fu Fa Food Court @ Hougang Green",
+    "address": "21 Hougang St 51, Singapore 538719",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3788331,
+      "lng": 103.8876981
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Hougang Mall",
+    "address": "90 Hougang Ave 10, Singapore 538766",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.372455,
+      "lng": 103.8938277
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Kedai Kopi - AMK",
+    "address": "108 Ang Mo Kio Ave 4, Singapore 560108",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3709152,
+      "lng": 103.8382463
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Lentor MRT Station (TE5)",
+    "address": "1 Lentor Dr, Singapore 789361",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.384359,
+      "lng": 103.8367061
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Northshore Plaza I",
+    "address": "407 Northshore Dr, Singapore 820407",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4171246,
+      "lng": 103.9017228
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "NEX",
+    "address": "23 Serangoon Central, Red 2, Singapore 556083",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3506853,
+      "lng": 103.8719911
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Oasis Terraces",
+    "address": "681 Punggol Dr., Singapore 820681",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4031154,
+      "lng": 103.9132209
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "One Punggol",
+    "address": "1 Punggol Dr., Singapore 828629",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4082044,
+      "lng": 103.9050448
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Punggol Community Club",
+    "address": "3 Hougang Ave 6, Singapore 538808",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3741844,
+      "lng": 103.892043
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Punggol East Container Park",
+    "address": "50 Punggol E, Singapore 828824",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3944727,
+      "lng": 103.9169026
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Rivervale Community Club",
+    "address": "2 Rivervale Cl, Singapore 544583",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3850601,
+      "lng": 103.9024284
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Rivervale Mall",
+    "address": "11 Rivervale Cres, Singapore 545082",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3923205,
+      "lng": 103.9045208
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Sengkang Sports Centre",
+    "address": "57 Anchorvale Rd, Singapore 544964",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3967499,
+      "lng": 103.8870317
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Steak-Me",
+    "address": "248 Jln Kayu, Singapore 799472",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3978688,
+      "lng": 103.873372
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "The Midtown",
+    "address": "Upper Serangoon Rd, Singapore",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3576174,
+      "lng": 103.8824871
+    }
+  },
+  {
+    "region": "NORTH-EAST",
+    "location": "Waterway Point",
+    "address": "83 Punggol Central, Singapore 828761",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4066273,
+      "lng": 103.9022552
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Ali's Prata (Bedok)",
+    "address": "136 Bedok Reservoir Rd, Blk 136, Singapore 470136",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3335538,
+      "lng": 103.9135607
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Badaque",
+    "address": "298 Bedok Rd, Singapore 469454",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3315739,
+      "lng": 103.9486808
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Bedok Mall",
+    "address": "311 New Upper Changi Rd, Singapore 467360",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.324592,
+      "lng": 103.9292631
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Bedok Point",
+    "address": "799 New Upper Changi Rd, Singapore 467351",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3249396,
+      "lng": 103.9324355
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Butter Space",
+    "address": "55 Chai Chee Dr, #01-198, Singapore 460055",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3271729,
+      "lng": 103.9193384
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Century Square",
+    "address": "2 Tampines Central 1, #5, Singapore",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.352263,
+      "lng": 103.9436929
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Changi Bay Park Connector",
+    "address": "2a Changi Ferry Rd, Singapore",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3723129,
+      "lng": 104.005455
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Changi City Point",
+    "address": "5 Changi Business Park Central 1, Singapore 486038",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3350882,
+      "lng": 103.9635677
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Changi General Hospital - Medical Centre Building @ NDCS Oral & Maxillofacial Surgery Clinic",
+    "address": "2 Simei St 3, Singapore 529889",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3406383,
+      "lng": 103.9500605
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Cilantro: The Biryani Club",
+    "address": "102 Joo Chiat Rd, Singapore 427396",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3141476,
+      "lng": 103.8989195
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "E!Avenue @ Downtown East",
+    "address": "1 Pasir Ris Cl, Singapore 519599",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3788971,
+      "lng": 103.9550732
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "East Coast Commune",
+    "address": "ECP, Singapore 449876",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3019659,
+      "lng": 103.9125252
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "East Coast Lagoon Food Village",
+    "address": "ECP, Singapore",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3052353,
+      "lng": 103.9234317
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "East Village",
+    "address": "430 Upper Changi Rd, Singapore 487048",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3318464,
+      "lng": 103.9463496
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Grandlink Square",
+    "address": "511 Guillemard Rd, Singapore 399849",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3143063,
+      "lng": 103.8913348
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Happy Hawkers Bedok Reservoir",
+    "address": "741 Bedok Reservoir Rd, #738, Singapore 470741",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3378056,
+      "lng": 103.9225306
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "I12 Katong",
+    "address": "112 E Coast Rd, Singapore 428802",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3052002,
+      "lng": 103.9050645
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Jewel Changi Airport",
+    "address": "78 Airport Blvd., Singapore 819666",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3603912,
+      "lng": 103.989642
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Kembangan MRT",
+    "address": "55 Sims Ave E, Singapore 416551",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3210138,
+      "lng": 103.912982
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Mana Lagi by FattyBomBom Group",
+    "address": "477 Tampines Street 43, #01-172, Singapore 520477",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3610116,
+      "lng": 103.9527859
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Our Tampines Hub",
+    "address": "1 Tampines Walk, Singapore 528523",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3527822,
+      "lng": 103.9396258
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Pasir Ris Bus Interchange",
+    "address": "501 Pasir Ris Dr 3, Singapore 519490",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3735167,
+      "lng": 103.9501508
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Plaza 8 @ CBP",
+    "address": "1 Changi Business Park Ave 1, Singapore 486025",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3363809,
+      "lng": 103.9636992
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "PLQ Mall - Shaw Theatres",
+    "address": "10 Paya Lebar Rd, #05-02 PLQ Mall, Singapore 409057",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3173198,
+      "lng": 103.892442
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Singpost Centre",
+    "address": "10 Eunos Rd 8, Singapore 408600",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3189418,
+      "lng": 103.8944605
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Shell - Tamp Ave 2",
+    "address": "9 Tampines Ave 2, Singapore 529731",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3492002,
+      "lng": 103.9477141
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Siglap CC",
+    "address": "151 Bedok S Rd, Singapore",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3180279,
+      "lng": 103.9480475
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Singapore Expo",
+    "address": "1 Expo Dr, Singapore 486150",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3334948,
+      "lng": 103.9586333
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Supper Deck",
+    "address": "288 Bedok Rd, Singapore 469444",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3318333,
+      "lng": 103.9484829
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Syed Cafe",
+    "address": "328 Bedok Rd, Singapore 469499",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3311137,
+      "lng": 103.9481577
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Tampines Bus Interchange",
+    "address": "1 Tampines Central 1, Singapore 529539",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3520334,
+      "lng": 103.9427075
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Tampines East Community Club",
+    "address": "10 Tampines St 23, Singapore 527201",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3533873,
+      "lng": 103.9545991
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Tampines North Polyclinic",
+    "address": "35 Tampines Street 61, Singapore 528566",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3632456,
+      "lng": 103.9375858
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Tampines Mall",
+    "address": "4 Tampines Central 1, #5, Singapore 529536",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3542907,
+      "lng": 103.9456602
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "The Coffee Bean & Tea Leaf @ East Coast Park",
+    "address": "1000 ECP, Singapore 449876",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.301352,
+      "lng": 103.9129206
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "Tomahawk King: Steakhouse and Grill",
+    "address": "324 Changi Rd, Singapore 419799",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3179055,
+      "lng": 103.908016
+    }
+  },
+  {
+    "region": "EAST",
+    "location": "White Sands",
+    "address": "1 Pasir Ris Central, #3, Singapore 518457",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.372269,
+      "lng": 103.9498804
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "5themoments Handcrafted Gelato Cafe (Tanjong Pagar)",
+    "address": "73 Tg Pagar Rd, Singapore 088494",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.278025,
+      "lng": 103.843844
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "18 Tai Seng",
+    "address": "18 Tai Seng St, Singapore 539775",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3364487,
+      "lng": 103.8890365
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "111 Somerset",
+    "address": "111 Somerset Rd, TripleOne Somerset, Singapore 238164",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3001685,
+      "lng": 103.8372952
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "313 Somerset",
+    "address": "313 Orchard Rd, Singapore 238895",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3009665,
+      "lng": 103.8384727
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Active Garden, Waterfront Plaza",
+    "address": "18 Marina Gardens Dr, Singapore 018953",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.28222,
+      "lng": 103.8657743
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Al Bidayah Restaurant",
+    "address": "364 Geylang Rd, Singapore 389369",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3127769,
+      "lng": 103.8812822
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Aliwal Arts Centre",
+    "address": "28 Aliwal St, Singapore 199918",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3027035,
+      "lng": 103.8609818
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Amoy Street Food Centre",
+    "address": "7 Maxwell Rd, Singapore 069111",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2794385,
+      "lng": 103.8466789
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Apartment Coffee",
+    "address": "139 Selegie Rd, #01-01, Singapore 188309",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.302735,
+      "lng": 103.8499407
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Apple Marina Bay Sands",
+    "address": "2 Bayfront Ave, B2-06, Singapore 018972",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2829793,
+      "lng": 103.8579939
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Bayfront Pavillion",
+    "address": "",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 0,
+      "lng": 0
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Beo Crescent Market",
+    "address": "38A Beo Cres, Singapore 169982",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2889614,
+      "lng": 103.827332
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Bishan Bus Interchange",
+    "address": "514 Bishan St. 13, Singapore 570514",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3507153,
+      "lng": 103.8497249
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Black Raisins",
+    "address": "28 Lor Ampas, Singapore 328781",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3266284,
+      "lng": 103.8528257
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Botanical Gardens Nassim Gate Visitor Centre",
+    "address": "1 Cluny Rd, Singapore 259569",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3114235,
+      "lng": 103.8147771
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "CapitaSpring",
+    "address": "88 Market St, Singapore 048948",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2840483,
+      "lng": 103.8500506
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Cash Studio - Prinsep",
+    "address": "72 Prinsep St, Singapore 188671",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2998313,
+      "lng": 103.8501919
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Chye Seng Huat Hardware",
+    "address": "150 Tyrwhitt Rd, Singapore 207563",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3115341,
+      "lng": 103.8603844
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Clarke Quay",
+    "address": "3 River Valley Rd, Singapore 179024",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2905113,
+      "lng": 103.8461835
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Clarke Quay - Haidilao",
+    "address": "3 River Valley Rd, #02-04 Blk C Clarke Quay, Singapore 179022",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.290395,
+      "lng": 103.8456635
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Collyer Quay Centre",
+    "address": "16 Collyer Quay, 16 Collyer Quay, Singapore 049318",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2840798,
+      "lng": 103.8525004
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Crane @ Kim Yam Rd",
+    "address": "46 Kim Yam Rd, #01-06, Singapore 239351",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.292444,
+      "lng": 103.8387727
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Daizu Cafe",
+    "address": "129 Rangoon Rd, Singapore 218407",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3152919,
+      "lng": 103.8534066
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Dessert First",
+    "address": "8 Liang Seah St, #01-04, Singapore 189029",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2978891,
+      "lng": 103.8566338
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Dopa Dopa Creamery",
+    "address": "29 South Bridge Rd, #01-01, Singapore 058665",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2878015,
+      "lng": 103.8486502
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Duo Tower",
+    "address": "3 Fraser St, Singapore 189352",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2994163,
+      "lng": 103.8576444
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Esplanade Mall",
+    "address": "1 Esplanade Dr, Singapore 038981",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2899031,
+      "lng": 103.8553215
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Fort Canning Park",
+    "address": "70 River Valley Rd, Singapore 179037",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.292137,
+      "lng": 103.8458932
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Frasers Tower",
+    "address": "182 Cecil St, Singapore 069547",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2787134,
+      "lng": 103.8473114
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Funan",
+    "address": "107 N Bridge Rd, Singapore",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2912134,
+      "lng": 103.8511097
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Furama City Centre",
+    "address": "60 Eu Tong Sen St, Singapore 059804",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.28649,
+      "lng": 103.8444964
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Gardens by The Bay",
+    "address": "18 Marina Gardens Dr, Singapore 018953",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.28222,
+      "lng": 103.8657743
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Gardens by the Bay MRT",
+    "address": "11 Marina Mall, Singapore 019396",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2797297,
+      "lng": 103.8679393
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Gleneagles Hospital",
+    "address": "6A Napier Rd, Singapore 258500",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3073782,
+      "lng": 103.8198608
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Goldenroy Sourdough Pizza",
+    "address": "125 Desker Rd, Singapore 209642",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3082725,
+      "lng": 103.8566027
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "GR.iD",
+    "address": "1 Selegie Rd, Singapore 188306",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3005405,
+      "lng": 103.8492521
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Hai Ge Ji Hainanese Chicken Rice",
+    "address": "783 N Bridge Rd, Singapore 198751",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3038011,
+      "lng": 103.8599255
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Health Sciences Authority (HSA)",
+    "address": "11 Outram Rd, Singapore 169078",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2804789,
+      "lng": 103.8384306
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Homeground Coffee Roasters",
+    "address": "15 Teo Hong Rd, Singapore 088328",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2800678,
+      "lng": 103.840857
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Hotel Mi",
+    "address": "41 Bencoolen St, Singapore 189623",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2990138,
+      "lng": 103.8499666
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "ION Orchard",
+    "address": "2 Orchard Turn, Singapore 238801",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3040056,
+      "lng": 103.8319983
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Grand Hyatt Singapore",
+    "address": "10 Scotts Rd, Singapore 228211",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3062616,
+      "lng": 103.8334004
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Jollibee - Bugis Village",
+    "address": "Rochor Rd, Singapore",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2994427,
+      "lng": 103.8569602
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Kallang Tennis Hub",
+    "address": "15 Stadium Walk, Singapore 397694",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3022673,
+      "lng": 103.8766367
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Kwong Wai Shiu Hospital",
+    "address": "705 Serangoon Rd, Singapore 328127",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3173275,
+      "lng": 103.8593328
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Little India MRT - Exit F",
+    "address": "60 Bukit Timah Rd, B1-02, Singapore 229900",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3068697,
+      "lng": 103.849474
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "lyf Farrer Park Singapore",
+    "address": "2 Perumal Rd, #01-01, Singapore 218773",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3126963,
+      "lng": 103.8556448
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Malay Heritage Centre",
+    "address": "85 Sultan Gate, Singapore 198501",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3029666,
+      "lng": 103.8598608
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Mandarin Gallery",
+    "address": "333A Orchard Rd, Singapore 238897",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3022297,
+      "lng": 103.8363746
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Macpherson MRT - Circle Line",
+    "address": "171 Paya Lebar Rd, Singapore 409048",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3255213,
+      "lng": 103.8902395
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Marina Bay Sands",
+    "address": "10 Bayfront Ave, Singapore 018956",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2824499,
+      "lng": 103.8578807
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Mount Elizabeth Novena Hospital",
+    "address": "38 Irrawaddy Rd, Singapore 329563",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.322236,
+      "lng": 103.8440388
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "National Archives Singapore",
+    "address": "1 Canning Rise, Singapore 179868",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2931305,
+      "lng": 103.8483091
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "National Gallery Singapore",
+    "address": "1 St Andrew's Rd, #01 – 01, Singapore 000000",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2912054,
+      "lng": 103.8517827
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "New Bahru",
+    "address": "46 Kim Yam Rd, New Bahru, Singapore 239351",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2928106,
+      "lng": 103.8386992
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "New Tech Park (NTP)",
+    "address": "151 Lorong Chuan, Singapore 556741",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3515367,
+      "lng": 103.8621252
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Novena Specialist Center",
+    "address": "8 Sinaran Dr, Singapore 307470",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3200182,
+      "lng": 103.8447218
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "OG Albert",
+    "address": "60 Albert St, Singapore 189969",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3024158,
+      "lng": 103.8539626
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "One Farrer Hotel - LOBBY",
+    "address": "1 Farrer Park Station Rd, Singapore 217562",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3121617,
+      "lng": 103.8540179
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "One Raffles Place",
+    "address": "1 Raffles Pl, One Raffles Place Tower 1, Singapore 048616",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2844024,
+      "lng": 103.8509818
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Outram Park MRT",
+    "address": "Outram Rd, Singapore",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2833414,
+      "lng": 103.8359684
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "PARKROYAL Serviced Suites Singapore",
+    "address": "Beach Rd, Singapore",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.299508,
+      "lng": 103.8592765
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Picanhas'",
+    "address": "90 Club St, Singapore 069458",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2817814,
+      "lng": 103.8455418
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Plaza Singapura",
+    "address": "68 Orchard Rd, Singapore 238839",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3007111,
+      "lng": 103.844904
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Raffles City",
+    "address": "252 N Bridge Rd, Raffles City Shopping Centre, Singapore 179103",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2937921,
+      "lng": 103.8528755
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Raffles Hospital",
+    "address": "585 N Bridge Rd, Singapore 188770",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3011534,
+      "lng": 103.8570811
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Raffles Hotel",
+    "address": "1 Beach Rd, Singapore 189673",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2955026,
+      "lng": 103.8544179
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Raffles Shopping Arcade",
+    "address": "328 N Bridge Rd, Singapore 188719",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2958405,
+      "lng": 103.8538673
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Royal Plaza on Scotts Singapore",
+    "address": "25 Scotts Rd, Singapore 228220",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3073645,
+      "lng": 103.8324041
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Shaw Plaza",
+    "address": "360 Balestier Rd, Singapore 329783",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3251455,
+      "lng": 103.8509767
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Shenton Way MRT Station (TE19)",
+    "address": "2 Park St, Singapore 018928",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2777941,
+      "lng": 103.8507023
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Singhealth Tower",
+    "address": "10 Hospital Blvd, Singapore 168582",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.277657,
+      "lng": 103.8354837
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Suntec City",
+    "address": "3 Temasek Blvd, Singapore 038983",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.295825,
+      "lng": 103.8587866
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Suntec Singapore Convention & Exhibition Centre",
+    "address": "1 Raffles Blvd, Singapore 039593",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2933872,
+      "lng": 103.8571396
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Takashimaya Shopping Centre",
+    "address": "391 Orchard Rd, Singapore 238873",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3024048,
+      "lng": 103.8347024
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "TARIK",
+    "address": "16 Bali Ln, Singapore 189852",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3007618,
+      "lng": 103.8588428
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Taste Orchard",
+    "address": "160 Orchard Rd, Singapore 238842",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3011743,
+      "lng": 103.8405561
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Tekka Place",
+    "address": "2 Serangoon Rd, Singapore 218227",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3050631,
+      "lng": 103.8514261
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "The Adelphi",
+    "address": "1 Coleman St, Singapore 179803",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2913131,
+      "lng": 103.8512472
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "The ARK @ Cuppage",
+    "address": "51 Cuppage Rd, Singapore 229469",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3027365,
+      "lng": 103.8404385
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "The Cage - Pitch 5",
+    "address": "38 Jln Benaan Kapal, Singapore 399635",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3016557,
+      "lng": 103.8795196
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Three's A Crowd - Little India",
+    "address": "50 Race Course Rd, Singapore 218562",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.308231,
+      "lng": 103.8508783
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Tiong Bahru Plaza",
+    "address": "302 Tiong Bahru Rd, Singapore 168732",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2864763,
+      "lng": 103.8271508
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "UNIQLO Orchard Central (Global Flagship)",
+    "address": "181 Orchard Rd, #01 01, Singapore 238896",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3006242,
+      "lng": 103.8398658
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Valley Point - Office Tower",
+    "address": "491 River Valley Rd, Singapore 248371",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2928755,
+      "lng": 103.827015
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Volkswagen Singapore",
+    "address": "247 Alexandra Rd, Singapore 159934",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2913808,
+      "lng": 103.8117479
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Wheelock Place",
+    "address": "501 Orchard Rd, Singapore 238880",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3047411,
+      "lng": 103.8305926
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Wine Connection Bistro (Capital Square)",
+    "address": "25 Church St, #01-01 Capital Square 3, Singapore 049482",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2840465,
+      "lng": 103.8486352
+    }
+  },
+  {
+    "region": "CENTRAL",
+    "location": "Wisma Atria",
+    "address": "435 Orchard Rd, Singapore 238877",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3037148,
+      "lng": 103.8332642
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "Anytime Fitness Pasir Panjang",
+    "address": "44 Pasir Panjang Rd, Blk #A01, Singapore 118504",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2750721,
+      "lng": 103.7939776
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "Beach Station",
+    "address": "50 Siloso Bch Walk, Singapore 099000",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.252426,
+      "lng": 103.8161576
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "Mount Faber Park",
+    "address": "99448 Rittersdorf, Germany",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 50.84121709999999,
+      "lng": 11.1885943
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "Harbourfront MRT",
+    "address": "",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 0,
+      "lng": 0
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "Mess Hall @ Sentosa",
+    "address": "12 Artillery Ave, Singapore 099953",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2522129,
+      "lng": 103.8208336
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "Telok Blangah MRT",
+    "address": "463 Telok Blangah Rd, Singapore 109028",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2707279,
+      "lng": 103.8099369
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "Vivocity",
+    "address": "1 HarbourFront Walk, VivoCity, Singapore 098585",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2647139,
+      "lng": 103.8231658
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "VivoCity - Golden Village",
+    "address": "1 HarbourFront Walk, #02-30, Singapore 098585",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2647865,
+      "lng": 103.8232563
+    }
+  },
+  {
+    "region": "SOUTH",
+    "location": "Vivocity - library@harbourfront",
+    "address": "1 HarbourFront Walk, #03-05 VivoCity, Singapore 098585",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2636837,
+      "lng": 103.8233985
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Bukit Batok Community Club",
+    "address": "21 Bukit Batok Central, Singapore 659959",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.350151,
+      "lng": 103.7475504
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Bukit Gombak ActiveSG Gym",
+    "address": "810 Bukit Batok West Ave. 5, Singapore 659088",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3598234,
+      "lng": 103.7523081
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Buona Vista MRT",
+    "address": "100 N Buona Vis Rd, Singapore 139349",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3061841,
+      "lng": 103.7908865
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Caltex Jurong West",
+    "address": "100 Jurong West Ave 1, Singapore 649519",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3496242,
+      "lng": 103.7148049
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Civil Service Club @ Bukit Batok",
+    "address": "91 Bukit Batok West Ave 2, Singapore 659206",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3527145,
+      "lng": 103.7493724
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Clementi Bus Interchange",
+    "address": "441 Commonwealth Ave W, Singapore 120441",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.315027,
+      "lng": 103.763991
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Clementi Sports Hall",
+    "address": "518 Clementi Ave 3, Clementi Sports Hall, Sports Complex, Singapore 129907",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3111166,
+      "lng": 103.7652387
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Connection One Tower 1",
+    "address": "169 Bukit Merah Central, Singapore",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2830841,
+      "lng": 103.8190902
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Daily Ground",
+    "address": "619D Bukit Timah Rd, #01-01, Singapore 269724",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3244854,
+      "lng": 103.809246
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Esso 50 Chua Chu Kang Drive",
+    "address": "50 Choa Chu Kang Dr, Singapore 689716",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3951586,
+      "lng": 103.7472339
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "ESSO JURONG EAST",
+    "address": "150 Jurong East Ave 1, Singapore 609787",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3452603,
+      "lng": 103.7327769
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Fusionopolis",
+    "address": "",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 0,
+      "lng": 0
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Gul Circle MRT",
+    "address": "7A Tuas Rd, Singapore 637288",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3188661,
+      "lng": 103.6604192
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "IMM",
+    "address": "2 Jurong East Street 21, Singapore 609601",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3349575,
+      "lng": 103.7468492
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Jem",
+    "address": "50 Jurong Gateway Rd, Singapore 609690",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3330166,
+      "lng": 103.7437038
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "JTC LaunchPad (one-north)",
+    "address": "73A Ayer Rajah Crescent, Singapore 139957",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.297437,
+      "lng": 103.7875057
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Jurong West Hawker Centre",
+    "address": "50 Jurong West Street 61, #61, Singapore 648202",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3412561,
+      "lng": 103.6974152
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "KAP Mall - EagleWings Cinematics",
+    "address": "9 King Albert Park, #01-58, Singapore 598332",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3369213,
+      "lng": 103.7790175
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Kent Ridge Park",
+    "address": "Vigilante Dr, Singapore",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2847931,
+      "lng": 103.7887475
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Limbang Shopping Centre",
+    "address": "Choa Chu Kang Street 51, Singapore",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3913255,
+      "lng": 103.7430316
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Margaret Market",
+    "address": "38 Margaret Dr, Singapore 141038",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2977516,
+      "lng": 103.8043441
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "NUH Main Building",
+    "address": "5 Lower Kent Ridge Rd, Singapore 119074",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2941305,
+      "lng": 103.7831784
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Queensway Shopping Centre",
+    "address": "1 Queensway, Singapore 149053",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2875231,
+      "lng": 103.8031063
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Rochester Mall",
+    "address": "35 Rochester Dr, Singapore 138639",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3055636,
+      "lng": 103.7882108
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Senja-Cashew Community Club",
+    "address": "101 Bukit Panjang Rd, Singapore 670534",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3815795,
+      "lng": 103.7646826
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Senja Hawker Centre",
+    "address": "2 Senja Cl, Singapore 058416",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3878836,
+      "lng": 103.7610495
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Shell Bukit Panjang",
+    "address": "772 Upper Bukit Timah Rd, Singapore 678122",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3722978,
+      "lng": 103.7634458
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Singapore Science Centre KidsSTOP",
+    "address": "21 Jurong Town Hall Rd, Singapore",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3353344,
+      "lng": 103.7356336
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Temasek Club",
+    "address": "131 Rifle Range Rd, Singapore",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3468846,
+      "lng": 103.7807948
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "The Star Vista",
+    "address": "1 Vista Exchange Green, Singapore 138617",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3068072,
+      "lng": 103.7883997
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "West Coast Pier",
+    "address": "60 W Coast Ferry Rd, Singapore 126979",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2925226,
+      "lng": 103.7621497
+    }
+  },
+  {
+    "region": "WEST",
+    "location": "Westgate",
+    "address": "3 Gateway Dr, Singapore",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3343784,
+      "lng": 103.7427835
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Admiralty MRT",
+    "address": "",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 0,
+      "lng": 0
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Canberra Plaza",
+    "address": "133 Canberra Vw, Singapore 750133",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4429605,
+      "lng": 103.830607
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Causeway Point",
+    "address": "1 Woodlands Square, Singapore 738099",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4360933,
+      "lng": 103.7859471
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Honda Mandai Service Centre",
+    "address": "6A Mandai Estate, Singapore 729903",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4072075,
+      "lng": 103.7577005
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "HomeTeamNS Khatib",
+    "address": "2 Yishun Walk, Singapore 767944",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4143332,
+      "lng": 103.8307227
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Kranji MRT Station",
+    "address": "960 Woodlands Rd, Singapore 738702",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4254944,
+      "lng": 103.7621808
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Khoo Teck Puat Hospital (KTPH)",
+    "address": "90 Yishun Central, Singapore 768828",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4242972,
+      "lng": 103.8385907
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Masjid Yusof Ishak",
+    "address": "10 Woodlands Dr 17, Singapore 737740",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4265634,
+      "lng": 103.796179
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Northpoint City",
+    "address": "930 Yishun Ave 2, Singapore 769093",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4293702,
+      "lng": 103.8350761
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Orchid Country Club",
+    "address": "1 Orchid Club Rd, Singapore 769162",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4110296,
+      "lng": 103.8440049
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "SAFRA - Yishun",
+    "address": "60 Yishun Ave 4, #02-07, Singapore 769027",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4242354,
+      "lng": 103.8409184
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Sinopec Woodlands",
+    "address": "150 Woodlands Ave 5, Singapore 739375",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.432767,
+      "lng": 103.7987108
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Wisteria Mall",
+    "address": "598 Yishun Ring Rd, Singapore 768698",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4182745,
+      "lng": 103.8410316
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Woodlands Galaxy Community Club",
+    "address": "31 Woodlands Ave 6, Singapore 738991",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4389694,
+      "lng": 103.8025495
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Woodlands Train Checkpoint",
+    "address": "21 Woodlands Crossing, Singapore 738203",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.444468,
+      "lng": 103.7689097
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Woodlands Waterfront Park",
+    "address": "Admiralty Rd W, Singapore",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4560244,
+      "lng": 103.7986363
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Yishun Bus Interchange",
+    "address": "920 Yishun Ave 2, Singapore",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4284453,
+      "lng": 103.8353564
+    }
+  },
+  {
+    "region": "NORTH",
+    "location": "Yishun Park Hawker Centre",
+    "address": "51 Yishun Ave 11, Singapore 768867",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.4249457,
+      "lng": 103.8447228
+    }
+  },
+  {
+    "region": "INSTITUTIONS",
+    "location": "James Cook University",
+    "address": "149 Sims Dr, Singapore 387380",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3158489,
+      "lng": 103.8761082
+    }
+  },
+  {
+    "region": "INSTITUTIONS",
+    "location": "NTU",
+    "address": "21 Nanyang Link, #04 01 School of Physical and Mathematical Sciences, Singapore 637371",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.3419648,
+      "lng": 103.6819156
+    }
+  },
+  {
+    "region": "INSTITUTIONS",
+    "location": "NUS",
+    "address": "Singapore 117565",
+    "hasHandicap": "unknown",
+    "hasBidet": "unknown",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.297413,
+      "lng": 103.771114
+    }
+  },
+  {
+    "region": "INSTITUTIONS",
+    "location": "SMU Connexion",
+    "address": "40 Stamford Rd, Singapore 178908",
+    "hasHandicap": "none",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.2953073,
+      "lng": 103.84948
+    }
+  },
+  {
+    "region": "INSTITUTIONS",
+    "location": "SUSS",
+    "address": "463 Clementi Rd, Singapore 599494",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.329081,
+      "lng": 103.7761967
+    }
+  },
+  {
+    "region": "INSTITUTIONS",
+    "location": "Temasek Polytechnic",
+    "address": "21 Tampines Ave 1, Singapore 529757",
+    "hasHandicap": "male",
+    "hasBidet": "male",
+    "hasSanitizer": "unknown",
+    "hasShower": "unknown",
+    "latlong": {
+      "lat": 1.345576,
+      "lng": 103.9322542
+    }
+  }
+]

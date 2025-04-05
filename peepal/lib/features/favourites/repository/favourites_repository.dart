@@ -63,7 +63,6 @@ class MockFavouritesRepository implements FavouritesRespository {
       await Future.delayed(Duration(seconds: 1)); // Simulate network delay
       return PPToiletCollection(_mockToilets);
     } catch (e) {
-      log('Error in getFavourites: $e');
       rethrow;
     }
   }

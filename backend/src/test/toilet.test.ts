@@ -10,7 +10,10 @@ interface ToiletResponse {
     id: number;
     name: string;
     address: string;
-    location: string;
+    location: {
+      x: number;
+      y: number;
+    };
     toiletAvail: boolean;
     handicapAvail?: boolean;
     bidetAvail?: boolean;
@@ -59,7 +62,10 @@ describe('Toilet API Tests', () => {
   const mockToilet = {
     name: 'Test Toilet',
     address: '123 Test Street',
-    location: 'Test Location',
+    location: {
+      x: 51.5074,  // Longitude (example: London)
+      y: 0.1278,   // Latitude (example: London)
+    },
     toiletAvail: true,
     handicapAvail: true,
     bidetAvail: false,

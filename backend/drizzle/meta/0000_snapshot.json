@@ -1,5 +1,5 @@
 {
-  "id": "dc697e82-fdb2-4ec7-8c05-c7804c31ed72",
+  "id": "2f82e133-bbbf-42e5-abd8-fb5d349a6f2c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -95,7 +95,7 @@
         },
         "location": {
           "name": "location",
-          "type": "text",
+          "type": "geometry(point)",
           "primaryKey": false,
           "notNull": true
         },
@@ -161,7 +161,23 @@
           "default": 0
         }
       },
-      "indexes": {},
+      "indexes": {
+        "idx_spatial_toilets_location": {
+          "name": "idx_spatial_toilets_location",
+          "columns": [
+            {
+              "expression": "location",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "gist",
+          "with": {}
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},

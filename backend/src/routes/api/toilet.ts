@@ -19,7 +19,10 @@ toiletApi.post('/create', async (c) => {
     const [newToilet] = await db.insert(toilets).values ({
           name: body.name,
           address: body.address,
-          location: body.location,
+          location: {
+            x: body.location.x,
+            y: body.location.y
+          },
           toiletAvail: body.toiletAvail,
           handicapAvail: body.handicapAvail,
           bidetAvail: body.bidetAvail,

@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { db } from '../../app'
-import { favorites, users } from '../../db/schema'
+import { favorites } from '../../db/schema'
 import { eq, and, desc } from 'drizzle-orm'
 import { logger } from '../../middleware/logger'
 

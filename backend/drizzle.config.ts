@@ -4,6 +4,7 @@ export default {
   schema: './src/db/schema.ts',
   out: './drizzle',
   dialect: 'postgresql',
+  extensionsFilters: ['postgis'],
   dbCredentials: {
     host: process.env.DB_HOST || 'localhost',
     port: Number(process.env.DB_PORT) || 5432,

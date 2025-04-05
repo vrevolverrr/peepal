@@ -1,19 +1,18 @@
-import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
-
 import 'package:peepal/shared/location/model/mock_location.dart';
 import 'package:peepal/shared/toilet/model/toilet.dart';
 import 'package:peepal/shared/toilet/model/toilet_collection.dart';
 import 'package:peepal/shared/toilet/model/toilet_crowd_level.dart';
 import 'package:peepal/shared/toilet/model/toilet_features.dart';
+import 'dart:developer'; // Import for the log method
 
-abstract interface class FavouritesRespository {
+abstract interface class FavouritesRepository {
   Future<PPToiletCollection> getFavourites();
   Future<void> addFavourite(String toiletId);
   Future<void> removeFavourite(String toiletId);
   Future<bool> isFavourite(String toiletId);
 }
 
-class MockFavouritesRepository implements FavouritesRespository {
+class MockFavouritesRepository implements FavouritesRepository {
   final List<PPToilet> _mockToilets = [
     PPToilet(
       id: 1,

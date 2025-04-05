@@ -55,7 +55,10 @@ describe('Test Favorites API', () => {
     const [toilet] = await db.insert(toilets).values({
       name: 'Test Toilet',
       address: '123 Test St',
-      location: 'Test Location',
+      location: {
+        x: 51.5074,  // Longitude (example: London)
+        y: 0.1278,   // Latitude (example: London)
+      },
       crowdLevel: 1,
       rating: '0.00',
       toiletAvail: true,

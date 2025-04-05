@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm"
 export const toiletApi = new Hono()
 
 //api/toilets/ CREATING TOILET
-toiletApi.post('/', async (c) => {
+toiletApi.post('/create', async (c) => {
   const logger = c.get('logger')
   const body = await c.req.json()
 

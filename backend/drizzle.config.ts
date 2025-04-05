@@ -9,7 +9,7 @@ export default {
     port: Number(process.env.DB_PORT) || 5432,
     user: process.env.DB_USER || 'sc2006',
     password: process.env.DB_PASSWORD || 'sc2006',
-    database: process.env.DB_NAME || 'dev',
+    database: process.env.DB_NAME || 'sc2006',
     ssl: false
   }
 } satisfies Config

@@ -7,6 +7,7 @@ import { authMiddleware } from './middleware/auth';
 import auth from './routes/auth';
 import toiletApi from "./routes/api/toilet";
 import userApi from "./routes/api/user";
+import reviewApi from "./routes/api/reviews";
 
 // Create a `db` instance with the default connection pool
 export const db = drizzle(pool);
@@ -33,3 +34,4 @@ app.get('/api', async (c) => {
 /// API Routes
 app.route('/api/users', userApi);
 app.route('/api/toilet', toiletApi);
+app.route('/api/reviews', reviewApi);

@@ -10,7 +10,7 @@ toiletApi.post('/', async (c) => {
   const logger = c.get('logger')
   const body = await c.req.json()
 
-  // Input validation: Ensure required fields are present
+  // Input validation
   if (!body.name || !body.address || !body.location || body.toiletAvail === undefined) {
     return c.json({ error: 'Missing required fields: name, address, location, or toiletAvail' }, 400) // Return 400 if any required field is missing
   }
@@ -50,7 +50,7 @@ toiletApi.put('/{id}', async (c) => {
       .update(toilets)
       .set(body) //fields to update is inside body
       .where(eq(toilets.id, Number(toiletId)))
-      .returning();
+      .returning()
 
     if (!updatedToilet) {
       return c.json({ error: 'Toilet not found' }, 404)
@@ -64,6 +64,25 @@ toiletApi.put('/{id}', async (c) => {
 })
 
 //api/toilets/{id} Deleting Toilet
+toiletApi.delete('/{id}', async c => {
+  const logger = c.get('logger')
+  const toiletId = c.req.param('id')
 
+  try {
+    const [deletedToilet] = await db
+    .delete(toilets)
+    .where(eq(toilets.id, Number(toiletId)))
+    .returning()
+
+    if (!deletedToilet) {
+      return c.json({ error: 'Toilet not found'}, 400)
+    }
+
+    return c.json({toilet: deletedToilet}, 200)
+  } catch (error) {
+    logger.error(`Error deleting toilet ${toiletId}`, error)
+    return c.json({error: 'Internal server error'}, 500)
+  }
+})
 
 export default toiletApi

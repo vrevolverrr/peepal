@@ -14,7 +14,7 @@ CREATE TABLE "toilets" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"address" text NOT NULL,
-	"location" text NOT NULL,
+	"location" geometry(point) NOT NULL,
 	"toilet_avail" boolean DEFAULT false,
 	"handicap_avail" boolean DEFAULT false,
 	"bidet_avail" boolean DEFAULT false,
@@ -65,4 +65,5 @@ ALTER TABLE "favorites" ADD CONSTRAINT "favorites_user_id_users_id_fk" FOREIGN K
 ALTER TABLE "favorites" ADD CONSTRAINT "favorites_toilet_id_toilets_id_fk" FOREIGN KEY ("toilet_id") REFERENCES "public"."toilets"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "history" ADD CONSTRAINT "history_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "history" ADD CONSTRAINT "history_toilet_id_toilets_id_fk" FOREIGN KEY ("toilet_id") REFERENCES "public"."toilets"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "notifications" ADD CONSTRAINT "notifications_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+ALTER TABLE "notifications" ADD CONSTRAINT "notifications_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+CREATE INDEX "idx_spatial_toilets_location" ON "toilets" USING gist ("location");

@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, integer, uuid } from 'drizzle-orm/pg-core'
+import { pgTable, serial, text, timestamp, integer, uuid} from 'drizzle-orm/pg-core'
 import { users } from './users'
 import { toilets } from './toilets'
 
@@ -10,5 +10,5 @@ export const reviews = pgTable('reviews', {
   reviewText: text('review_text'),
   createdAt: timestamp('created_at').defaultNow(),
   imageUrl: text('image_url'),
-  reportCount: integer('report_count').default(0)
+  reportCount: integer('report_count').default(0),
 });

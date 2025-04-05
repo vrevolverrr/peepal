@@ -104,3 +104,24 @@ toiletApi.delete('/:id', async c => {
 })
 
 export default toiletApi
+
+toiletApi.get('/:id', async c => {
+  const logger = c.get('logger')
+  const toiletId = c.req.param('id')
+
+  try {
+    const [toilet] = await db
+      .select()
+      .from(toilets)
+      .where(eq(toilets.id, Number(toiletId)))
+
+    if (!toilet) {
+      return c.json({ error: 'Toilet not found' }, 404)
+    }
+
+    return c.json({ toilet }, 200)
+  } catch (error) {
+    logger.error(`Error fetching toilet ${toiletId}`, error)
+    return c.json({ error: 'Internal server error' }, 500)
+  }
+})

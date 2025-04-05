@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/features/app/bloc/app_bloc.dart';
-import 'package:peepal/features/favourites/view/favourites_page.dart';
+import 'package:peepal/features/favourites/favourites_page.dart';
 import 'package:peepal/features/nearby_toilets/nearby_toilets_page.dart';
 import 'package:peepal/features/profile_page/profile_page.dart';
 import 'package:peepal/features/toilet_map/toilet_map_page.dart';

@@ -12,7 +12,9 @@
     "migrate": "drizzle-kit migrate",
     "studio": "drizzle-kit studio",
     "test": "NODE_ENV=test vitest",
-    "test:watch": "NODE_ENV=test vitest watch"
+    "test:watch": "NODE_ENV=test vitest watch",
+    "generate:toilets": "ts-node scripts/generate-toilet-data.ts",
+    "import:toilets": "ts-node scripts/import-toilet-data.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,9 +22,14 @@
   "description": "",
   "dependencies": {
     "@hono/node-server": "^1.14.0",
+    "@types/axios": "^0.9.36",
     "@types/bcrypt": "^5.0.2",
+    "@types/dotenv": "^6.1.1",
     "@types/jsonwebtoken": "^9.0.9",
+    "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7",
     "drizzle-orm": "^0.41.0",
     "hono": "^4.7.5",
     "jsonwebtoken": "^9.0.2",

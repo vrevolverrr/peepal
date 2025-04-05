@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/features/favourites/repository/favourites_repository_impl.dart'; // Import the concrete implementation
+import 'package:peepal/features/favourites/repository/favourites_repository.dart';
 import 'package:peepal/shared/toilet/model/toilet.dart';
 import 'package:peepal/features/favourites/widget/toilet_card.dart';
 
@@ -11,7 +11,7 @@ class FavouritesPage extends StatefulWidget {
 }
 
 class _FavouritesState extends State<FavouritesPage> {
-  final FavouritesRepository _repository = MockFavouritesRepository(); // Use the concrete implementation
+  final FavouritesRespository _repository = MockFavouritesRepository(); // Use the concrete implementation
   late Future<List<PPToilet>> _favouriteToilets;
 
   @override

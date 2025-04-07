@@ -3,35 +3,40 @@ import { db } from "../../app"
 import { toilets } from "../../db/schema"
 import { eq } from "drizzle-orm"
 
-export const toiletApi = new Hono()
+const toiletApi = new Hono()
 
-//api/toilets/ CREATING TOILET
+interface CreateToiletBody {
+  name: string
+  address: string
+  location: {
+    x: number
+    y: number
+  }
+  handicapAvail?: boolean
+  bidetAvail?: boolean
+  showerAvail?: boolean
+  sanitiserAvail?: boolean
+  crowdLevel?: number
+}
+
+// POST /api/toilets/create - Create a new toilet
 toiletApi.post('/create', async (c) => {
   const logger = c.get('logger')
-  const body = await c.req.json()
-
-  // Input validation
-  if (!body.name || !body.address || !body.location || body.toiletAvail === undefined) {
-    return c.json({ error: 'Missing required fields: name, address, location, or toiletAvail' }, 400) // Return 400 if any required field is missing
-  }
-
   try {
-    const [newToilet] = await db.insert(toilets).values ({
+    const body = await c.req.json<CreateToiletBody>()
+
+    const [newToilet] = await db.insert(toilets).values({
           name: body.name,
           address: body.address,
           location: {
             x: body.location.x,
             y: body.location.y
           },
-          toiletAvail: body.toiletAvail,
           handicapAvail: body.handicapAvail,
           bidetAvail: body.bidetAvail,
           showerAvail: body.showerAvail,
           sanitiserAvail: body.sanitiserAvail,
           crowdLevel: body.crowdLevel,
-          rating: body.rating,
-          imageUrl: body.imageUrl,
-          reportCount: body.reportCount
     }).returning()
   
     return c.json({ toilet: newToilet }, 200)
@@ -56,7 +61,7 @@ toiletApi.put('/:id', async (c) => {
 
   try {
     // First check if toilet exists
-    const [existingToilet] = await db
+    const [ existingToilet ] = await db
       .select()
       .from(toilets)
       .where(eq(toilets.id, Number(toiletId)));
@@ -106,8 +111,6 @@ toiletApi.delete('/:id', async c => {
   }
 })
 
-export default toiletApi
-
 toiletApi.get('/:id', async c => {
   const logger = c.get('logger')
   const toiletId = c.req.param('id')
@@ -128,3 +131,5 @@ toiletApi.get('/:id', async c => {
     return c.json({ error: 'Internal server error' }, 500)
   }
 })
+
+export default toiletApi

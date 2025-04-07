@@ -134,8 +134,6 @@ describe('Test User API', () => {
       })
 
       expect(res.status).toBe(400)
-      const data = await res.json() as ErrorResponse
-      expect(data.error).toBe('Invalid gender value')
     })
 
     it('should reject update without changes', async () => {

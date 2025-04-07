@@ -2,36 +2,37 @@ import { Hono } from 'hono'
 import { db } from '../../app'
 import { favorites } from '../../db/schema'
 import { eq, and, desc } from 'drizzle-orm'
-import { logger } from '../../middleware/logger'
+import { validator } from '../../lib/validator'
+import { addFavoriteSchema, deleteFavoriteSchema } from '../../validators/api/favorites'
 
 const favoritesApi = new Hono()
 
-// Export the router
-export default favoritesApi
-
-// POST /api/favorites - Add a toilet to favorites
-favoritesApi.post('/', async (c) => {
-  // Verify auth token
-  const user = c.get('user')
-  if (!user) {
-    return c.json({ error: 'Unauthorized' }, 401)
-  }
+// Route-wide error handler
+favoritesApi.onError((err, c) => {
   const logger = c.get('logger')
-  const body = await c.req.json()
+  logger.error('Error in favorites API', err)
 
-  const { toiletId } = body
-  if (!toiletId) {
-    return c.json({ error: 'Invalid input' }, 400)
-  }
+  return c.json({ error: err.message }, 500)
+})
 
-  try {
-    // Check if favorite already exists
-    const [existing] = await db
+// GET /api/favorites - Health Check
+favoritesApi.get('/', async (c) => {
+  return c.json({ message: 'Favourites Endpoint Health Check'}, 200)
+})
+
+// POST /api/favorites/add - Add a toilet to favorites
+favoritesApi.post('/add', validator('json', addFavoriteSchema), async (c) => {
+  const logger = c.get('logger')
+  const userId = c.get('user').id
+  const { toiletId } = c.req.valid('json')
+
+    // Check if the toilet is already in favorites
+    const [ existing ] = await db
       .select()
       .from(favorites)
       .where(
         and(
-          eq(favorites.userId, user.id),
+          eq(favorites.userId, userId),
           eq(favorites.toiletId, toiletId)
         )
       )
@@ -44,92 +45,60 @@ favoritesApi.post('/', async (c) => {
     const [favorite] = await db
       .insert(favorites)
       .values({
-        userId: user.id,
+        userId,
         toiletId,
       })
       .returning()
 
-    logger.info(`User ${user.id} added toilet ${toiletId} to favorites`)
+    logger.info(`User ${userId} added toilet ${toiletId} to favorites`)
     return c.json({ favorite }, 201)
-  } catch (err) {
-    logger.error('Error adding toilet to favorites', err)
-    return c.json({ error: 'Failed to add toilet to favorites' }, 500)
-  }
 })
 
-// GET /api/favorites/user/:user_id - Fetch all toilets saved by a user
-favoritesApi.get('/user/:user_id', async (c) => {
-  // Verify auth token
-  const user = c.get('user')
-  if (!user) {
-    return c.json({ error: 'Unauthorized' }, 401)
-  }
-  const userId = c.req.param('user_id')
+// GET /api/favorites/me - Fetch all toilets saved by a user
+favoritesApi.get('/me', async (c) => {
   const logger = c.get('logger')
+  const userId = c.get('user').id
 
-  try {
-    // Only allow users to view their own favorites
-    if (userId !== user.id) {
-      return c.json({ error: 'Not authorized' }, 403)
-    }
+  // Fetch favorites and map the results
+  const dbFavorites = await db
+    .select()
+    .from(favorites)
+    .where(eq(favorites.userId, userId))
+    .orderBy(desc(favorites.createdAt))
 
-    // Fetch favorites and map the results
-    const dbFavorites = await db
-      .select()
-      .from(favorites)
-      .where(eq(favorites.userId, user.id))
-      .orderBy(desc(favorites.createdAt))
+  const favoriteEntries = dbFavorites.map(fav => ({
+    id: fav.id,
+    userId: fav.userId,
+    toiletId: fav.toiletId,
+    createdAt: fav.createdAt.toISOString()
+  }))
 
-    const favoriteEntries = dbFavorites.map(fav => ({
-      id: fav.id,
-      userId: fav.userId,
-      toiletId: fav.toiletId,
-      createdAt: fav.createdAt?.toISOString() || null
-    }))
-
-    logger.info(`User ${user.id} fetched their favorites`)
-    return c.json({ favorites: favoriteEntries }, 200)
-  } catch (err) {
-    logger.error('Error fetching favorites', err)
-    return c.json({ error: 'Failed to fetch favorites' }, 500)
-  }
+  logger.info(`User ${userId} fetched their favorites`)
+  return c.json({ favorites: favoriteEntries }, 200)
 })
 
-// DELETE /api/favorites/:id - Remove a favorite
-favoritesApi.delete('/:id', async (c) => {
-  // Verify auth token
-  const user = c.get('user')
-  if (!user) {
-    return c.json({ error: 'Unauthorized' }, 401)
-  }
-  const favoriteId = Number(c.req.param('id'))
-  if (isNaN(favoriteId)) {
-    return c.json({ error: 'Invalid favorite ID' }, 400)
-  }
+// DELETE /api/favorites/remove - Remove a favorite
+favoritesApi.delete('/remove', validator('json', deleteFavoriteSchema), async (c) => {
   const logger = c.get('logger')
+  const userId = c.get('user').id
 
-  try {
-    // First check if the favorite exists
-    const [favorite] = await db
-      .select()
-      .from(favorites)
-      .where(eq(favorites.id, favoriteId))
+  const { toiletId } = c.req.valid('json')
 
-    if (!favorite) {
-      return c.json({ error: 'Favorite not found' }, 404)
-    }
+  // Check if the favorite exists
+  const [favorite] = await db
+    .select()
+    .from(favorites)
+    .where(and(eq(favorites.userId, userId), eq(favorites.toiletId, toiletId)))
 
-    // Check if the favorite belongs to the user
-    if (favorite.userId !== user.id) {
-      return c.json({ error: 'Not authorized' }, 403)
-    }
-
-    // Delete the favorite
-    await db.delete(favorites).where(eq(favorites.id, favoriteId))
-    logger.info(`User ${user.id} removed favorite ${favoriteId}`)
-    return c.json({ message: 'Favorite removed successfully' }, 200)
-  } catch (err) {
-    logger.error('Error removing favorite', err)
-    return c.json({ error: 'Failed to remove favorite' }, 500)
+  if (!favorite) {
+    return c.json({ error: 'Favorite not found' }, 404)
   }
+
+  // Delete the favorite
+  await db.delete(favorites).where(eq(favorites.id, favorite.id))
+  logger.info(`User ${userId} removed favorite ${toiletId}`)
+  
+  return c.json({ message: 'Favorite removed successfully' }, 200)
 })
+
+export default favoritesApi

@@ -37,3 +37,15 @@ app.route('/api/users', userApi);
 app.route('/api/toilet', toiletApi);
 app.route('/api/reviews', reviewApi);
 app.route('/api/favorites', favoritesApi);
+
+/// Global handlers
+app.onError((err, c) => {
+  console.error(err)
+  return c.json({ error: err.message }, 500)
+})
+
+app.notFound((c) => {
+  return c.json({ error: 'Not Found' }, 404)
+})
+
+export default app

@@ -42,7 +42,7 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
 
   logger.info(`Toilet ${newToilet.id} created`)
 
-  return c.json({ toilet: newToilet }, 200)
+  return c.json({ toilet: newToilet }, 201)
 })
 
 // PATCH /api/toilets/:id - Update an existing toilet

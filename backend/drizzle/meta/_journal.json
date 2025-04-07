@@ -29,6 +29,20 @@
       "when": 1744007463533,
       "tag": "0003_lucky_warpath",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1744014082139,
+      "tag": "0004_bored_black_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1744015853982,
+      "tag": "0005_careless_havok",
+      "breakpoints": true
     }
   ]
 }

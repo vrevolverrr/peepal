@@ -90,7 +90,7 @@ describe('Test Toilet API', () => {
         body: JSON.stringify(toiletData)
       })
 
-      expect(res.status).toBe(200)
+      expect(res.status).toBe(201)
       const data = await res.json() as ToiletResponse
       expect(data.toilet).toBeDefined()
       expect(data.toilet.name).toBe(toiletData.name)

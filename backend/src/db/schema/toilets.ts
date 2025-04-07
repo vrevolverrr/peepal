@@ -13,5 +13,6 @@ export const toilets = pgTable('toilets', {
   rating: decimal('rating', { precision: 3, scale: 2 }).default('0.00'),
   reportCount: integer('report_count').default(0)
 },  (t) => [
-  index('idx_spatial_toilets_location').using('gist', t.location),
+  index('idx_toilets_id').on(t.id),
+  index('idx_toilets_spatial_location').using('gist', t.location)
 ]);

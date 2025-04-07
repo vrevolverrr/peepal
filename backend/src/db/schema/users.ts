@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, uuid, pgEnum } from 'drizzle-orm/pg-core'
+import { pgTable, index, text, timestamp, uuid, pgEnum } from 'drizzle-orm/pg-core'
 
 export const genderEnum = pgEnum('gender', ['male', 'female', 'others'])
 
@@ -9,4 +9,8 @@ export const users = pgTable('users', {
   passwordHash: text('password_hash').notNull(),
   gender: genderEnum('gender'),
   createdAt: timestamp('created_at').defaultNow()
-});
+}, (t) => [
+  index('idx_users_id').on(t.id),
+  index('idx_users_username').on(t.username),
+  index('idx_users_email').on(t.email)
+]);

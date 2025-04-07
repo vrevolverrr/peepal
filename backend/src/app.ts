@@ -34,7 +34,7 @@ app.get('/api', async (c) => {
 })
 /// API Routes
 app.route('/api/users', userApi);
-app.route('/api/toilet', toiletApi);
+app.route('/api/toilets', toiletApi);
 app.route('/api/reviews', reviewApi);
 app.route('/api/favorites', favoritesApi);
 

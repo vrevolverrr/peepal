@@ -8533,23 +8533,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJsxF-IrZq2jERHzhdTyum-G8",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 5,
-    "latlong": {
-      "lat": 1.4822809,
-      "lng": 103.8916845
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Tingkat 1, Lot 10 Inkubator PIJ, Taman Bukit Dahlia, 81700 Pasir Gudang, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJQ6As6uUV2jER9C83LI0WFpM",
     "status": "OPERATIONAL",
     "name": "Public Toilet",
@@ -8561,23 +8544,6 @@
     "photoReference": "AeeoHcKAPTKdS2obM6hr6DMbDbk94n4722SQQ2aICLlVPZCtqQ0qB042Ew7T6-DNORxc8OgkPCvZS32tl3AHnRlF_cXjpTzO91WYj3wZVKfkCk22VRi5NXju7Pi6mmoxUAoe55QnEtFk3KCM7MufJl0_L36nuTbqCHMBRTlWq5DlErIRwsZCemqk-mwInV82_ONGRuXASlHoGVi9sZxGmhrEsa5lBZvwQRhep1KPdX1uvTYhr27DFUN5tz4paetMNprCLYrexQDCNY1vF1CYBRjNCbdeGVEbmgLdtPOMeWLoq-loTsvvWWI",
     "country": "Singapore",
     "address": "38 Sumang Walk, Singapore 821313",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJq6pq7XJr2jERu7bncNcIjrE",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 4,
-    "latlong": {
-      "lat": 1.506176,
-      "lng": 103.84273
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Petronas, Kawasan Perindustrian Kota Puteri, 81750 Masai, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -8652,108 +8618,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJlbdc-Wtt2jERmHZ9QcYZUxk",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 1,
-    "latlong": {
-      "lat": 1.5005589,
-      "lng": 103.7467046
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Caltex, Lot PTD 18540, Jalan Dewata, Larkin Jaya, 80350 Johor Bahru, Johor, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJKaxBFzZt2jEROF5Q7JUB-UI",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4829062,
-      "lng": 103.7528874
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "1b, Jalan Tun Abdul Razak (Susur 4), Ulu Air Molek, 80000 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJiSwxTVAV2jERzEMg3WSITDQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.46924,
-      "lng": 103.90486
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Shell, Lot PTD 69991, Jalan Bandar, 81700 Pasir Gudang, Johor, Kawasan Perindustrian Pasir Gudang, 81700 Pasir Gudang, Johor, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJ-635aBpt2jERQVtCZC1o9lE",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.50237,
-      "lng": 103.76493
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "109, Jalan Tebrau, Kampung Setanggi, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJyQdYlxpt2jERRNPVDmLy1xA",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.5036795,
-      "lng": 103.764704
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "115, Jalan Tebrau, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcIdQfwjxMlngmst4JeivBKbvhMF0Y4tm9vF9kZAkmecyjDLWKZP0p3JnATM8sZxopX-1bQHN66lSXqA3qVymbvvLeoYMK8dqxXrOPQjg4pSdtz2iEiuBms0drvVdH4zfq8RupEDZnIatk3GzeywuP-IYnsqX8TExVbHy0VZqhNGGid2V3pmwQcQY7P4BJuPZeY9XNOAlHEvNOsidfCi9ZM-GbY8pnFelPfnITA7-X-VuKYILeI3EVcoWSpUl1jzuasSoZZo1aZqdxvcNcEvOENScBK0D_-Mj_O414eXbv2Yev8Tox0",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJi6cYNJ0R2jERmgoENhwE_DY",
     "status": "OPERATIONAL",
     "name": "Public Toilet 1",
@@ -8782,40 +8646,6 @@
     "photoReference": "AeeoHcK0VNOvqhmrCesIuwfr7Stur70QdGGQfwMRU0obRmcE4TtAFzTATTStkwflTFHRReIfM7azwpFABAAsiB2XKAIUn2h6tcVd6LnrtlCT1TS6ofVoYyGDyR9dFA2vMWqRf23Y3aiX06A5wyPysLRlUdvxyOTbljHsLqMrohLSqayCPBKZ1TZ2itLiubNZ9mzKIf5vIMDUuOWltGiyWubPu77qUoNRa7RA5Fm81GT8MZbWXNpGjdbWh8cvlII-KPHMG6iMC1-XZWmjqc8ZaOZRZrnKPik9xBMyYJc2oE50t1RCZ3kwUFM",
     "country": "Singapore",
     "address": "1230 Upper Thomson Rd, Singapore 787129",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJzeYQtmJr2jERwBcP7TkulZo",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.5045846,
-      "lng": 103.8222164
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "49A, Jalan Permas 4, Bandar Baru Permas Jaya, 81750 Masai, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJVVWFWmYV2jERWkoq-kD-pak",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4545728,
-      "lng": 103.9051611
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Esso, Plo375, Jalan Pasir Gudang, Kawasan Perindustrian Pasir Gudang, 81700 Pasir Gudang, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -8924,23 +8754,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJ06ahEZxs2jERXHPlGZ0NaZM",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.5007094,
-      "lng": 103.8160642
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Shell, Lot PTD 146999, Jalan Permas Utara, Permas Jaya, 81750 Masai, Johor, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJKaPrEgAT2jER0NMrkDNLpFU",
     "status": "OPERATIONAL",
     "name": "Toilets",
@@ -9037,23 +8850,6 @@
     "photoReference": "AeeoHcInuQZVY0_8unn1vUGIMRoncMAe9uwxXkOYuPxVGzieMG0Xbkze6nOtMil0dNwKlpVz1rKt0dITWaJkOW_IoIK39QNuru98MlxDx_MiLbK5Q7zv-a5MNi-gzZOIqeibH0fROrI0e5UKLjpTDpozDaAyQ0SQTbrjyQCzCgiIJlRrqpBJnrMFU6RD_IsbpEOqr2e0ETLDy8sb-XwjcYyCT8FfcGDZMGKQ3y9TxdDD89laPyvOowc4_pDEC23UJad5rFcNqyHGDh9REKIzjASTuv0XRMj8y_xZ5ftwsh4LpO5nkJQ3SaSrFcETsD0z2TFVd7QCOUsmuB52mc8Nwnop2wOQHGNJTM_4i9dlujOHrcj-IvbrnnqNZhfQ5Cnc5ExrdKczKk6Ph4bMrP8ZAihoGD9jx5yYIgXX5fF3xYKKPWXSlMlGzIOYl1-sh9R2GOcWLDVtxrgTtDfPMuWjoU7gFy-L7LT61zkM6TUrFsvzeQriGUEouJN4zbyORWMk-TD6oymP2xHtyJCohk6SYlNjxZPCk6tAxCiwh62me4XJ_bqB7GJAdskcycHNmHZan0uLUk99jw",
     "country": "Singapore",
     "address": "601 Island Club Rd, Singapore 578775",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJA-aQ9scS2jERLlfV4Z61oxo",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4669965,
-      "lng": 103.7522142
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "19, Jalan Yahya Awal, Bandar Johor Bahru, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -11219,23 +11015,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJA6nqlnUL2jERoMlaGPqtGTY",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4283506,
-      "lng": 103.6295777
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "CJHH+6M, 79100 Iskandar Puteri, Johor, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJwd1kFJMb2jERiA7bPKv2-W4",
     "status": "OPERATIONAL",
     "name": "Public Toilet",
@@ -11604,23 +11383,6 @@
     "photoReference": "AeeoHcIwfa5IXM3GzJPbZ2jP8gAMIjRoak-Xjix25OwOL8ipUpNSPAjg0H8YELqY-qeqBB5Rkoj15WW5nb0ri8n9iPnb5ZKhR9noi1NJZjwH3fFHqJtDKQcsiWhN2h1LSQeUsLtGQfHapB0KQGtvx94S4An7QYSpQBDPCVruHa4qi2VEPcC6pQmr3otUpc_PFP95DsRRJoK8idOP16nreuy70gjOowFlYhJQPIG86mWWSLqBg1uiFHyi8AFNi5Q7oG8G--E_7TVyxPPNGlGmhg7otqa5X2VAxVNoK62z5bsrutoKy-fhElY",
     "country": "Singapore",
     "address": "1 Bukit Timah Railway Station, Singapore 599938",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJXz-WLnIL2jERnscgMt6H-58",
-    "status": "OPERATIONAL",
-    "name": "Toilet Brick Cafe",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4256289,
-      "lng": 103.6310218
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "1, Jalan Medini Utara 3, Bandar, 79250 Iskandar Puteri, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -15061,23 +14823,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJCzvJ394_2jERsIL0IjOd3O8",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4540509,
-      "lng": 103.9177165
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Lot 305, Jalan Gangsa, Taman Air Biru, 81700 Pasir Gudang, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJMR_6520X2jERn1JfF8AxwJw",
     "status": "OPERATIONAL",
     "name": "Public Toilet & Water cooler",
@@ -15140,23 +14885,6 @@
     "photoReference": "AeeoHcKzY1IDjopP0dMY8ccHdmsrQ-A8NttPh87fh7EL1W8TseAAQH8cRIq8wM6XH1OV5PaeCHvuCWGZxHrkODvogyomd3lCdkInqIg_9BrNWsmQRTrRdFqUGgC1qmup8xYufYGnGUHUR-sg6fSkzMKS5Wem5oaKbrTfJPHP0yljoSUubYWjVqQWsKDRmKhCvC_xbkCC71PUuv9y_sePOwij3KuUqVDMHYvujgASsqZnMasNjHxcbyMuAXzvkEY4H9oUXhn3vkSZBYfwGgqwtL3C_N9UKx91nVBZoJrBjCdcif7dS0aaCbk",
     "country": "Singapore",
     "address": "3A River Valley Rd, Singapore 179020",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcJ60wSSh69ledWyYksYPo-5crYik0yJsZ3ni1AlC3Giz6bLbmh6VQs99YkfB3S4fy-4sDzcZVdzZBRRCWMKTzBqMu2lHn_oK3--HtJFxDa_6V7ggdg7XRvefLf83DZ-8YGvrxYcpOzX3nBdz54m7IGKMdXGe0wWELIHYWtzQpuTuZSQIhtEH4yU6ZAwkd97UjV5NagJB6qkrHeI5Ndc4-FVPd9vvdpnN7TG1aUBeC4B7HWZgn5dVX_sU_knm4AyJL76KINpa8clkhAHjPpTSflQbl_Tudl6yuoGNPfdX7FnKerZmXQ",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -15775,23 +15503,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcIhTNZLESdYRcV220o_tTJt5Klc8aGk6CFnER6iN8czqgTSGlq9MUfuXac5RpejZP4YNdMaGBLyyQAG5TrMm4xDkCaCKE4qIC_JaEWjeRwG_WH6IuS23XBIyxIgNKiFKv_fgSAqvbaa5oLhXjYYBIUqdc4LXmEa3a8930FTNHiMMeeRs-fCd1rK6DU-XA85F56fGEwMA3VodvDyxC944s9ma2qFtP1vBjnEEHnkiuo-g2tnBR38ZIg8wj90EJO6jiXjDDt86qD--JFhs_YUru_Y5bdiiuOjgTqKNZ33VhjFH63_RkQ",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJi6cYNJ0R2jERmgoENhwE_DY",
     "status": "OPERATIONAL",
     "name": "Public Toilet 1",
@@ -16166,40 +15877,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJQU_fYYdr2jERjknH_2NhD18",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.5206218,
-      "lng": 103.8219183
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "1, Jalan Rotan Bakau, Taman Ria, 81750 Masai, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcLIybIxE8ZDLQFZpmhdMvDmFnvLU6poc5M6PSQn9WULTXdQcjclanf0QbYy_X-9NuY6UVgX7S7xnauOqtRgYyq0fipuS8wW0KupHF2yBKKlu1uUT84D4UjkktKlaLZXEMeMroxwxQaTWVswDaIFlhif4u50e2G0DXRD2cC-xLOmlGvyGy18lBvBMu9RFgQguVlDvx0l2qM7scn600oI9f6Wfv-d3ZnmSBcz5uGA5vx16APpWnnXEjXy1_rYeip37E7JsthYVJ8aXOY8iscn-5cSs3V6s-pJET6NqL29Ni_qvwkvn04",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJi6cYNJ0R2jERmgoENhwE_DY",
     "status": "OPERATIONAL",
     "name": "Public Toilet 1",
@@ -16228,23 +15905,6 @@
     "photoReference": "AeeoHcJw92XatCwJ_7NkbubmWlM0fwtWht7pUPFV4JjZ8nLFQuIax8vsxJgQmiv949H2Zkijz7fFLbQN3SZA-XPydRl6ZTGiAFH7vhG5ZppKrZPJY8a5r9xCYPGVQHCzqirAus6rhZqdr5ETlQRENRlp1QU4U1Z4zRlr0T2zMfGzr5HDzUiMQo3GRoc54j9ion2CXuUbDFFm3YKpMy_54E4ttBvAS6KOvawbnNIrnBQgJ_bWskgCAHndhuWlW22G7APikGBRxwkDjvKUE4IKw0t9yHy5NTkzVrlavxlqNvtbSoOCU9853xXnrNTgnXMxZ0QN624mjGihGTL3LuNmyKrS7JJZqEjEHAiK1voMsqQ1NnaKIZe5qK7x18o5Zncv7et-ozkGVQnSxU0PzUECju2eQ3Zi4IDl5jVxb9imD_ZBu9uMoZGlRY9RVqyAwViQ5fMf5Zlz8K6Y1ASHVSqLk9ihe2KI_uQWwJTy4sCVS3COOvIEaeTnbo4ZJya92OfO0pFckoHEeJGDfIML5djSqchp2LhOtf18_2ourfZt8IK0Ec28G3gQg4oXl0BmEfSYUr1bLgBKamOg",
     "country": "Singapore",
     "address": "1230 Upper Thomson Rd, Singapore 787129",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJq6paTrpy2jERBtvgzarJqU4",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4888831,
-      "lng": 103.7135769
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "81200, 1, Bandar Baru Uda, 81200 Johor Bahru, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -16455,23 +16115,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJU8u6tQht2jER0uZgkxEPxwU",
-    "status": "OPERATIONAL",
-    "name": "Toilet @ Petron Century Garden",
-    "rating": 5,
-    "latlong": {
-      "lat": 1.4803651,
-      "lng": 103.763913
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "79, Jalan Tebrau, Taman Abad, 80300 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJA8WWhfAV2jERbL1UK1kg4rQ",
     "status": "OPERATIONAL",
     "name": "Jalan Kayu Guardhouse Toilet",
@@ -16500,23 +16143,6 @@
     "photoReference": "AeeoHcLHUTXBMprN7KvLRqFQudOV9pjCrx0IqCVYEn-haTSxJ-jsB21pRgU4hYLE00YNlV0fQIEb4xjj3fuxSWPHQWzoHvdf9jXOOo9O5EAZZzMoH3HIPOgWpbeC6fABJEpeDzd_Y6CIDU5w-uhflWzbpbgG3-8N-KccFL9-PsFjg4-c8WvaQzFcaNEDbTDcVbv-BSTqCM5T_EakcaPFDb-TlOi3hJR-4ienxXDPnbSiQhgK4IPO3FC47b6t4QgjgQC8ZaGj2HfnZ-eQA1evc4PxOYYfRvVr34mGoRBL1Bg3DyfUag76ZsM",
     "country": "Singapore",
     "address": "1 Maju Ave, Singapore 556679",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJcQaHZ9YS2jERNZbJfZao1EI",
-    "status": "OPERATIONAL",
-    "name": "Serene Community Toilet",
-    "rating": 5,
-    "latlong": {
-      "lat": 1.4712795,
-      "lng": 103.7729265
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "8, Lorong Satu Jalan Bersatu, Taman Pelangi, 80400 Johor Bahru, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -16829,23 +16455,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJq6q-4LJt2jERLWzMA3TsEE8",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.5262812,
-      "lng": 103.7737602
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "117a, Jalan Surau, Kampung Melayu Pandan, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJ46I4-fsR2jERBQC797UzjlQ",
     "status": "OPERATIONAL",
     "name": "Bukit Batok Nature Park Toilet & water",
@@ -16874,23 +16483,6 @@
     "photoReference": "AeeoHcKo7Uyw6pJ64fKbtyEOilE7mWPhmFv6dNXyuwXCQTzIggMxu78ZefWsYgDYpVe5b-j6GrNoylpDW1dt0ndbBvRMVTOo9nyHTMrl4bUpUb1BJ77S3E-7ztmfHgynQ6ipJKPMbmDjq6q4yAdhwfy9hVLkl81NO9p7-10SBbDXbnY61DF8IESr6dx_3kfR_Rhr98la37qO6vgMezPdXSjpR_xdnHV-YdaM4LfMMVyecaw_RcOXNs_D_pMKh1TwheYYQ7-EPFos6IBG6RqdOvUroC6shuU0Rv6B7mmtjJEo1EhQq2czyI4BYNRd7V6EG6_TqGLwf0Ed-0SudaxsCrJGS3vprGJp3GUue9UysWlr4JqqcYf5-u4t_aiM293ldxGWnWzkQ4HV49dePAxMPtAanynVc95MdYYhm15221AepoBaIBzLC0METIQfDR3vKS-CGJCVudmORjCC7C97kMToXH2ynxJ9rn-ioHhSw6nyIVlAynhuP7R4xfxoPcpYf-jnDBJKcSl531MxvKPgmPQoilRTDY9tOz5Et_lYGCLXz4Lc9J632WfQUJyl6-TFDimNdDZZbJit",
     "country": "Singapore",
     "address": "700 W Camp Rd, JTC Aviation One, Singapore 797649",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJFYs8JkRs2jERa6bd_Yddc8w",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.5285628,
-      "lng": 103.7904575
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "4, Persiaran Molek Utama, Taman Molek, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -17356,40 +16948,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJdYuVePty2jERgnnp4s0luxU",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 5,
-    "latlong": {
-      "lat": 1.508188,
-      "lng": 103.6887915
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "LOT 58267, 61/2 MLS, Lbh Skudai, Taman Tampoi Indah, 81200 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcIbOzeuxMq6G9VSz035EK08IRjLgxXGf1L_f9z7aqvh2HvzUKcaywwj1vi_SCsXL8lKkyfTMrhtw9fJ7m8453lrOEXAE6okfpPJ6rpmAeogXl0Cr1OO4D4KerFZdMApCFtBfaa65Aw5UN2eGBMobfTd3-Gxr6fNqcCgV-3bFeqy7b-i1TC2nVtXOEqssz8vluJCvHznJUBdWny2l_KdueEGFBKqtIxTN4xxXfoG-OgCHHXffpd9ZYKOf0QDFWYZohsY9jmbct8IHIs5nVjvuaEI99_XkTlTU2q8KTfYSVJqaRr0Q9s",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJi6cYNJ0R2jERmgoENhwE_DY",
     "status": "OPERATIONAL",
     "name": "Public Toilet 1",
@@ -17418,23 +16976,6 @@
     "photoReference": "AeeoHcIvJybgSzP8qKZZw3YhjVsOs55_YkEBO59XwSgHk_cN6qTCAGiOHUgSDHDBNrX7-SWbzH2E_wd1EJ1ySyrVa3hxjpyKnacFm6006PgH05D-t3sjCW2bCmuGPY3qEoAxqIxHfZ9Yi-4lB_iDLjbzLGaNPwUkg-g0IuOpd8PC7PSNO0r33tDH2AOLOgBqhFSgNwZ75Hkg3Ann6N40OJCNOOMm3C2TGxgwRgWXOxvDVpFjnoIo8VcCzvrv1Zwxl4Oiw3c4uXTSAEZ_cxx3kMBig-64EbuV5fd2CvEPbYRuZTze4BO5_VdtiQf68i0ADTwM8w39bbfeTKNT6_48ZAKmZDRix8Kc-YhNRU1jI2oV3zeyBPd9xyUADyio7egj0Qxj5QmYW2dyte6Cu2i44RPODKNjO_W6olNsj2S9oEBFX7QW0vlfA7zS14CWHBvaex91ycH2W_1pyE6pDPJNC57bnthJsyqiCQ9fnqKkVfGxWTHYZ_ZMTKnpbfcXMg-IO8nzAmQ157vgsu45_4Kpr7zrPz4YGaKMuYVWSkM3BEE1qheZaSyZa-VpVwj7Tjx-OIm3tPeqIiij",
     "country": "Singapore",
     "address": "1230 Upper Thomson Rd, Singapore 787129",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJqaX93ONy2jERzZxfDzVhn80",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.5017044,
-      "lng": 103.6866844
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "60266, Jalan Sri Perkasa Utama, Taman Tampoi Utama, 81200 Johor Bahru, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -17696,23 +17237,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJv8qQ6Xlr2jERh2OylZd5T-8",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 5,
-    "latlong": {
-      "lat": 1.5106921,
-      "lng": 103.8321631
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Caltex, Taman Perindustrian Sri Plentong, 81750 Masai, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJnWfjhxQV2jERO-rVfSagrJ4",
     "status": "OPERATIONAL",
     "name": "Toilet",
@@ -17747,57 +17271,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJZXkdHe5q2jER_ECNXakRKak",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.5040395,
-      "lng": 103.8845818
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "LOT PTD 127591, Jalan Tasek, Bandar Baru Seri Alam, 81750 Masai, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJP9PXUFIV2jER0jQyYdJ1jDE",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4739148,
-      "lng": 103.9055692
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "FWF4+39, Kawasan Perindustrian Pasir Gudang, 81700 Pasir Gudang, Johor, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJWeIJ-BBr2jERBj5K75ty9cg",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.5022751,
-      "lng": 103.8546699
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "12, Jalan Masai Lama, Bandar Seri Alam, 81750 Masai, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJz14zhn4V2jER1djIzQjGg_w",
     "status": "OPERATIONAL",
     "name": "PUBLIC TOILET",
@@ -17809,23 +17282,6 @@
     "photoReference": "AeeoHcKeHTj01gNN4HbnV-wTv6yZcVSKYpwSrBg07S8YE4-uccraRJMLmUa5L9SDwrKXSB1ko1RGo4egmc2L1WFrrryma1pF2sukxZ0iDbRRzQW6-ZEhWGi0CSULdR0BeUeoh5vGN1gr544DuE2P0itM57kiHzG9fJB_YUZTn4LKmOmHF4D-bngTVpmjotgauhQlWoaCWqCSMt-j-ID46UVhjR0GN48kHySF9kg_ovprBVlWH8ApF3uAI1QwMxTeT6FmGmRfnZvKAdyBE1NXuKWYNV96UCYrJIe7sPEZJU2KGZFBKqoFb1ppYqXuC5AnSCL_Kla0y74RGTqJdAwrIWdvalwA_DSCqYmsudCLP7zh8u3pmDzxQNQhzCtf-3Pc81IbBy8CZb0Sm09ysn65MGtiW0rNTe9vjHB4w84VOgJ28gzdpSJgaYtsj35JkkPVT_eeoGRv5n5u-aKABr-3WKcTlPKHlsYQoFi0bzW9g8_cW2Z-OyuD-U_u3AGiIgZSs4l17Wg3Yfo0xT5UrN0AZNqqPdTatvAbCsOK8HsaukMDKKiDr2dIgsz76jXrT-N1X480VySRWoix",
     "country": "Singapore",
     "address": "101 Seletar Club Rd, Singapore 798273",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJTy6jMHps2jER8z_iuIbeVd0",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.52151,
-      "lng": 103.81541
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "CIMB Retail Forex, Lot Ol-G01, Tesco Extra Plentong, Lot 34, Jalan Masai Baru, Batu 10, Plentong, 81750 Johor Bahru, Johor, 81750 Masai, Johor, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -18013,23 +17469,6 @@
     "photoReference": "AeeoHcJZqeGvNiO9Ym6n1heH1JU52qAdG0B-yqqSXnH5-b3RjQlIC2DTLFVCXgHn7pBwPqA5SpRACbem245iQZq1CIAx2Y-el8qCkRnH9IQP6YxYM0sURdwK3eKO1PgP_2-AwciNiR6aXYXSgI3K3YpeGLFtGJgIH1XMfFUDwnnLd3Gj1_2RzIheZPHpkblZgrkaK6B5kZG4yq2AJFC5HUeLLO6uh1jQBhqXrTtrjNLgg5tuVcVCUuQqx9riN_NrDs2iLcof1esEJMEQvo63A8T83pLdcP61I_V3UI4W7qCcputzR-c9pLzi5-hYUFxMp4TTgD6_suY9Jm9ZGadji5hUUyRKBGjV9mv_Z56E8wDdiv53kSUeRsbWmu-ubOueVvfVYHi0wdLxswRxP8nuMzZH7YSCegIw1nBzOR-wPZy-Fx_zOnwAI4_ifaLsEw642G0kg6-klD7gW-Ib_wFC8iuNJwl5O0S16Dz-nfqkA3gNGFxNr64QcsjzMU0T7_fEiirx4BYUO3ZDHidXbmzso2gigOnOzJahF_0ptOcMhv9zeGeFHVO446ASAxvzwPBsf-jAHI2K4baH",
     "country": "Singapore",
     "address": "9R6G+5R Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcImrRzTWUokAhZhTqEF85rZ1o4sIDsiDmSYsfgvYz-_RpQ1aWudVnYiOdFlhVSkvemWjjW8JsEIRr3U4RVh7iHISVRxrrhL_EWYvoqeSFqc0uoYTM_LBXhbMMs-QoSQeGLlhTQN4ldGmIhHV5tgbUCgzOP070pbi_9JBFa8Iz5a4B7g3MPVKPAWtaIhWHPuEDZBeQTQ-4dd8CoG6GG2M2181Pb2M-vcZCOYqHrHzXgV9L0VNvjWchoHh1lzpKr93HU3eRRWdT3OoO2WzzchJ1pzvyKUHQGI8SvRLI_wUEV49Pvfqdlo8TGceNPbzdmcxZzuxafHzO10zVD5wpH__hxZ3qM8R0u9tA5K7PxVMuzl6zUMYghNoUdDgtK3GXwd0ju5SsbhGhwLHwxHJsI2DU25mTaxFGp8sn87BslBXmVXf9u_5pxC6wUGJENSP4zRBeHd6MhQN-VMaBpbQcJx3AQ2VLEadS1QOhXC_BSFx4ROYY4IjTAEQu145tsGbW91eWj4U3nzd8biiG_DaA5UY-pmNidfb3ropHn29XeBL3h8MN2ST6OilQXdDdI3D_lIZrugnKPx",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -29443,23 +28882,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcITsVUZmVX1BtoIQoMh12OSM7BI0wzcgYj860BkV_Hp4k_p5K2KuWGi_uCvWz8JcZS4lT8Vq4SpI9Zy4l1xqlwB2XDR63kwNDWF5vvzdAb_W7dQz_sjDACw9ksE6zrWgQjdPdmw2AzJeQED7iE8kjWRgwdQA2XlvTWb1XKQLRtfBvfORHg90jX8KHU4cH3soWdKkuspoCoQOoO4UwlGZL7mwfR099erEb3h6tZjiFv6xj1zYQkzKnTkgbC4jw0fflkcjb_bbHrVHi_QguT3rcLi0CsLet3VEq3UPTUlrJmCwrxbRy4MaGWQbaP_3RtI6BsH2U7kNs-qeIX2h_F0VkH5Ff7G8-njzY0AxUAJ1rAUudMy7LRgw43TkcKFEMmkS84RZwP2vbQNOAyaMm0oLJH7Q7SoJY27Dpiiv-KVBSiNuCkUpjUaDSa3WyOe44jBIzS64t6uGzDGIFude6uFfNFmzxlJ5Iniq5A7vybFcNfwT98ASpEACxFAHeW9lHkUXZpOTBDLq5RUQLvTM7Db042nLdfvqth-nv5b0wbDVlvZBd9AqCbLWt7VkY_NDloZuswZB8e0",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJAewABQAb2jERaLxU2vdCwEI",
     "status": "OPERATIONAL",
     "name": "Public Toilet",
@@ -29794,23 +29216,6 @@
     "photoReference": "AeeoHcLcuor3qEm_gAJn0NAYcwTfpGmdh22Xwn27cik0n9RzczDOKmcDsmMNUKRcDdW-urMda1UXjD-zjtVyezrt_KHdQOPMLgCs7L-6_NZSlI6qiozAk8_hO1PnoYDvQXxKl3fYn3LcMQppQuahpAocNL0ZQqdWqEwIhvzq7huZkuEjXtf8rHfh-kik6BMqr-j1pAre1PJmt-h-DpQtjMTVamg_lyK4IDXymPepKJASCzqIHMtHaGBPTeXaWRPMEaTmzZoXJ6Ux5H99BrdiwRSAKkl70Ws6YAiiUSetHsDARr0Iq3wpMWcY4K4Pa166mxXLnbt0uM8RslGMhLWjOhAyhqjO6bz4LBTOo47vD5M1Kjvuf94lzWss2B2b3oul9iV8uLqH-imzHPTXtrOqApdZTtU_fhA30xfYTI4Z7K8Siofwjytdzw5F6OhBm0HeIZZoF5VhBk7cibtC3m3UVaGTcrUSMuw-rmgi_cI0GUUqehBrxg0jlwdSpbaInvsltrmXtw32wgwBbewpT0fwS5IxEyOMNVcC7r2T9cyr2q_OabK1d1s3xBYk8hCoYYIxDmw_B4XZ1UA4",
     "country": "Singapore",
     "address": "8RRP+X3 Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJ6_Hl8DET2jER1y5D_pxh2pE",
-    "status": "OPERATIONAL",
-    "name": "Toilet JBS level 2",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.462986,
-      "lng": 103.7646782
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "JB Sentral, Jalan Tun Abdul Razak, Bandar Johor Bahru, 80000 Johor Bahru, Johor, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -30803,23 +30208,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcKsslAP9vFXfKhwacq7qjG71CAPq3whV3JVJg-lJLvlktAdmdhi7jrRlLmXvdf9PPFucqKwjgqJt5Fo5-hcxAIa0ZkYEamCEWpW5RTIkO-3buZ9HNqirimeEk_QF9dGVX5aToBRHGAAUoV5tdfKVbI9D9amDvy9G_bijWti4TFWVfn2Z7ZNTia5ZPcjHmkC1ozq0__Cc9_qDkF7aR-v-uhcBMIXLwNr0F5j9dcGGIfVuuQ3nVhooBGDGu2HaWuiujPI3I2KhW9QFiSsNuX91QorPbKI5aZC9VWV0UA8Ekza2IsvtF1kZRgXA_bJUrCwdIs6ZXgFIn68TPUzyg_TCrAvRtfA03ytzAZuBSkA1t8BzMQX_3EP2gSxg2R3PNPK0xZFpACA2MDTZFhRAVcmZLuGfzFqOfljax94FNeX30Qp7Mw8eGi3uMbr8zXtsuHghauuFYNDdnHCEzQj12pTnflSInz1x4MLKuRknXUVzGA5ror2Jhc-ez8J49gAU_2Jiz846hw1vSxWPG0TjuX-e0sVGsZQfURH0Pl3JqV6Cbizm7mkk2Zvi5HLcwWfwkQdUR8rjZD5",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJAewABQAb2jERaLxU2vdCwEI",
     "status": "OPERATIONAL",
     "name": "Public Toilet",
@@ -31228,57 +30616,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJ3So0-dUJ2jERtecqWYJRQdc",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.376691,
-      "lng": 103.6006303
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "9JG2+M7, 81550 Gelang Patah, Johor, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJ97ZtdccS2jERqXV3hilvHlQ",
-    "status": "OPERATIONAL",
-    "name": "Toilet, Petron",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.4652005,
-      "lng": 103.75323
-    },
-    "photoReference": "AeeoHcI-7s2tazmyMN90zM80omW4GZWokTxp7XIdoxosGmOGT-RGOpokd5CyacbhxONDm8m2QQ9k10-9rudBtcoEJreblU9cEPLG65GU14Wayzs9ZKVuhw1jFKEGStjH-eofFN9M0OPp6OkcmUp37JAJFWJw-3lkzYRPZLiH_WRBL4qI_R8fnVWDJZlKFZcw4P84I7qdEzPLOMLJ57y5wPAEduG5H_69tJ6Q9F5tPXm4ZEvXglN_cwjvksxk5dJJxpPPMOhtpVhJwDMZhZoxJDis-Eof5ynBOssrCnLgWxOLIjOnxC-n_Y-k0xtpMdcIy649Kx8doHzJzsHXctkB3Ko1k3nJct_O6N-TKGtYZflDDM0trtr9hTKuiiy1gHBIg676z-NfNlLgIcg6jCMcf8uFS-mglmB0TR5MK1G39OsguKCVUTrHVbBWg6ccNsFEdOpcKr3vbwaz80o_XpesxCfhOpyRQn_ZBI1E3fSJOG7kyDGPyaigVan648iZ8ePZg9wKo-95HFqPdx1KrqUlVS4-4eOoO5pJK6FUmArwHNHyXRTRvf4v0hPwMpTaQ1WRDGbs_gpsQUJp",
-    "country": "Singapore",
-    "address": "Esso, 2-c, Jalan Yahya Awal, Gertak Merah, 80100 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJX1rKbmAN2jERLdD_m6Hra6U",
-    "status": "OPERATIONAL",
-    "name": "Public Toilet",
-    "rating": 5,
-    "latlong": {
-      "lat": 1.4638027,
-      "lng": 103.6456119
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "FJ7W+7H, 79100 Iskandar Puteri, Johor, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJ46I4-fsR2jERBQC797UzjlQ",
     "status": "OPERATIONAL",
     "name": "Bukit Batok Nature Park Toilet & water",
@@ -31307,23 +30644,6 @@
     "photoReference": "AeeoHcJdOV8V2do7oDKtJs7CLrY_AD8sd0QZ3W2z786Mxli1QLY0hcyW312hgLoXAXtdHPEqRopT-GdY800EmJ-yhBrqUxDZ4dtp_x3mqdMsRuOErrxhEuDGHZNd4kUiyZsB-z2b0dnVY2babnq0Rwza9rMzQBWsUqmLZ0rUFovWsehFx7_ClQOhseIa5b3nJQWa54yYFfCxgsT1Bi3F688HAUVyk5hICz1zGIM5c3M3KhT1XN53k4vNU2GVv9c2s0NgBUSwJbkr8ADZG4bWtnwJU93UonI8xlBPcDTWxQeY7z-IlFzdg3kkFhAsRF82perWtvT8mPRdDzU65omTBpzjqXOXk9Zg3IDF1OIJmcFApY-ZRfEg9zBa9ZkthnjAoMSCH90L3UH4S1phoTdUwF804OgW0t4ytJ4GbufN0O-1akbwOF14hTTG_Fm0XtAx2JuZefJGbb1KBfxlttDEzJBXesTJQjqbCgkW4fZ3CoUTrIiRQn3VPgK9kRYSmLa1cXbY6EQdD0K_8AyGu-SJ074O-nusIKT2ygIFIVzbBWIOqF2_Cz5bvFD9xyg3iOjf5O2lM3X_5k85FTA9DQ",
     "country": "Singapore",
     "address": "Woodlands Town Gdn, Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJU7VLOAgN2jERvXjHsQCKkOc",
-    "status": "OPERATIONAL",
-    "name": "Public Toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4658738,
-      "lng": 103.6426376
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Jalan Nusa Idaman Iskandar Puteri, 79100 Johor Bahru, Johor, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -31602,23 +30922,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJafxWNgAT2jERhBks_1Uds8k",
-    "status": "OPERATIONAL",
-    "name": "Zoo toilet",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.4579401,
-      "lng": 103.7530398
-    },
-    "photoReference": "AeeoHcJt-VZvpaez6EHwDL1OTMyfs58zJSWsnE7-1lXMWLnRvK5huZJ1Hjs4DUD36EcYx-zUh_10NWT5D1pK75rglfDBshTJ6uwkeCKGYpZhNB9gkp9I5FjARnEum0DcLb_bWjCcgNAf4fiSeYrOFpvPlrIprcLE9SKLauLLHld9x3aSAU-a4NsHo030hpoz1xelh5d5IpnYMVYtTI2FzKxJN1-Kdi2GMW31HhLem4z3PzNhmHfCrkLIegDBLhZSSa5Jl4yP-ucv62OjupYIanOUbNiF9VpnBGoib4AUr0OEjSsHNPz6IwVL62rTwwCrcMJzIngfjzmGxQHPcRO2ibgDTJAo0YuHJkG6falP8_Of2OcWEip8_qAJSOYgzqv4_1MPJznc7nvNE_llWUIutOSw6THQQUesguaDxxzjsIVjeYfDt4hE5HtA19yshm1Jac4ZQRJ38V-68uGls_JeoYgBq8yzKH1PAi2gME5oTR9im0lWIaJId1E5F6fBVCY1l8dBqvGK-K-NpuFJ_jPRCdGgF41bON8TgxxeT917bjjf8Lvb5RC40SD4e9d12eoFGtGNawCNElA5",
-    "country": "Singapore",
-    "address": "Zoo Johor Bahru, Taman Istana, 80000 Johor Bahru, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJEenaXmcR2jERJRZ3QtVxl7o",
     "status": "OPERATIONAL",
     "name": "Nursing rooms at Jem",
@@ -31857,23 +31160,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJfe9sVHQJ2jERH7ygjmUcwfw",
-    "status": "OPERATIONAL",
-    "name": "Toilet",
-    "rating": 3,
-    "latlong": {
-      "lat": 1.3867036,
-      "lng": 103.5932416
-    },
-    "photoReference": "",
-    "country": "Singapore",
-    "address": "Petronas, 81550 Gelang Patah, Johor Darul Ta'zim, Malaysia",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJIUlJ7Z4P2jER-8DI9I7NeHU",
     "status": "OPERATIONAL",
     "name": "Toilets & Nursing Room",
@@ -32004,23 +31290,6 @@
     "photoReference": "AeeoHcK4T__xY8FDHq-057zjCmoF_xG3L2qg_7WUiP8j2vlyx0Rcac0TlxPv-QnhToDP4uwfX-rHE4BMVAPpRF5Q0ECCPhrrdfGRJ631F1XaNj-UWjj9FjUmaYUzDQF3tCejYEsHST7gCeMUKlhiaPic2esi913Gu2WCMOS2Qs8mUaIR1Hehu27oOd75IX09kEGFq01tsbv4tlx9pXHl7o709GLcl_Sf5VZDwcykOqsoifv2JjU46rMbNFy4pFEv6nPRLmbbp4lcl_wHn-HrZ-UwXpm5d10tw3sFfTukr3Opr7ApLY-l7Ys",
     "country": "Singapore",
     "address": "104 Yuan Ching Rd, Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJmYGjPEMJ2jERk4rdi2ZPq6k",
-    "status": "OPERATIONAL",
-    "name": "Public Bathroom",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.3381943,
-      "lng": 103.5809053
-    },
-    "photoReference": "AeeoHcL74L_hrfsajpT_rKoHDxEUOIkTIkBpGvfokKxXtmCUWJxKyoz3bNHBHsSg9t84TdJCiU92EeELaSBlk2q9NBQh6EMX6i_5XUHWquHf61eLSBplFgQOeFwWR8bhKXYZhuCNKjeTVPaFuXw6XoYekUXwGpqIo_OSI9TWv31trYdNXmnCe7y-RMLRmGzi-mBEnQTl3n-g5FSvLwS5biSb6TjmIs6HpLPqOZb0MK9ddyicthCVJz1Ai7AwHrKENcRcBYrb9bniOGEs1v83kVRHEBRFJldj7l6pGMOjVswbiI5qBZ8RpmM",
-    "country": "Singapore",
-    "address": "8HQJ+79 Gelang Patah, Johor, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -32191,23 +31460,6 @@
     "photoReference": "AeeoHcLE7_OdJNc7nIBUZMlGQiQIgyxKqK1RpooORPa_YIAk8uBfOLdlEwQAF5OOLnt9cKHsCeckB2oJGYQMTta4GFB0isBNr1LjFHNuvYttbKvqThQSiwyMvEGt9JkUqdMHfmQK6g1oWtA2GlmZNkdGkzC4GnCCd5JBav9fPJCtb8ag5557oaa7hlExWYHYCU-w1Ex0AOz9hn_SHCkEcjRlEPCUOxYriyMptRM3Jcg3InXSymCK2UzY8vMZn71P1O27-pEFJKMPKMEbYBo0_SrOy8N_RY90hd8C0zqtJeK6armKSbJARko",
     "country": "Singapore",
     "address": "Pusara Aman Mque, Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJJ7-ehSYJ2jER4ZLcvqwWj8M",
-    "status": "OPERATIONAL",
-    "name": "Locker&Bath Room",
-    "rating": 0,
-    "latlong": {
-      "lat": 1.3399189,
-      "lng": 103.580163
-    },
-    "photoReference": "AeeoHcLZHyXjSKfOU6iabjzmxtXL7QImYvt6vduR7-8OCILKCzMwmZKvKaOGaBO4slv5mBc53430KEtFdN06iUlIQYZyCMqqRrcsZqI7i7VZ7QCcsK_V_l7FzP8VSBjvkJhRTqqptulkXQeC1QNdCIeTuWA3h32v6FuZmkn80Sqjf5PnypkmEzq0QhZJglB3OjxOe84kJORyHy9nVbiFgKQuFgVLZyDJUBJowZfs3WYNQFe29U71yzClBbt9L_OMWHRO8TdV7bOEGJwoRyXlE1RW83-zjbK5i0XWvdH4CYtUdkU4gPwFU30",
-    "country": "Singapore",
-    "address": "8HQH+XW, Gelang Patah, Johor, Malaysia",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,

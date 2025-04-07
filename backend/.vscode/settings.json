@@ -1,1 +1,14 @@
-{}
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "sc2006",
+      "database": "sc2006",
+      "username": "sc2006",
+      "password": "sc2006"
+    }
+  ]
+}

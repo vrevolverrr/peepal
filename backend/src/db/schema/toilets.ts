@@ -11,7 +11,6 @@ export const toilets = pgTable('toilets', {
   sanitiserAvail: boolean('sanitiser_avail'),
   crowdLevel: integer('crowd_level').notNull().default(0),
   rating: decimal('rating', { precision: 3, scale: 2 }).default('0.00'),
-  imageUrl: text('image_url'),
   reportCount: integer('report_count').default(0)
 },  (t) => [
   index('idx_spatial_toilets_location').using('gist', t.location),

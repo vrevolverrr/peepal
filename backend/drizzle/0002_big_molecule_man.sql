@@ -1,0 +1,1 @@
+ALTER TABLE "toilets" DROP COLUMN "image_url";

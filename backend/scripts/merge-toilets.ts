@@ -61,6 +61,10 @@ async function checkDataset() {
     const fullToilets: FullToiletData[] = [];
 
     for (const toilet of toilets) {
+        if (toilet.address.includes("Malaysia")) {
+            continue;
+        }
+
         fullToilets.push({
             ...toilet,
             hasHandicap: true,
@@ -76,11 +80,14 @@ async function generateSeed() {
     const toiletsData = await fs.readFile('./scripts/data/full-toilets.json', 'utf-8');
     const toilets: FullToiletData[] = JSON.parse(toiletsData);
     
-    const seedFile = "";
+    var seedFile = "";
 
     for (const toilet of toilets) {
-        
+        seedFile += `INSERT INTO toilets (name, address, location, handicap_avail, bidet_avail, shower_avail, sanitiser_avail, crowd_level, rating) VALUES ('${toilet.name.replaceAll("'", "''")}', '${toilet.address.replaceAll("'", "''")}', ST_SetSRID(ST_MakePoint(${toilet.latlong.lng}, ${toilet.latlong.lat}), 4326), ${toilet.hasHandicap}, ${toilet.hasBidet}, ${toilet.hasShower}, ${toilet.hasSanitiser}, 0, ${toilet.rating});\n`;
     }
+
+    await fs.writeFile('./scripts/data/toilets.sql', seedFile);
 }
 
-checkDataset();
+// checkDataset();
+generateSeed();

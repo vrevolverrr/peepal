@@ -15,6 +15,11 @@ userApi.onError((err, c) => {
   return c.json({ error: err.message }, 500)
 })
 
+// GET /api/user/ - Health check
+userApi.get('/', async (c) => {
+  return c.json({ message: 'User API Health Check' }, 200)
+})
+
 // GET /api/user/me - Get current user
 userApi.get('/me', async (c) => {
   const logger = c.get('logger')

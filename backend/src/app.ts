@@ -5,7 +5,7 @@ import { logger } from './middleware/logger';
 import { pool } from "./db/db";
 import { authMiddleware } from './middleware/auth';
 import auth from './routes/auth';
-import toiletApi from "./routes/api/toilet";
+import toiletApi from "./routes/api/toilets";
 import userApi from "./routes/api/user";
 import reviewApi from "./routes/api/reviews";
 import favoritesApi from "./routes/api/favorites";
@@ -33,7 +33,7 @@ app.get('/api', async (c) => {
     return c.json({ message: 'Protected route', user: c.get('user') }, 200)
 })
 /// API Routes
-app.route('/api/users', userApi);
+app.route('/api/user', userApi);
 app.route('/api/toilets', toiletApi);
 app.route('/api/reviews', reviewApi);
 app.route('/api/favorites', favoritesApi);

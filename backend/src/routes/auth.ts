@@ -19,6 +19,12 @@ auth.onError((error, c) => {
   return c.json({ error: 'Internal server error' }, 500)
 })
 
+// GET /api/auth - Health Check
+auth.get('/', async (c) => {
+  return c.json({ message: 'Auth API Health Check'}, 200)
+})
+
+// POST /api/auth/signup - Register a new user
 auth.post('/signup', validator('json', registerSchema), async (c) => {
   const log = c.get('logger')
 
@@ -56,6 +62,7 @@ auth.post('/signup', validator('json', registerSchema), async (c) => {
   return c.json({ user: newUser, token }, 200)
 })
 
+// POST /api/auth/login - Login an existing user
 auth.post('/login', validator('json', loginSchema), async (c) => {
   const { email, password } = c.req.valid('json')
 

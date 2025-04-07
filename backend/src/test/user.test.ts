@@ -47,9 +47,9 @@ describe('Test User API', () => {
     await db.delete(users).where(eq(users.email, 'test2@example.com'))
   })
 
-  describe('GET /api/users/me', () => {
+  describe('GET /api/user/me', () => {
     it('should return user data for authenticated user', async () => {
-      const res = await app.request('/api/users/me', {
+      const res = await app.request('/api/user/me', {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
@@ -64,14 +64,14 @@ describe('Test User API', () => {
     })
 
     it('should return 401 without auth token', async () => {
-      const res = await app.request('/api/users/me')
+      const res = await app.request('/api/user/me')
       expect(res.status).toBe(401)
     })
   })
 
-  describe('PUT /api/users/update', () => {
+  describe('PUT /api/user/update', () => {
     it('should update username successfully', async () => {
-      const res = await app.request('/api/users/update', {
+      const res = await app.request('/api/user/update', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -88,7 +88,7 @@ describe('Test User API', () => {
     })
 
     it('should update email successfully', async () => {
-      const res = await app.request('/api/users/update', {
+      const res = await app.request('/api/user/update', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -105,7 +105,7 @@ describe('Test User API', () => {
     })
 
     it('should update gender successfully', async () => {
-      const res = await app.request('/api/users/update', {
+      const res = await app.request('/api/user/update', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -122,7 +122,7 @@ describe('Test User API', () => {
     })
 
     it('should reject invalid gender value', async () => {
-      const res = await app.request('/api/users/update', {
+      const res = await app.request('/api/user/update', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -137,7 +137,7 @@ describe('Test User API', () => {
     })
 
     it('should reject update without changes', async () => {
-      const res = await app.request('/api/users/update', {
+      const res = await app.request('/api/user/update', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -152,9 +152,9 @@ describe('Test User API', () => {
     })
   })
 
-  describe('DELETE /api/users/delete', () => {
+  describe('DELETE /api/user/delete', () => {
     it('should delete user successfully', async () => {
-      const res = await app.request('/api/users/delete', {
+      const res = await app.request('/api/user/delete', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${authToken}`
@@ -175,7 +175,7 @@ describe('Test User API', () => {
     })
 
     it('should return 401 without auth token', async () => {
-      const res = await app.request('/api/users/delete', {
+      const res = await app.request('/api/user/delete', {
         method: 'DELETE'
       })
       expect(res.status).toBe(401)

@@ -5,9 +5,21 @@ import { eq } from "drizzle-orm"
 import { validator } from "../../lib/validator"
 import { createToiletSchema, reportToiletSchema, updateToiletSchema } from "../../validators/api/toilet"
 
+const NUM_REPORTS_DELETE = 3
+
 const toiletApi = new Hono()
 
-const NUM_REPORTS_DELETE = 3
+toiletApi.onError((err, c) => {
+  const logger = c.get('logger')
+  logger.error('Error in toilets API', err)
+
+  return c.json({ error: err.message }, 500)
+})
+
+// GET /api/toilets - Health Check
+toiletApi.get('/', async (c) => {
+  return c.json({ message: 'Toilets Endpoint Health Check'}, 200)
+})
 
 // POST /api/toilets/create - Create a new toilet
 toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {

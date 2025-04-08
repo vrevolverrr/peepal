@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:peepal/features/toilet_map/model/toilet_location.dart';
+import 'package:peepal/features/navigation/navigation_page.dart';
 
 class NearbyToiletCard extends StatelessWidget {
   final String address;
@@ -10,6 +12,8 @@ class NearbyToiletCard extends StatelessWidget {
   final bool hasShower; // Add shower property
   final bool hasSanitizer; // Add sanitizer property
   final double height;
+  final double latitude;
+  final double longitude;
 
   const NearbyToiletCard({
     Key? key,
@@ -19,6 +23,8 @@ class NearbyToiletCard extends StatelessWidget {
     required this.highVacancy,
     required this.bidetAvailable,
     required this.okuFriendly,
+    required this.latitude,
+    required this.longitude,
     this.hasShower = false, // Initialize with default value
     this.hasSanitizer = false, // Initialize with default value
     this.height = 400,
@@ -95,9 +101,33 @@ class NearbyToiletCard extends StatelessWidget {
                       children: [
                         Text(distance, style: const TextStyle(fontSize: 20)),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // Create ToiletLocation from card data
+                            final toiletLocation = ToiletLocation(
+                              id: address.hashCode.toString(),
+                              name: address,
+                              address: address,
+                              latitude: latitude, // REPLACE 0.0 WITH THIS PROPERTY
+                              longitude: longitude, // REPLACE 0.0 WITH THIS PROPERTY
+                              rating: rating,
+                              hasAccessibleFacilities: okuFriendly,
+                              hasBidet: bidetAvailable,
+                              hasShower: hasShower,        // Include these properties
+                              hasSanitizer: hasSanitizer,  // Include these properties
+                            );
+                            
+                            // Navigate to navigation page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NavigationPage(
+                                  destination: toiletLocation,
+                                ),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 91, 100, 134),
+                            backgroundColor: const Color.fromARGB(255, 52, 64, 74),
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
                             shape: RoundedRectangleBorder(
@@ -109,7 +139,7 @@ class NearbyToiletCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 225, 222, 222),
+                              color: Colors.white,
                             ),
                           ),
                         ),

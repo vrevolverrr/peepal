@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peepal/features/toilet_map/model/toilet_location.dart';
+import 'package:peepal/features/navigation/navigation_page.dart'; // Add this import
 
 class ToiletLocationCard extends StatelessWidget {
   final ToiletLocation location;
@@ -53,12 +54,12 @@ class ToiletLocationCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.location_on, size: 18, color: Colors.grey),
+                const Icon(Icons.location_on, size: 18, color: Color.fromARGB(255, 192, 73, 73)),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     location.address,
-                    style: const TextStyle(color: Colors.grey),
+                    style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                   ),
                 ),
               ],
@@ -136,10 +137,41 @@ class ToiletLocationCard extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.directions),
-                label: const Text('Directions'),
-                onPressed: onDirections,
+                label: const Text(
+                  'Navigate',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
+                onPressed: () {
+                  // Create a complete ToiletLocation with all properties
+                  final navigationDestination = ToiletLocation(
+                    id: location.id,
+                    name: location.name,
+                    address: location.address,
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    rating: location.rating,
+                    hasAccessibleFacilities: location.hasAccessibleFacilities,
+                    hasBidet: location.hasBidet,
+                    hasShower: false, // Add default values
+                    hasSanitizer: false, // Add default values
+                  );
+                  
+                  // Navigate to navigation page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NavigationPage(
+                        destination: navigationDestination,
+                      ),
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: const Color.fromARGB(255, 52, 64, 74),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

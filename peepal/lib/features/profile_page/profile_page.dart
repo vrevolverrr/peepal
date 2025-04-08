@@ -165,7 +165,7 @@ class ProfilePageState extends State<ProfilePage> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 91, 100, 134), // Red button
+                        backgroundColor: const Color.fromARGB(255, 52, 64, 74),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
                         shape: RoundedRectangleBorder(
@@ -175,7 +175,7 @@ class ProfilePageState extends State<ProfilePage> {
                       child: const Text(
                         'Log Out',
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                           ),
                       ),

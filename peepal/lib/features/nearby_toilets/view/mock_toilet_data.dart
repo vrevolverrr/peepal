@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peepal/features/nearby_toilets/view/widgets/nearby_toilet_card.dart';
+import 'package:peepal/features/toilet_map/model/toilet_location.dart';
+import 'package:peepal/features/navigation/navigation_page.dart';
 
 final List<Map<String, dynamic>> toilets = [
   {
@@ -11,6 +13,8 @@ final List<Map<String, dynamic>> toilets = [
     'okuFriendly': true,
     'hasShower': true,
     'hasSanitizer': true,
+    'latitude': 1.3414, 
+    'longitude': 103.7208,
   },
   {
     'address': '123 Jurong West St',
@@ -21,6 +25,8 @@ final List<Map<String, dynamic>> toilets = [
     'okuFriendly': false,
     'hasShower': false,
     'hasSanitizer': true,
+    'latitude': 1.3484,
+    'longitude': 103.7097,
   },
   {
     'address': '456 Clementi Ave',
@@ -31,6 +37,8 @@ final List<Map<String, dynamic>> toilets = [
     'okuFriendly': true,
     'hasShower': true,
     'hasSanitizer': false,
+    'latitude': 1.3162,
+    'longitude': 103.7649,
   },
   {
     'address': '789 Bukit Batok Rd',
@@ -41,6 +49,8 @@ final List<Map<String, dynamic>> toilets = [
     'okuFriendly': false,
     'hasShower': false,
     'hasSanitizer': true,
+    'latitude': 1.3590,
+    'longitude': 103.7637,
   },
   {
     'address': '321 Tampines Ave',
@@ -51,6 +61,8 @@ final List<Map<String, dynamic>> toilets = [
     'okuFriendly': true,
     'hasShower': false,
     'hasSanitizer': false,
+    'latitude': 1.3546,
+    'longitude': 103.9436,
   },
   {
     'address': '654 Punggol Walk',
@@ -61,8 +73,24 @@ final List<Map<String, dynamic>> toilets = [
     'okuFriendly': true,
     'hasShower': true,
     'hasSanitizer': true,
+    'latitude': 1.4035,
+    'longitude': 103.9082,
   },
 ];
+
+// Helper method to convert mock data to ToiletLocation
+ToiletLocation createToiletLocation(Map<String, dynamic> toilet) {
+  return ToiletLocation(
+    id: toilet['address'].hashCode.toString(),
+    name: toilet['address'],
+    address: toilet['address'],
+    latitude: toilet['latitude'],
+    longitude: toilet['longitude'],
+    rating: toilet['rating'],
+    hasAccessibleFacilities: toilet['okuFriendly'],
+    hasBidet: toilet['bidetAvailable'],
+  );
+}
 
 @override
 Widget build(BuildContext context) {
@@ -79,6 +107,8 @@ Widget build(BuildContext context) {
           highVacancy: toilet['highVacancy'],
           bidetAvailable: toilet['bidetAvailable'],
           okuFriendly: toilet['okuFriendly'],
+          latitude: toilet['latitude'],
+          longitude: toilet['longitude'],
           hasShower: toilet['hasShower'] ?? false,
           hasSanitizer: toilet['hasSanitizer'] ?? false,
         );

@@ -110,6 +110,8 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage> {
                             okuFriendly: toilet['okuFriendly'],
                             hasShower: toilet['hasShower'] ?? false,
                             hasSanitizer: toilet['hasSanitizer'] ?? false,
+                            latitude: toilet['latitude'],
+                            longitude: toilet['longitude'],
                             height: 500, // Dynamically set card height
                           ),
                         );

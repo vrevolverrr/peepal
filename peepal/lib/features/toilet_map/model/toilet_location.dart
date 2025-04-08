@@ -11,7 +11,9 @@ class ToiletLocation extends Equatable {
   final double longitude;
   final double? rating;
   final bool? hasAccessibleFacilities;
-  final bool? hasBidet; // Add bidet information
+  final bool? hasBidet;
+  final bool? hasShower; // Add this
+  final bool? hasSanitizer; // Add this
 
   const ToiletLocation({
     required this.id,
@@ -21,7 +23,9 @@ class ToiletLocation extends Equatable {
     required this.longitude,
     this.rating,
     this.hasAccessibleFacilities,
-    this.hasBidet, // Add to constructor
+    this.hasBidet,
+    this.hasShower, // Add to constructor
+    this.hasSanitizer, // Add to constructor
   });
   
   @override
@@ -33,6 +37,8 @@ class ToiletLocation extends Equatable {
     longitude,
     rating,
     hasAccessibleFacilities,
-    hasBidet, // Add to equality check
+    hasBidet,
+    hasShower, // Add to equality check
+    hasSanitizer, // Add to equality check
   ];
 }

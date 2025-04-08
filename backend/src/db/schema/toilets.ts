@@ -1,7 +1,9 @@
-import { pgTable, index, serial, text, boolean, integer, decimal, geometry } from 'drizzle-orm/pg-core'
+import { sql } from 'drizzle-orm';
+import { pgTable, index, text, boolean, integer, decimal, geometry } from 'drizzle-orm/pg-core'
 
 export const toilets = pgTable('toilets', {
-  id: serial('id').primaryKey(),
+  id: text('id').primaryKey(),
+  placesId: text('places_id'),
   name: text('name').notNull(),
   address: text('address').notNull(),
   location: geometry('location', { type: 'point', mode: 'xy', srid: 4326 }).notNull(),
@@ -14,5 +16,6 @@ export const toilets = pgTable('toilets', {
   reportCount: integer('report_count').default(0)
 },  (t) => [
   index('idx_toilets_id').on(t.id),
-  index('idx_toilets_spatial_location').using('gist', t.location)
+  index('idx_toilets_spatial_location').using('gist', t.location),
+  index('idx_toilets_address_search').using('gin', sql`to_tsvector('english', ${t.address})`)
 ]);

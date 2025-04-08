@@ -12,12 +12,8 @@
     "push": "drizzle-kit push",
     "migrate": "drizzle-kit migrate",
     "studio": "drizzle-kit studio",
-    "test": "NODE_ENV=test vitest",
-    "test:watch": "NODE_ENV=test vitest watch",
-    "generate:toilets": "ts-node scripts/generate-toilet-data.ts",
-    "import:toilets": "ts-node scripts/import-toilet-data.ts",
-    "fetch:toilets": "ts-node scripts/master-script.ts",
-    "fetch:toilets:test": "ts-node -e \"require('./scripts/master-script.ts').test()\""
+    "test": "vitest",
+    "test:watch": "vitest watch"
   },
   "keywords": [],
   "author": "",
@@ -40,6 +36,7 @@
     "drizzle-zod": "^0.7.1",
     "hono": "^4.7.5",
     "jsonwebtoken": "^9.0.2",
+    "nanoid": "^5.1.5",
     "pg": "^8.14.1",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0"

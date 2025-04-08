@@ -27,7 +27,7 @@ export const updateToiletSchema = z.object({
 })
 
 export const reportToiletSchema = z.object({
-  toiletId: z.number(),
+  toiletId: z.string(),
 })
 
 export const nearbyToiletSchema = z.object({
@@ -37,10 +37,8 @@ export const nearbyToiletSchema = z.object({
 
 export const searchToiletSchema = z.object({
   query: z.string(),
-  location: z.object({
-    x: z.number(),
-    y: z.number()
-  }).optional(),
+  latitude: z.number(),
+  longitude: z.number(),
   radius: z.number().optional(),
   handicapAvail: z.boolean().optional(),
   bidetAvail: z.boolean().optional(),
@@ -50,4 +48,10 @@ export const searchToiletSchema = z.object({
 
 export const imageToiletSchema = z.object({
   id: z.number(),
+})
+
+export const navigateToiletSchema = z.object({
+  toiletId: z.string(),
+  latitude: z.number(),
+  longitude: z.number(),
 })

@@ -1,4 +1,4 @@
-import { Client } from '@googlemaps/google-maps-services-js';
+import { Client, PlacesNearbyRanking } from '@googlemaps/google-maps-services-js';
 import { placePhoto } from '@googlemaps/google-maps-services-js/dist/places/photo';
 import * as fs from 'fs/promises';
 import * as path from 'path';
@@ -104,8 +104,8 @@ async function searchToilets(location: LatLng, searchRadius: number = SEARCH_RAD
             const response = await client.placesNearby({
                 params: {
                     location: location,
-                    radius: searchRadius,
-                    keyword: 'Toilet ',
+                    rankby: PlacesNearbyRanking.distance,
+                    keyword: 'Toilet',
                     key: process.env.GOOGLE_API_KEY || '',
                     pagetoken: pageToken
                 }
@@ -213,7 +213,7 @@ async function main() {
                 };
                 
                 // Generate points with minimum spacing
-                for (let i = 0; i < 8; i++) { // Reduced from 10 to 8 for better spacing
+                for (let i = 0; i < 5; i++) { // Reduced from 10 to 8 for better spacing
                     let attempts = 0;
                     let validPoint = false;
                     

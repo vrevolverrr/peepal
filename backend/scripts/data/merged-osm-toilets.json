@@ -8245,23 +8245,6 @@
     "hasSanitiser": null
   },
   {
-    "placeId": "ChIJycMPlbgb2jERwcD_nlYNnmg",
-    "status": "OPERATIONAL",
-    "name": "Premium Outlet by Econflo Systems Pte Ltd",
-    "rating": 4.7,
-    "latlong": {
-      "lat": 1.2750714,
-      "lng": 103.7964604
-    },
-    "photoReference": "AeeoHcIuG2gZjlSQIhi3Albsmik1X7v3WBXytGCFLpq02XEBsjaAkKRhfIoRGN4b8Hc5o734_15KLQeRV5O2Z6AgfFD_9Z0xpZqWRknClXs8otb7wvamOSZbZlk-GAmbNvVihpf4u-h3p7CLcsBdaFiYbxdz6dRiEPvjbTjJcnP_Pm7P-RqGkeZgGcji3KBE3hP1LyehaoDyYOfLeqMM_YX6FPnb6EDhws_sg7MXJPUYymbwq1QSWfBcnZ72IPQF3YNrZjjZGK0PtpMmk0s342-sWedg1TK_-ZdNw0vNc8p1mC8AQAvi",
-    "country": "Singapore",
-    "address": "2 Boon Leat Terrace, Singapore 119844",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
     "placeId": "ChIJ__8vp1UZ2jERiyRqbsAhoc8",
     "status": "OPERATIONAL",
     "name": "Public Bathroom",
@@ -8783,23 +8766,6 @@
     "photoReference": "",
     "country": "Singapore",
     "address": "8 Scotts Rd, Singapore 228238",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "placeId": "ChIJmwBJXJEF2jERanJIQicMaHM",
-    "status": "OPERATIONAL",
-    "name": "W. Atelier Pte Ltd - Head Office",
-    "rating": 4,
-    "latlong": {
-      "lat": 1.3150541,
-      "lng": 103.665596
-    },
-    "photoReference": "AeeoHcJ7I4kvcboRIbb7iTL0YtHzTVRDUSbAbbXoor53D_dLTmQeF_BTTBgQRceVIVJLmeA4j02NJ_5XiUpjQUPKqkJJXkrr07VBRcBC9RHIGC5rwim9cX2tqxLzkwZ4Dz-BWFfRinIlnAh9mAFklBTURreCpAq_VYvGsl-PNzTkBNrrv3UBu83sk6ke-W3kXyCJRAY4H4EEiYZB2IkSWxhNHUJpW6INbwv1kqE65D3et68GNkfnwrxsvflVxCmffGrfa0xfKCRLT-8qdfUA7soyhdC0drxNnDJ0jsP0yQqBXIUayIeTh1KQFXP0DacXUJT0HvLzu2uCyDKvarCVjwIzmowSvJOFEjBFOaQMaGz-IJhnnsS7yTzVEYxn-xRMDd1q0IYFtsFqW8qGfMGtVDrGn13elRLrSPZecchpAUHSlfIdRhpMddVn5YhIfiw0EG_asdmv5ckw8fq6Mnaqa0SRHM_1xo1XQBH4FUv9qaV59LNMTtEVi9uUdEly04PJzaS8Vghf1xlj4UlGtMU6dP3CaeFqJoQiG0d_jzPLc60RVB3fh_gnBZLG6wUzd2S0wZQ94YJTIaM3",
-    "country": "Singapore",
-    "address": "50 Gul Ave, Singapore 629682",
     "hasBidet": false,
     "hasHandicap": true,
     "hasShower": null,
@@ -9986,56 +9952,6 @@
   },
   {
     "status": "OPERATIONAL",
-    "placeId": "ChIJu0vgft8Z2jER9pokjKN7dDE",
-    "name": "Wasser Bath Pte Ltd",
-    "latlong": {
-      "lat": 1.326247,
-      "lng": 103.848056
-    },
-    "address": "",
-    "rating": 4,
-    "photoReference": "AeeoHcJ-z8wtg1oESFSMgV6MkrHUFmNIChu_nisTmXYytAQds5ijGvRb9gxYF4i5vUnZuDwY_T-X2WmKp2vUpyTCXSGQRv82Vc6KrVamwZsbDkG6tB8nXN3WduMQuv0D-6Gv43CpxIRVvnlkIQ5zvqNzZInVVu4-idmlKO9qlghg1HGMow9YIBX5U87xEddn2_FfpQtGBH_oLC6WGanJMId3fLm3Bcx8AQ-RJWlD0q7iuB7e8NR4tzfFUccrnkr1FvY5Ut0HuCenw_V5iJFujjQD6MzRSMGySNfjFr2gl8xeD39NAdNfih4jKVpXK6vYLZgZEDbTbdh3aN-x3HZOHE8wtqDGuioPOlqiYGM8pJiB8O_uHl3mJS8et6ozvtG1lYMonMAKle3Uq_kDh8BSYVSqxyL5lm0iFu04ArtQG57_36RmyJogmQuuBfHtqjhrTEVsG1Yi0gi05S_VkBefheuHQ-0tAzrKrhkcl9NBCtTOiWiiDMNjRaoQ-W21mRDKiwOXwVS-ZelbK2kwLl-kze5NI7yi8kI57EzxW0R8WcP4lOOygb8csHWnFGFF743X1Vwap2LM0dq6",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJA5nJ_t8Z2jERsfI6RhrZafQ",
-    "name": "Ideal Kitchen and Bathroom Pte Ltd",
-    "latlong": {
-      "lat": 1.3264703,
-      "lng": 103.8440738
-    },
-    "address": "",
-    "rating": 4.2,
-    "photoReference": "AeeoHcJnefW0CUS7C5w7GIdBgX5OO0pSJiopbWptr_K3yOWTuIiFG_OO69r8MKiuIAr2HQoAWCK2ZAosNAvkvUACH17v8js-2FWizy7qcmNrOjM3nSLy7eIQsT8HWcLZWyCJS6wPuMJu6DwCWlF6vreplTr9EDBwgzwsNH_KmD9oO7DUnEwfvv0u-SUCgnviCwZEV_3wPk4a4NpD7Vdn2zGAeywVKWLLFmVn-sDrnmZdVv8r7pBLlsLcdCQaiEkwj1jrJkFvB7puphl2Jwm1my4_VoZCBnxV6ZpS8v5ZBhSoy56sMLzxZPA",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJywNJDwAX2jERpUCaBLt4MxM",
-    "name": "Domain Expansion: Authentic Mutual Love",
-    "latlong": {
-      "lat": 1.3430614,
-      "lng": 103.8432826
-    },
-    "address": "",
-    "rating": 0,
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
     "placeId": "ChIJ63VVUwAb2jER6gjgappRAoQ",
     "name": "Fung Shao Kai Kaden Gooning To Marilene",
     "latlong": {
@@ -10077,23 +9993,6 @@
     "address": "",
     "rating": 4.2,
     "photoReference": "AeeoHcIZ96CnsoZoXsYudF0ncFnQaet82BJmwCyMmQygTUr43rjbBPD9XQcdI3CLX7-xxvZU-zyvQjTMfiGIbkd0YVEXtiKGmLqgsiUEziKZi4B7x0gWfx8xbaNPJoSgfpyYJc1EfOOxBTX_GnkYri0D4z2zBHTMCWi0G2H9tT01A3SEg_wBjzQiMbXVY1xxi6wXDOC-UwNmPAexH4ke2y-yRkTil3F7CxkUnOSD46oF1IDTZydDP63ejAhxUWaTadcGDxpmrmwTJ8ednmTyzk_PetRUo6lkRP8KkRAiPFCOsAG-_CI9sT0",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJtwfUSC4T2jERmJ_-OmxbFf4",
-    "name": "9 Star Services Pte Ltd - Bathroom Specialist",
-    "latlong": {
-      "lat": 1.4378735,
-      "lng": 103.8067738
-    },
-    "address": "",
-    "rating": 4.6,
-    "photoReference": "AeeoHcJ9de07VuIL1nSCP0_rBqyPO-8fGK2jIfLqsIDXb7THmTEguyCrPoWAouNWRVaqUZV9MlbSH4V7-RSaPzdpsoNZVmbO-dVbRzUN2ZK1556MyWk3iUFGnHCcrMWch7cM_q6gF_DgbEO0p3zJOyOK30OKin_4agKay8UxfWyy7DuuhRbg5GBrcuCs95nKX2-edwz7Y7J-zDj2uR8zzcMU80ovJc3o1s61gSJ9oQUzRdaHMTz0zqEz_ml7_WujOD0Ao2PclW0hkVvx8GMRTOX4nDE_1WD_YFZsb89Yr6jcb6BDcgj5qwSGNA-poNZWpPx9cDWlcH5gvA1vbvC4kGLUCeWmw3pkNHLIYVdlfiUmzSeEHdzYdXjux-jaWfEZ9olweaIc_BeVPtCI5iU7VyxGKYert3QQnY_5Jt0JWmoFPLvIXScOtSqDQn7vM0XwPLbErTMGzVDPByufKXAsGzoqFbaK0bl_vNaa8OWdxFqznHQr4MisxlUYC3vsVS_5YEH6f32BbXngsGqlORl07Rgwj2Gh3IcxvY0Z3JBx67PTAi7dbN9VGCPVg5bGwWzZyN_BEg9gTFFkgveYLg",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -10144,23 +10043,6 @@
     },
     "address": "",
     "rating": 0,
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJ6TYv9rcZ2jERaaRhyt1U7HY",
-    "name": "Fullsun Marketing Pte Ltd",
-    "latlong": {
-      "lat": 1.306864,
-      "lng": 103.856517
-    },
-    "address": "",
-    "rating": 4.8,
-    "photoReference": "AeeoHcLcr1eX-K6DHmyjohunMH7DG3cARr5ImRRU3I8pI52ZztiMhE2oCPfe2c54KoNyBBIPw599vHHub2M56Hdwe2y1-rt2muHHoXOjyFQRkoYMSJdMdJqxZMVRnUxQn76T0l2aQ21Fw1jct4WcMa0tAz6VGB963n9tXMWHQ0rra_PfXHXoljpl8RNvYBDbUcE0rtzEPFJMTj4yOZBDNIGygk-zkI4Lh10ciHvIWryJ1Frvuj4O9_g2PNlbkyiLzrPltnNKDSuWA8iwJ5E6yhjRjtmrGvPvuLNEun701_bSidHsqwbkK-A",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -10421,23 +10303,6 @@
   },
   {
     "status": "OPERATIONAL",
-    "placeId": "ChIJ-yLjZ3UQ2jERhwESEbEiJ6A",
-    "name": "Adamas Bathroom Pte Ltd",
-    "latlong": {
-      "lat": 1.327352,
-      "lng": 103.7537286
-    },
-    "address": "",
-    "rating": 3.4,
-    "photoReference": "AeeoHcLZBFOKzsVPOKm42woBfMZJy-rpNSt5YsQDdHpTqvfOABnEtDARjtm_ju5bY_v4vqni1ZXz3xU1UFxtGeQxZM6K0rcV7aRolA-5e6pF1R_LkcFC1zHzWndQsBCMju-KGJ1fFSzVBdCUH0BBFKrct0BjeBaJGy7b1Mki5DTmmmcU0ZRtHpFk8EIsqNnMWKN4NUGIR08Rk9ITU5hdR4_alfmiuGYSiXGfJluLiPkyB3sKrmSAWYYic-pjB9QfXiq5YgkQCfbhhn5O8lThpotLFO9MOcz4oYUVWXtVStoQ0nA6c-yW-TU",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
     "placeId": "ChIJhxnsoRwR2jERRGmDESnJtZ8",
     "name": "Bathlabz Tradehub 21",
     "latlong": {
@@ -10464,23 +10329,6 @@
     "address": "",
     "rating": 4.9,
     "photoReference": "AeeoHcKwj-dK_3D2GZDPmLXU_TPqnFCNPfvd_MByRuQ-uPMrk51lzapFo8DzthqZZrPFbb81_z9YcQo4n8k7WgqoD7fZjjvNTmQs313-VxBdOPFMwHcTAsHo_1eoMmu7qSe2gte9oOKTqZevc_I7ZciT7HlOx-1Zu31OJleEoktuDvxjePKErM0wIT8N5-uKndTNwXP4AbCzP5wErhs0Wa7D3F8wDP--CS95Ht0TzwhkUYhZtslbRReb0XGNDxpZYWQQeIqjL9m4w4pljVd0Cwq-_pNW6mguwuO0-Y46F_uFhmu7QufK6Dg",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJyWnbsm0Q2jERwdtdqOinzjw",
-    "name": "Frontier Concept Interior Design Pte Ltd",
-    "latlong": {
-      "lat": 1.3384864,
-      "lng": 103.7556863
-    },
-    "address": "",
-    "rating": 2.5,
-    "photoReference": "AeeoHcI4TzdbvIcVTROGaj6dxJisB1jJPWzCnlcGDIlMaLXxg1Zep6NtwamCY1Mb6Qkb8w4jOVNQPb2YOKByEHWkAXGCrvW6tSdl3m3kwUSBR3mya3ZW1lkVSpKf0vGPHjR_vhHK4DWhZ6GGc8i9L6OljwKr7mSH77wt1vv_QAxDr7bZ3I1DRKzCPZKIfsiAQhAwllAyKehpKqGpJdxvyR86gAMJHAK7sm_7A3wrCgJPr3U2WCJAcAE0shrrpREk6COKBTigpl7r2NsVYOKAplZI3tFEzMcf39cpmRuQYj5D3Hrfa__bmVI",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -10740,40 +10588,6 @@
   },
   {
     "status": "OPERATIONAL",
-    "placeId": "ChIJP5v91-MX2jERacHl3AZ-Y-w",
-    "name": "Uniqool Engineering & Services Pte Ltd - Bathroom and Kitchen Specialised Store",
-    "latlong": {
-      "lat": 1.3142194,
-      "lng": 103.8872314
-    },
-    "address": "",
-    "rating": 4.8,
-    "photoReference": "AeeoHcLGnIUGzAV9BKw4h4GizDwddiePLq8LL1HL73V4WqJBJmZCywdcwfCVJ6zo7x-zIhUYSYCCSHZK4eYxz26iQaPKqpNzhV6amXTFrBKws3RO56-DUZvCHuGvOHqqdB5piRfR-v-Rwe9HloYE0-wf70wkQPRVM6kFcAl3lSeo2Ld43uUeIX59FEWt4xdA1AEqzEbVIQ83gic96c38p3RM-KQVWG0URjz1PwxxvnyfLaJNALnHor6lQ-YE1XySebCyeaucsp4J2HCYbUoV4--qFSB4ojmhjy5xh1XFpJjCdfOJ1WFMnA0",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJgQ7qKyEZ2jERkkjYF0TX25Q",
-    "name": "King Eco Pte Ltd **Makes Living Better**",
-    "latlong": {
-      "lat": 1.3142727,
-      "lng": 103.887485
-    },
-    "address": "",
-    "rating": 4.8,
-    "photoReference": "AeeoHcL_QrencC1Uc9EUFLcqZeSKwByW_aHF7nqg7KhnVuasoFz9IcjpYMYnsY24RpA5eLhKIrkZabkJKDfDbkdKCqwkX9gLYzWd1-q00lc5_XbXpMYrElQTSorqFMvPx2Dkn9hI0IQjNui5lyBZADlEXepmVs6Ol-00lkbmVJ-E8cdylvqjNzYnar8BJ_SEalDuUvuhdcViWBG6fkQb0kLzE_Y-1bWfiW3TeXluuoz6HftKC-g5Mhvgo1t0BlbH6kmgBbqyli690t2t89R2OI57w5sVQv9t9n4hIt0qm5cjL300m62bQrU",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
     "placeId": "ChIJx71oWzwY2jERywdnv585mlo",
     "name": "Haus Square",
     "latlong": {
@@ -10783,23 +10597,6 @@
     "address": "",
     "rating": 4.6,
     "photoReference": "AeeoHcIGBIgUbA6hwJZ5zP57wUtsenNSPvKujI46s4oewoXe0nNtssoKRngjwYaO_nHdl7GzAitZZZ_DJGOXCMjQh3JjDs97U3CC5-_K_0B9BsPpDY_pQMuBEyD8HWeB2Kie-BgdD_CmG8ugU2TGVoAvXukHEFd7CbK48osDch9ZRUoDq7I1tsaXBGEnslJWO5_udlfx0nsUjGpSB8pcJ24UkNjCZ_Ns6XJ-d_z0A6-XtjkbM3DamLLfosv6oxc6sde3QKsXPQm1NniEEI-1oRFVSuGA4_uktI9y2m6opvGyMI2zbBwmh3lwX3oVHJ9AVWMVb9g_FOzLO2ugxN7vvL47GPd9b4TpJPDly4g_PikArgFyQutnvl6uNFcV1AJe3PJmrh2D-_EREnnBs61xjo0YYTzdKuH7JZph0rJSco9pjouEp0Gfch2vpXyLuVw65FHQSwwGTJDdW1eekXxH-AZETotLnkgTzT3oCGeBGuROz4yFxU1x5BbhnCPEV0z3nAtKFy7dYZmPMsugCu37DMKcEsq8xfR54KHP4cLZxI3ihx4AcAc-Vb8hRQ_jCEDBXO-cLoUvYJVw",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJx_HhBuAZ2jERB_KH3PJSMls",
-    "name": "Swiss (S) Pte Ltd - Boshsini",
-    "latlong": {
-      "lat": 1.3145445,
-      "lng": 103.8899949
-    },
-    "address": "",
-    "rating": 5,
-    "photoReference": "AeeoHcI6At48e9XjCgPfyNFAKBZIjd0v6oS5OGpLjwjrvunuNGgLyS49SBOhUGluOZL5DuNDi9mDr0_hgzyX_-licn-mobmFDb5w6BGUoaYM4aSjTM1Qr7z4G98riweEVvVNv9LLO_45eJmjd-1ywp6Z_x6IdRMS1_B3HxqCfhq4HtyYF06n30VjjgzGsBvPJOEhRX33dQEVxoSeMPYAqEN-L-_r0ojjNl01EI52k1w1ABGUPvcpMpxM93dJ9s84tEgxqWM-P0AyEMLrd0Rbb_L1GVNH0AZWWqP3xcRne4ahPk9W4eOoGIYS0JPVoUMYWn6knQar80Cb1W9uNdt91RyBZrCMMEQ3xXN5NVVF3lkHn0etCmOt6N_sqCL5PDRrdiFT9SI-1VqpoliSeR2u4Yri2FqwZde67u7mZPzzLLJ5lJfID8KiyTY-C3FMAWgqQyeDL1e57eqCwYJ1aXkKDFOokXECcC-q5BymnpJs_NaLj8a17PyRsiUANk8B8Zw3zKzqEwL-G7m38Xls9431HPygIhPpAC6tQz0b2FxZj6zFDdw2S2yj_CBp55r55WjAVgwC0gDdo-pb",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -10833,23 +10630,6 @@
     "address": "",
     "rating": 4.3,
     "photoReference": "AeeoHcJoVLcwxNSMumoqAj2pxi-5MX4Cc10hul9sEayml4sQNagI1VTLzh8U7PRr0T492-Z5baXWzzxFQju7-hUKgjLkH4qZqhzu3LIhTLWrWC5882VmbHN8gP7xIVGk_GNkb0Bijg_jZMP2Eqjk1KBHRz9k2KnqDtihSPhizQ1pbeI4qwy2IDLENjAMT5AcgyWF2lVsgJkMt8LIHADBdUOVG83aIo-qZwZdMVCgs2J4TSBrDIKy6u6sAZ7q8fLx-stACuWJ9jRe8DA15rOf965iLzUMOrNPwO8Pba6kq-E0EDJSyReBLTU",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJD2Y098kZ2jERQAPTCGqQ6lc",
-    "name": "Ideal Merchandise Pte Ltd",
-    "latlong": {
-      "lat": 1.3156027,
-      "lng": 103.8678825
-    },
-    "address": "",
-    "rating": 4.6,
-    "photoReference": "AeeoHcJHApjg1W01EOO0ggQKbsbu-MUvhCK-IgucUIotfsAF6dR-J9A0tmM6QKe2lOrhWqcBoMSzWcYhAK_rj91KIdM2q2qal_78JqiqXeyhb0K2Upqnm8tbOIdZp_Z8Kaysva6xPtkBMeVXdfun4O761e61Pd-7CKqRQdwjju16b9-yMd86kjx12SlICk4W4i0GKZfF3u8qBSCejLcVLW1ql123QQuiKkZoPNDEV5pcBHzARITmrG_ZkEjR3QD2uF8xQP3LQcO5pZxExfUwylCv4MPJVqJAJ9i9Cj2QaMMp_yJu3vWwueE",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -10960,23 +10740,6 @@
   },
   {
     "status": "OPERATIONAL",
-    "placeId": "ChIJ8WJ2htkX2jERCxLTA0Yh-Wk",
-    "name": "U-Home Hardware Trading Pte Ltd",
-    "latlong": {
-      "lat": 1.3620742,
-      "lng": 103.8568997
-    },
-    "address": "",
-    "rating": 5,
-    "photoReference": "AeeoHcIh3UR5Xq3ZVSb4szS8WUOB0W06HsO6LBIaEVNRFq_YrDf_s8x9W6ZNZWHh6tr2JaOlAgXqNc9V-oc_mfSfOr8hKktgVM0tVzgNtDpir93_3mTkSLalGmYPLhntZ-QkwkE3SAlshXvmDIPj_wjvaMgwb8BpemFhUlZ5jUOaZawqf5l3h6Rr9aQl6PPj4a9371R1HQ-9eIvmEhm24z57DIyUYBmwT-SP3jPYU1Im284SD0qONZX94nZS8AHCNmU3i106GfU_L1tUkR5ClwO2pMoybMhFug6zqRyWKbk-eOxu0ABlybU",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
     "placeId": "ChIJnbR3wVoX2jERj4CsiGG0EDc",
     "name": "Bishan MRT Toilet (Exit C)",
     "latlong": {
@@ -11020,23 +10783,6 @@
     "address": "",
     "rating": 3.8,
     "photoReference": "AeeoHcJpk_7z-U0EVSKrOeCsEVY9Dl8yfnpC4JWjqRa3V30UI_TyJuG-Ow8s3hBbBcpuMI6nOpJkBTLqemGPUPF-cSwVGjsDgpAxc_OXuwMgSivxnm254GRo2VFg9APkaRPNQUaCaU6_EfqZzmHQkUvbzepq45s69kp6_bKH8PRvChqNtdElUsbQngZLX_kMsasBMip2fWoqPP_4Kw48gTNZbZenF-TD7EqtPmxHQ4gSHqWwh6U3gp_Hbx7exw2-rRKptRwSEV6DMDwMcVojlYBuB86fyV_hn7SyVv7NQv6_c7CC6eWK8LU",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJg12ha9E82jERPjbnWA5qAGA",
-    "name": "Bathroom Gallery Changi Showroom by Wan Tai & Co Pte Ltd",
-    "latlong": {
-      "lat": 1.33152,
-      "lng": 103.968317
-    },
-    "address": "",
-    "rating": 3.3,
-    "photoReference": "AeeoHcITVXNMdJRMqHrDXN5TctVEYOEwTQ552MsU6iba-RpHC-xnBAtA8aWwi3OmpvYOfRuuQBtr29SOlGqTHMwC-fUrBpEEsf6C97a30h6AW-fsSsmCBw1zZRCVcs7GCsBuR5dn1N5PVoLP3GugFG6TmS5vPQcagjJ0R0VP0etlyDmC041TrTHWlKsdmzS3P5AoknyzaogqcJJwTf3rjiOSphGZp3uxCKy7sjFAyUSmQS14ZimQdxk8jIGBniFQ5qzaXj97FOhBIyTk7puJsN_Wmkze97121ulAFhhlRGkSSGp7CJIJR5DAoKqORo-9MWtase-_iyJmH2yjjeJ6ndlRVVNzGY0IgELT6jap6s4Agqa4E58CGF_-VvMII-lIff_-_zy1BzAUS5mzIm-XCztWsFdaGsi0u9gE8PixhoyZzqbX_X6_MTp-71iFAsRKHG2p44rpSWzKlR4SY3sqx1IMVohoktBWVZbuE2oX8s0SCyJ8_CeqQhSQwFdjK-5oo8of5ZMIwhCscdxM5s8Az9ZzijBzgEpUblYG1PiI1795oOsXm7r5nIimCqSr3A85avdZ381GPatT",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -11179,40 +10925,6 @@
   },
   {
     "status": "OPERATIONAL",
-    "placeId": "ChIJ3TgTHGQZ2jERT35z8Adflok",
-    "name": "OXO Ceramic- Hosin Trading Pte Ltd (Jalan Besar Branch)",
-    "latlong": {
-      "lat": 1.3068822,
-      "lng": 103.8564305
-    },
-    "address": "",
-    "rating": 4.1,
-    "photoReference": "AeeoHcKInfzMQ-DRoTgwh-WW12bSQle_65ydsoTv96otF92J-daNAmbZRCWmx-1AluD05y9JPFEu-Ljcjwm96PvVmbKFQvet5o_lXiSxiDIbqj5Cj10BvB_8FJPf89OMo0qkA9w7Oonfq3RznMLpZmVTS8UENLlCw_pKX7AZOI6ZjjMEZ_KHnC_YFs9nW095tezBs5rGJRVJxUNGbRWLiv0vrVPWqNPcN9W04IB0kvOtTAsMXJB5_N13whaXDVqLx6OS7_ywe7lR8rVpXjY99E74VVYtTTEl82VxN8BUl9jPJKEpgzs7_L8",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJP2g0ussZ2jER-Nu2oTgbBq0",
-    "name": "Geberit South East Asia Pte Ltd",
-    "latlong": {
-      "lat": 1.3110976,
-      "lng": 103.8640257
-    },
-    "address": "",
-    "rating": 5,
-    "photoReference": "AeeoHcLZb_NkQuff8ly0_kUozSfLwRG9W-u68uTBQFqJI3BkXFr8raFn0OH5ytbvtWLBlMnveYV-czhyYJZErKWyrDKuOnL72kLu0RXdhpYQnSXIk6dx_7GZ_j5ik1eNQ9KFFo_amC_XVOjW847Ty4Tg5G7_FdBlk36jmujDIT_TRLcmVv53J1o2RjCPbIqVtY1w0-NO4USsPQBiGuVijiPg0S9d8hojJxOtuTFg6PPVMLl4w3ZxcRdEXwQvaxh7HrGw0dWhVgL77_ocghKpxSSSB_C7Wh-4gO4FuL2o8uVVJlsELms9OTs",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
     "placeId": "ChIJLWE1bgAZ2jERvRjsJN0P7_M",
     "name": "Levin Bin",
     "latlong": {
@@ -11221,23 +10933,6 @@
     },
     "address": "",
     "rating": 0,
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJN2rtc7gZ2jER-57wHx8CFPU",
-    "name": "360 Bathware Pte Ltd",
-    "latlong": {
-      "lat": 1.3074185,
-      "lng": 103.8546811
-    },
-    "address": "",
-    "rating": 4.6,
-    "photoReference": "AeeoHcKYefGislDvmR0o2iCzLuloFJScq4G56Wd8u5cuRFwFFJug5TZUg5UNwQMKHGRfKJZ-HqMbjHDOoTZDnBExyTOLJA7ct8QZC1Q-eDI_JeVQiWg4bF-xkdS7qaxrGzwWPnP4ap6epc6rjWYpt88D0BQeVfyrGDWfI_TmXhyYXGFifaSCcg5VuVCwTeRc58ipTuzRBUQg-ZkIz_PJx4t2haUBAWDw9TWQerFzz3DwT8N1iCKbdzQ8yAOjclIJ4X3ZiXSBovtyEebBLyI1_hygQV_BdN9ngkCrqHXY5zwAhTntzPDQXttjOpEg_3lL5hFRE9LdKazFz0TCdz-2EX1LejufM7hoiQFXugJz_6WRLx3Rd0hkLXPnAXSyv1i6HJIabmP_8VuygHJJUghuLjKceoaXYLEkLu0LTtbeBvtkkge1sDOtZlwdWkRcEluX_ynEmYYspE-sKj0YWV7RfQZX3LN2A2RgG0gwJ5oAKvhy6rQkEVMoFOTkR53DPjRTVVfJPez0AzkibD8ZIrS5AW24SuDGbWeXZ1v_4jybM-dzPnqDjbQLXCPbH8y0YLSgAEnatFp3Y3Oq",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -11314,23 +11009,6 @@
   },
   {
     "status": "OPERATIONAL",
-    "placeId": "ChIJB_5y2w0Q2jER9MPONZ-uRSA",
-    "name": "Hoe Kee Hardware Pte Ltd (IMM Showroom)",
-    "latlong": {
-      "lat": 1.3354783,
-      "lng": 103.7463135
-    },
-    "address": "",
-    "rating": 2.8,
-    "photoReference": "AeeoHcIh0Pb8TIVuAya1XbWyhG0Ws1dxSEJIq4VbSbkxRo5I20o10pP6e8jck9AUvD-a5vjnbPmv31Yy9Tuidls5YK3iQ0tFfF5ehac0AonP6878e-dV-5b0qazXwOcr4jyXO0OsUieIQKYD1mmeR8noYirp31Y9sbHWgp3d_GSrGaaZmvBDv0uF5-FQS37vkPPmheSBjRiIj89AkVgTVHywQbPvwqmAGtq6rvy2yqr7eKSYS7iXThS-qLacUXrdX4RrqnmBGPX02BphqrSs4XZmJ9q95RGfjEKw9GCqPy3qhf0-DgYbsAI",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
     "placeId": "ChIJzQDVJtkZ2jERXX7xqkl7mzc",
     "name": "Bath @ Holt",
     "latlong": {
@@ -11340,23 +11018,6 @@
     "address": "",
     "rating": 3.3,
     "photoReference": "AeeoHcJVinK_z6vGT1n1ii4rvGD5te5doDSNiGx28_63XuIt9qSUEzHLSwxvgofUVifAodXp7Bf5k-TwvQ43FHk9BnDw7PAmJ0Dtpr4CzwaDqLQqjdNkH-iZ9EdfrvzFKcB43fTjOvCcWgEKuUEFO-sF_TVHqxON2UE6i3kgjj2JUmzpriAc-KUDPriePcl3GpaxI6TzhuwuHiWp5HW9_444uRiAqNF3n-_k9LZ7QQIBLrQs4gYiNzTBHTFumuIfBNyC_kpICzrj_M85EItbBui7vDzruQ-8TRcJMOUvQnilelgVQmq_h0s",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJ48c6ReIX2jER_bsf3l_ltTQ",
-    "name": "Steldor Pte Ltd",
-    "latlong": {
-      "lat": 1.3367452,
-      "lng": 103.9112123
-    },
-    "address": "",
-    "rating": 0,
-    "photoReference": "AeeoHcJ6PlM-x-m82qHZDzXnr9l5UmjoNknNAlTH1gEUVBPJqe52yvCuyRIYgh7I3Afi1oBvPezzjA3QavxDfBwnJhMH49jcFUNopaP08q0c4M6QMYjJufTGLCpUyFPmMv_VFat9bt_uBf05e-7TkuKomMeoIDbneq-MpUGUZJPKHe_1hEOA2j6H5H_eLAUs-5w9GRQ5knzsq7t_Kw4HaehZAOkzCT3cWpZfyzxFWp9NEoB_eT94tjZK3iqFkTiJGO8PzFuEK-Vd0hhDE4-ELFJMqMM2VhemMW6wRvIjnkbsQgv849IiO_c",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -11407,23 +11068,6 @@
     "address": "",
     "rating": 4,
     "photoReference": "AeeoHcJ8hrZB71HMRp2qrX1K_vNZ0rqThUsg8L80WAG7qxvmKS85kTO50h8LV-OVJzmWtx2SdxgRE_We0DhwnP_T_cQicfiegGWjU1_G2htb2p-yCQhLg0lWH2MvDTmvxAvhi5Ys_hPz5mFA6LBInX3bcn3utFMgd5XjYwyjqrzU0DnRhQSgQE4QyRmps0oBXe519fgePRcYIUhAJoH9pBIqIE07DJg1AmueXo7AatoPP7XuunxHSR1d4kmh6WdUsxGnLPbcsWB-MgAXlKKYTwbaqtDh7Yzu-i402U4aEEX2er-xkgj7nbbAifAhwWI_yHpacHlG-Tn51xfWDMfW1m2673_UKxEkaI0DeVFt5Dt4EsTnRfdmjCBxpV6iNhaJ0znatLHnhmb3oW-v6YsAOjdnOx0Sm6AZq0Zj6XWWagdSe8U3lcB8U2rf48-cYB8i-OVabiQpCM8q1PgKr5euV866nIZg1LFYHa1poabyNy0_02dgYRmhpiSlarFPw-c_QvhOPYv6x1_zlCqffwh9RAzNKplkRiJOjhujwexYYx5IpeW-MD96ZpS-Ejlont9nP1d7tBwnBh_G1qUnkA",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJxQ_CcTwY2jERE3Az3eyL4ZU",
-    "name": "D'Posh Pte Ltd",
-    "latlong": {
-      "lat": 1.3769653,
-      "lng": 103.8748031
-    },
-    "address": "",
-    "rating": 4.7,
-    "photoReference": "AeeoHcKz03WSZYF-WgDqueT_L5A0TM1HBh_oCFBw-GYQKnMju19uogoLdmm4GHdOrb4APXSzXbipeOqMkF-cBUVsPMyjjSPqZiIaOd_EXxloQbuyIRGqYyhblf0JrJ5697wKnrgJwNWTPwo8xYuxjFaH-Ad-dQhqdGltnZhu_HPstKfuzRUpX_nf0lMEOan0hE7BQvZlvsS-50PRBKu8dO3rO0kmgM-gr-uLcVFl1MBmhPrDLTmCk_OiNjX_g-IGgS29qK-Q7hSo1d69cgo09gFAPvF738UHM4j7Y9fAJlbzh7w_IjEY3lE",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,
@@ -11529,90 +11173,6 @@
   },
   {
     "status": "OPERATIONAL",
-    "placeId": "ChIJ1xkyj8QF2jERcFlWsLmOGEA",
-    "name": "Heng Plumbing & Renovation",
-    "latlong": {
-      "lat": 1.3270611,
-      "lng": 103.6399299
-    },
-    "address": "",
-    "rating": 3.2,
-    "photoReference": "AeeoHcLDbIAb0E1k9AUbLzgB-2DwqHY8A6hSABoHLGZ2pzy56X200tFa1u6vqnjxG1hS1Nlpz5yrNtSbAvWMinFBhH8ceM6H5N8tOHygrIXhth5yBJ2Bik9USbKyiZk-XleFO-FJlVgaTdUy6Z9dNK7EWPlfMrRdTQThYhdE-ZL0k7ld3yF3f0wGjazgsXjwNhZg6hGB32Dksj5GZbeIpzrhsVy928_OGPYagLbeapx9i7NXgXD63l0Ehaa8iNpMOO8sAhiE9wAdYLBvhFima5h5kQI6Re7P7mUwms-llQWK_aB_2wHI",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJtfLKjHkG2jERwKMuxSvBd8Y",
-    "name": "Qool Enviro Pte Ltd",
-    "latlong": {
-      "lat": 1.2986396,
-      "lng": 103.6304313
-    },
-    "address": "",
-    "rating": 4.3,
-    "photoReference": "AeeoHcJPNhGLBsllQh41smyPetFnmtVHiQ0pfdFagz5Sp1XHBN9-rZ2FrB1E81G4aIEgPOvvnhlaIMeEMsACQC1jC0v31XJazRIxiMG5dHbJugXmmTgiRTpC3pESGoWVkLhwtE47dCAQfOAyfugpFEM_xyCSqTYbY7PlEKEvuVg5RfZ3d9vs4VbaQgqc3yDnzx3Bv1tsGje5vR1eSFCMqY1qpcvoNGolE1YJ_yMgGKT_ADlBFEG1g7UUacSbuWpjiyXBTvy12O5IhPHxf0HG3hsxdzOApDA96kqWyLLuAhoh6RnjswTOWqc",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJZaxs0g0H2jERjO0rULljKCE",
-    "name": "Polyportables Singapore Pte Ltd",
-    "latlong": {
-      "lat": 1.2985202,
-      "lng": 103.6312218
-    },
-    "address": "",
-    "rating": 0,
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJkaIuTuUW2jERWkAlfPbwPis",
-    "name": "U-Home Hardware Trading Pte Ltd",
-    "latlong": {
-      "lat": 1.3725416,
-      "lng": 103.8557195
-    },
-    "address": "",
-    "rating": 4.5,
-    "photoReference": "AeeoHcL6t1Cjqzt1Q6t-VtR0csuZRkLoh8geMeIJSYVxhRc_ytHx4dViIdjeOJRohW-9l2ENrzcMIPr81kZWAvFa2PjxJh7bz-tJDkV5vYAWjV9hIc3Ind2wSXStYX3SRtlQ7gaRRyZS_xZWCsMsqVdPn42e40Dz0DKqjm4p9-TDocW7ZfagmLygPBhwtgingzOw1EnDeTM3yCrm2jiRuQSb01tG6EJzrFoIQyjNrzQ-wKbY1uOjVt6ZsafqIoH76WOehGTJDX_i5n6MRf_QA6Ynzc2pdbxW1AEWvh-RA1KJnQ5Vm70kCt0",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJ19dx9GsT2jERqvZ3blpBrJ8",
-    "name": "Porta Pumper Pte Ltd",
-    "latlong": {
-      "lat": 1.4538561,
-      "lng": 103.8032123
-    },
-    "address": "",
-    "rating": 5,
-    "photoReference": "AeeoHcJ2JOXSAlE-6vXBd9XwLwMNXzfJkfqmQdlZUef3NEMzIL0xpePyHduIhPf0lSNraTAxj8s3Bp9-JmxfamJdvPMPKoGpbkX1SsSb29S98tmWuK4sLUe-Io2KBWidsTbJLVXemF3hzCYaZTvZAx59WoIsUoQZsXimldBkA-R30MnHHdndaUE0QjFjMf62-0jHisMelqnUBTOHSL_u8qM0WSoyValiHLN_Gy2vl5OVUFHkN3IFw3xGrMUnP-V6v3kLdwlRx6EZhhDJpjCrtGw-klCpzad5-3QddkBaWtfZhhzJ5hi_siLYpIpjJ5xfRjwt6b4iZ4dnnApb1jHj9eJRb3u7thtN-eeKiDgDGriiKSEiAoyFdQNEmI-Wk8UUO5NnwNWvV5rjHMjNfSdvqbOTlV3Y-XUB_K9dVDlDfr5qvJHP3KbFNUX_dx4dzOlCMYWnFsAMylDRKFm36XOQmS4TS3g-9s_S6-2WMzHDgK5t4RpDE1H1ANPtGjl10NPJS2V2RcbMJWORditUQG9brgxT-W6gdo8U4oR5kKRhy5tlcaHezyvIO8tcMhjypSasE82FinW3pQ",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
     "placeId": "ChIJNQBMQwAf2jERsmzwuxXDNgU",
     "name": "Tanjong Restrooms",
     "latlong": {
@@ -11637,159 +11197,6 @@
     },
     "address": "",
     "rating": 0,
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJU3LIS9E82jERIleyTGceMhY",
-    "name": "Sim Siang Choon Hardware(S) Pte Ltd",
-    "latlong": {
-      "lat": 1.3359191,
-      "lng": 103.9704194
-    },
-    "address": "",
-    "rating": 4,
-    "photoReference": "AeeoHcIEP-Ei-slRrDooFpdsNGpMzQMNa89QsLbMQOEh5yTME2bLcA2_NSWuCYFmvAt8EQm3D-A1quX4PxPbrtppcKhZqLtmr3kjiWrscLo3eF9Dn6oMUabkx4OE0MuKz9yxg46U4aUbzMe6thHpaU03A-mwSSjs4JqQ3-Gk6W-y0M0GoF7Q1Gkw_gRVliaU_CuBAdml_eNMhHiY7g6GXgthJUgoQRwszvdlyFbNo927gaNdG46IMYDKEJg_CUoHM6LVfh3y1GpCagDtSVNMrPCYC5e8qSLWszMelSdaMvK3BMpD8IitBUs",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJVyFPB_MX2jERU3c5d7o73jg",
-    "name": "Bathroom Warehouse Ubi Vertex",
-    "latlong": {
-      "lat": 1.3323266,
-      "lng": 103.8946588
-    },
-    "address": "",
-    "rating": 3.9,
-    "photoReference": "AeeoHcL4YIwQQcbNymMmE7quW19mYUs-tNObwY-YqQewEw3SvSCr4UCeZTQgmjenL0r3vVm6tVLgWa1DrEEp4gVzYWP7ZCYz55lrKYDXmkxFmeb2W6R-6HCRzkfctvJFaAfk9pV9OAN_aruyvPmIC8h1G-9sJIZkTa8_wevrBErSWNxnAJ7wvLuPZhEwEANkJP6X0GqZsWl19eYwqFDLN0UBes7-6AXUvelzAY0xe1cBeLVG_hC_RaPyFenvHzTe8bEhxDPUJGxowdk7sYh7ed5Y3Nwv7ItC1qysQe-zi43h_a6HM5Zved8",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJXwr1mAUY2jERT9WHUsLyTrU",
-    "name": "Elite Sanitary Trading",
-    "latlong": {
-      "lat": 1.3179229,
-      "lng": 103.9062066
-    },
-    "address": "",
-    "rating": 4.9,
-    "photoReference": "AeeoHcJS6hNt7cjTleQyaY-QrNg9B0ecZ92cKY8_Jlr9CwWuSI9UXqmrce4iS7Ac1XXkv4ZZEzjDm5WiIqATsnRXBBOQ7dE7F1tQiJTXepyRX0bxSpusw9PnsjGMxEUCQgo0FDpwiBK6OQyjJXh_-IwINiEvAghenJiZittQmN8ufRxvf4_37LhjVo7-cUbuNASDj3YIWgedbMierjdmv2v7LotlK_sm44flCkacNvs_yJxHcNI5F_Y3LYnktOvdZCQv_lSbOu8oAG3qa_r1Kb_dbGIsBXwNf_RHn_kLsQMmDZHZBoQJALQ",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJp2dxnwUY2jERk5hAB5TwvjA",
-    "name": "Hupfarri Bathroom and Kitchen Gallery (Changi Showroom)",
-    "latlong": {
-      "lat": 1.3179264,
-      "lng": 103.9057957
-    },
-    "address": "",
-    "rating": 4.5,
-    "photoReference": "AeeoHcKn6nZKvANoLUq4r-fax0rNn-xqgBnf7naU_Fkpbqu5Xbjus-VvKn6vwpNf8x4gmLG7BpaFI7ojTYg9EJlZUVGiyApo4dKuQcK-CO9e-XtM8zTFtBpL-lqG_YZ7nQCu_h93QWGnrqwet1u5mF4wXA0p3eADTUwTGsb9Z4zwz5JRKjsmmSqYXx6yro6aTXbhjEwSk9ohObW_oBPs6eq2NdZkAKoSb7i-c0ndi2vkwVijgBDncmLeK9eOjg8d6sZP5ipz9hKC5rZelqVCPdLrj-vWG_kMtAIFB_OBQktlUdB8Rs9Nlfo",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJTwx4Cj0Y2jERxBAzRO909A4",
-    "name": "PH Bathroom Gallery",
-    "latlong": {
-      "lat": 1.3144451,
-      "lng": 103.889452
-    },
-    "address": "",
-    "rating": 4.4,
-    "photoReference": "AeeoHcJOo0n7C-EAwM0Yhy5LY-GJTy9Dy4JLWDKLXbZ2nI2qQquGygKPvLZRq6OLkCvMIExEh7y-bRMChkqmUnKexiv5DHf8lr6QEQtLihd6KaVeAoT6Ns0ZE2ubiItYUViqEzqKF6FZNwSWCLffd1eeUyK3h6QX-2Jn6Kxt1POXPsMSLir5tSsnhGZKGgCWgRiYaYqblUoklQrq93-KPuD9w5PsV68ZuaUEUNHk2HqaED0qcjA4uMMqV0_HoLDHF8ytrAoJKc6cOtIbtRtOuaxCV9mhBVnEbBluIWMTWAZiP-IkImcvxWA",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJE9DkqfMX2jERoq9oVP9WcYA",
-    "name": "Bathlabz Vertex",
-    "latlong": {
-      "lat": 1.3329431,
-      "lng": 103.8939977
-    },
-    "address": "",
-    "rating": 4.6,
-    "photoReference": "AeeoHcLgFaftD1GAk66-bvyZwTWI9UNHtqGR0Y5Eig-uTLWmN85tmnctkGXlFSMV-ThQdz8rRXSbqlGxexXFNYVcPV64unR6GwgfNwXJ1_u8hR42quuZJtGjDVwFR-TbdClRflAVqWRKo3AUi2KjgXcFKS0iwrLKUxPxKRZizsoRGJPl_YwccUVCAdf37Ino0w-CwVoM-L8fiBGYk2W_9RcZHf_6VdUlud0MMeaTsjLkTkBJpOMXjmnZwddPKuZn4fxfCuFBMswnzEOGkioEgp6UCxkHX3q1Rrc041DzgnJZiyL3kuyUSSQ",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJNxbqkhAY2jERaR4--1tOkv8",
-    "name": "Budget Home",
-    "latlong": {
-      "lat": 1.3157923,
-      "lng": 103.8990634
-    },
-    "address": "",
-    "rating": 4.5,
-    "photoReference": "AeeoHcLj8AOkJDp53JwMMmtRy5gEzCPdzppd2UF73jPkqIDaZEtn_9ZKn58FoqYv51rUsrbonb6yQuOEOs10Ye3cFgE3UqN9Xbe28O470zGCjcs3KXrrEoxIqYzc82QCJGrG1vRqxhmvUcUBV9E4gLFtt0gzpIA7-SYqQqNK1XvQ1j94WpqTlNecRxI9i8L3G0C6wgun_IU2_weRpNw2FHs9W0xu5NCSfvJZVote3diAQ9hq3VS0Y-XEPDSuFse3U0Eyp0QGGLS99WXzEHQxdCzKWHed4LAv5qXF3ZkWSNW2A5iIDF9axys",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJvXozdD0Y2jERO89h0r4Z-nE",
-    "name": "Bathzone Pte Ltd",
-    "latlong": {
-      "lat": 1.3145434,
-      "lng": 103.890004
-    },
-    "address": "",
-    "rating": 4.9,
-    "photoReference": "AeeoHcLgSlLyBS1OzyMYXSQ_w91EjZ9ZGS3wsUy8arkpd5KTLPu58HeGcJnOtJMFYBkey4IbvC12O9lQTi4ZxTJ9obxZ7yu561dWAdnsoRYqJ4mzujBhNlo6fG3Vj4yYw6ngCdKx1xOX0qfg4vvydvxnJjQeQvQycJ3CK2o2aS_eGUNfuJ_qUfpLrST9lwUNU_q5cL2QUqo1N1YNV2BCr5L1BDiSfEJSTSG4j-F9kxv0oUiEG8iNb_JV98HLhSYBWjNlCt7G3R2px_gC1nJT-CVqz_RVcL79Xc3eJq_lresq35-6v22_8R0",
-    "country": "Singapore",
-    "hasBidet": false,
-    "hasHandicap": true,
-    "hasShower": null,
-    "hasSanitiser": null
-  },
-  {
-    "status": "OPERATIONAL",
-    "placeId": "ChIJ6zYZjswZ2jERs2-AcGBaQOk",
-    "name": "ADVANCED BATHROOM GALLERY PTE LTD",
-    "latlong": {
-      "lat": 1.3185353,
-      "lng": 103.8900726
-    },
-    "address": "",
-    "rating": 4.8,
-    "photoReference": "AeeoHcLDfqhueXzErgToipOZhbpQ95868Lln9SLGZHoXlU1BlxvBV49byMBN7HPTbgVD7FhRw-aT5Z_XFCCnzSk-jXsZRH2_LoA5MHZtxy4YYzEjYrNpTxSG6Lnd-O41jjg9DWEy7oMzSh93XRxIqE5c3Q9eNkVmc1GeFNwzuqQu7LbrZ8hWjFVjfbJVTSM2ykPgoCnVfz6waY0ejZD-dAJY1CjZq2BrNyL-TQS3isVNcxnWGF0iDzZ0bf-GB7I5HczwHuYW9GkaulfPtNR4Pr8NE99r-GspPZt9MekAYqHqkt6kh-jCScw",
     "country": "Singapore",
     "hasBidet": false,
     "hasHandicap": true,

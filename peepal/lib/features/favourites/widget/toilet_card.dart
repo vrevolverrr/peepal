@@ -94,7 +94,7 @@ class ToiletCard extends StatelessWidget {
                       ),
                       _buildFeatureIcon(
                         icon: Icons.accessible,
-                        label: 'Accessible',
+                        label: 'OKU friendly',
                         isAvailable: toilet.features.hasAccessibility,
                       ),
                     ],

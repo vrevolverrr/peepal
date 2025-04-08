@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:peepal/features/login_page/view/login_page.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -19,7 +21,7 @@ class ProfilePageState extends State<ProfilePage> {
             width: double.infinity,
             padding: EdgeInsets.only(top: 80, bottom: 20),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 238, 242, 244), 
+              color: const Color.fromARGB(255, 253, 253, 253), 
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(40.0),
                 bottomRight: Radius.circular(40.0),
@@ -124,8 +126,43 @@ class ProfilePageState extends State<ProfilePage> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add your log-out logic here
-                        Navigator.pop(context); // Example: Navigate back
+                        // Show confirmation dialog
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Confirm Logout'),
+                              content: const Text('Are you sure you want to log out?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    // User canceled logout
+                                    Navigator.of(context).pop(); // Close the dialog
+                                  },
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    // User confirmed logout
+                                    Navigator.of(context).pop(); // Close the dialog
+                                    
+                                    // Navigate to login page and clear navigation stack
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                        builder: (context) => const LoginPage(),
+                                      ),
+                                      (route) => false, // This clears the navigation stack
+                                    );
+                                  },
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                  ),
+                                  child: const Text('Logout'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 91, 100, 134), // Red button

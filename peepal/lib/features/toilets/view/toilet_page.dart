@@ -142,7 +142,7 @@ class _ToiletPageState extends State<ToiletPage> {
                   const Text("Reviews", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
                   Text(
-                    "21 Reviews", // Replace with actual review count if available
+                    "2 Reviews", // Replace with actual review count if available
                     style: TextStyle(color: Colors.grey[600]),
                   ),
 

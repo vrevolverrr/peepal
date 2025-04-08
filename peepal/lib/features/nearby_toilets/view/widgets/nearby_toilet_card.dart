@@ -7,7 +7,9 @@ class NearbyToiletCard extends StatelessWidget {
   final bool highVacancy;
   final bool bidetAvailable;
   final bool okuFriendly;
-  final double height; // Add height parameter
+  final bool hasShower; // Add shower property
+  final bool hasSanitizer; // Add sanitizer property
+  final double height;
 
   const NearbyToiletCard({
     Key? key,
@@ -17,13 +19,15 @@ class NearbyToiletCard extends StatelessWidget {
     required this.highVacancy,
     required this.bidetAvailable,
     required this.okuFriendly,
-    this.height = 400, // Initialize height
+    this.hasShower = false, // Initialize with default value
+    this.hasSanitizer = false, // Initialize with default value
+    this.height = 400,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height, // Use the dynamic height
+      height: height,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
@@ -35,7 +39,7 @@ class NearbyToiletCard extends StatelessWidget {
               borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
               child: Image.asset(
                 'assets/images/toilet.jpeg',
-                height: height * 0.55, // Adjust image height proportionally
+                height: height * 0.55,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -74,32 +78,15 @@ class NearbyToiletCard extends StatelessWidget {
                       runSpacing: 8.0,
                       children: [
                         if (highVacancy)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.circle, color: Colors.green, size: 12),
-                              const SizedBox(width: 4),
-                              const Text('High Vacancy', style: TextStyle(fontSize: 16)),
-                            ],
-                          ),
+                          _buildFeatureRow(Icons.circle, 'High Vacancy', Colors.green),
                         if (bidetAvailable)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.check, color: Colors.black, size: 12),
-                              const SizedBox(width: 4),
-                              const Text('Bidet available', style: TextStyle(fontSize: 16)),
-                            ],
-                          ),
+                          _buildFeatureRow(Icons.wash, 'Bidet', Colors.black),
                         if (okuFriendly)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.accessible, color: Colors.black, size: 12),
-                              const SizedBox(width: 4),
-                              const Text('OKU friendly', style: TextStyle(fontSize: 16)),
-                            ],
-                          ),
+                          _buildFeatureRow(Icons.accessible, 'OKU friendly', Colors.black),
+                        if (hasShower)
+                          _buildFeatureRow(Icons.shower, 'Shower', Colors.black),
+                        if (hasSanitizer)
+                          _buildFeatureRow(Icons.clean_hands, 'Sanitizer', Colors.black),
                       ],
                     ),
                     const Spacer(),
@@ -135,6 +122,18 @@ class NearbyToiletCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+  
+  // Helper method to create feature rows
+  Widget _buildFeatureRow(IconData icon, String text, Color iconColor) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: iconColor, size: 12),
+        const SizedBox(width: 4),
+        Text(text, style: const TextStyle(fontSize: 16)),
+      ],
     );
   }
 }

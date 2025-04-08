@@ -8,6 +8,7 @@ export const validator = <T extends ZodSchema, Target extends keyof ValidationTa
 ) =>
   zValidator(target, schema, (result, c) => {
     if (!result.success) {
+      c.get('logger').error(result.error.message)
       return c.json({ error: result.error.message }, 400)
     }
   })

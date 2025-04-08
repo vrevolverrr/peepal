@@ -29,3 +29,25 @@ export const updateToiletSchema = z.object({
 export const reportToiletSchema = z.object({
   toiletId: z.number(),
 })
+
+export const nearbyToiletSchema = z.object({
+  latitude: z.string(),
+  longitude: z.string(),
+})
+
+export const searchToiletSchema = z.object({
+  query: z.string(),
+  location: z.object({
+    x: z.number(),
+    y: z.number()
+  }).optional(),
+  radius: z.number().optional(),
+  handicapAvail: z.boolean().optional(),
+  bidetAvail: z.boolean().optional(),
+  showerAvail: z.boolean().optional(),
+  sanitiserAvail: z.boolean().optional(),
+})
+
+export const imageToiletSchema = z.object({
+  id: z.number(),
+})

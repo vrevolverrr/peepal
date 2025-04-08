@@ -122,7 +122,7 @@ describe('Test Toilet API', () => {
     })
   })
 
-  describe('PATCH /api/toilets/:id', () => {
+  describe('PATCH /api/toilets/details/:id', () => {
     let testToiletId: number
 
     afterEach(async () => {
@@ -147,7 +147,7 @@ describe('Test Toilet API', () => {
         handicapAvail: false
       }
 
-      const res = await app.request(`/api/toilets/${testToiletId}`, {
+      const res = await app.request(`/api/toilets/details/${testToiletId}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -163,7 +163,7 @@ describe('Test Toilet API', () => {
     })
 
     it('should return 404 for non-existent toilet', async () => {
-      const res = await app.request('/api/toilets/999999', {
+      const res = await app.request('/api/toilets/details/999999', {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -176,7 +176,7 @@ describe('Test Toilet API', () => {
     })
   })
 
-  describe('GET /api/toilets/:id', () => {
+  describe('GET /api/toilets/detals/:id', () => {
     let testToiletId: number
 
     afterEach(async () => {
@@ -195,7 +195,7 @@ describe('Test Toilet API', () => {
     })
 
     it('should get toilet details', async () => {
-      const res = await app.request(`/api/toilets/${testToiletId}`, {
+      const res = await app.request(`/api/toilets/details/${testToiletId}`, {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
@@ -208,7 +208,7 @@ describe('Test Toilet API', () => {
     })
 
     it('should return 404 for non-existent toilet', async () => {
-      const res = await app.request('/api/toilets/999999', {
+      const res = await app.request('/api/toilets/details/999999', {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }

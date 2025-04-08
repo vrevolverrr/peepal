@@ -60,10 +60,21 @@ async function checkDataset() {
 
     const fullToilets: FullToiletData[] = [];
 
+    const duplicates: Record<string, boolean> = {}
+
+    var numDuplicates = 0
+
     for (const toilet of toilets) {
         if (toilet.address.includes("Malaysia")) {
             continue;
         }
+
+        if (duplicates[`${toilet.name}`]) {
+            numDuplicates++
+            continue;
+        }
+
+        duplicates[`${toilet.name}`] = true;
 
         fullToilets.push({
             ...toilet,
@@ -73,21 +84,79 @@ async function checkDataset() {
         });
     }
 
+    console.log(`Number of duplicates: ${numDuplicates}`)
     await fs.writeFile('./scripts/data/full-toilets.json', JSON.stringify(fullToilets, null, 2));
 }
 
+
+
 async function generateSeed() {
-    const toiletsData = await fs.readFile('./scripts/data/full-toilets.json', 'utf-8');
+    const toiletsData = await fs.readFile('./scripts/data/full-no-dups-toilets.json', 'utf-8');
     const toilets: FullToiletData[] = JSON.parse(toiletsData);
     
     var seedFile = "";
 
     for (const toilet of toilets) {
-        seedFile += `INSERT INTO toilets (name, address, location, handicap_avail, bidet_avail, shower_avail, sanitiser_avail, crowd_level, rating) VALUES ('${toilet.name.replaceAll("'", "''")}', '${toilet.address.replaceAll("'", "''")}', ST_SetSRID(ST_MakePoint(${toilet.latlong.lng}, ${toilet.latlong.lat}), 4326), ${toilet.hasHandicap}, ${toilet.hasBidet}, ${toilet.hasShower}, ${toilet.hasSanitiser}, 0, ${toilet.rating});\n`;
+        seedFile += `INSERT INTO toilets (name, address, location, handicap_avail, bidet_avail, shower_avail, sanitiser_avail, crowd_level, rating) VALUES ('${toilet.name.replaceAll("'", "''")}', '${toilet.address.replaceAll("'", "''")}', ST_SetSRID(ST_MakePoint(${toilet.latlong.lng}, ${toilet.latlong.lat}), 4326), ${toilet.hasHandicap}, ${toilet.hasBidet}, ${toilet.hasShower}, ${toilet.hasSanitiser}, 0, ${toilet.rating || 0.00});\n`;
     }
 
     await fs.writeFile('./scripts/data/toilets.sql', seedFile);
 }
+
+async function countDuplicates() {
+    const toiletsData = await fs.readFile('./scripts/data/merged-toilets.json', 'utf-8');
+    const toilets: ToiletsWithBidet[] = JSON.parse(toiletsData);
+
+    const duplicates: Record<string, boolean> = {}
+    var numDuplicates = 0
+
+    for (const toilet of toilets) {
+        if (duplicates[`${toilet.address}`]) {
+            console.log(`Duplicate found: ${toilet.address}`)
+            numDuplicates++
+            continue;
+        }
+
+        duplicates[`${toilet.address}`] = true;
+    }
+
+    console.log(`Number of duplicates: ${numDuplicates}`)
+}
+
+async function purgeDuplicates() {
+    const toiletsData = await fs.readFile('./scripts/data/full-toilets.json', 'utf-8');
+    const toilets: FullToiletData[] = JSON.parse(toiletsData);
+
+    const duplicates: Record<string, boolean> = {}
+    var numDuplicates = 0
+
+    const uniqueToilets: FullToiletData[] = []
+
+    for (const toilet of toilets) {
+        if (duplicates[`${toilet.placeId}`]) {
+            console.log(`Duplicate found: ${toilet.placeId}`)
+            numDuplicates++
+            continue;
+        }
+
+        duplicates[`${toilet.placeId}`] = true;
+        uniqueToilets.push(toilet);
+    }
+
+    await fs.writeFile('./scripts/data/full-no-dups-toilets.json', JSON.stringify(uniqueToilets, null, 2));
+    console.log(`Number of duplicates: ${numDuplicates}`)
+}
+
+async function countToilets() {
+    const toiletsData = await fs.readFile('./scripts/data/full-no-dups-toilets.json', 'utf-8');
+    const toilets: FullToiletData[] = JSON.parse(toiletsData);
+    console.log(`Number of toilets: ${toilets.length}`);
+}
+
+// countToilets()
+
+// countDuplicates();
+purgeDuplicates();
 
 // checkDataset();
 generateSeed();

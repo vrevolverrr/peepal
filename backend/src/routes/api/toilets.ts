@@ -1,13 +1,14 @@
 import { Hono } from "hono";
 import { db } from "../../app"
 import { toilets } from "../../db/schema"
-import { eq } from "drizzle-orm"
+import { eq, getTableColumns, sql } from "drizzle-orm"
 import { validator } from "../../lib/validator"
-import { createToiletSchema, reportToiletSchema, updateToiletSchema } from "../../validators/api/toilet"
+import { createToiletSchema, imageToiletSchema, nearbyToiletSchema, reportToiletSchema, searchToiletSchema, updateToiletSchema } from "../../validators/api/toilets"
 
 const NUM_REPORTS_DELETE = 3
 
 const toiletApi = new Hono()
+
 
 toiletApi.onError((err, c) => {
   const logger = c.get('logger')
@@ -45,8 +46,8 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
   return c.json({ toilet: newToilet }, 201)
 })
 
-// PATCH /api/toilets/:id - Update an existing toilet
-toiletApi.patch('/:id', validator('json', updateToiletSchema), async (c) => {
+// PATCH /api/toilets/details/:id - Update an existing toilet
+toiletApi.patch('/details/:id', validator('json', updateToiletSchema), async (c) => {  
   const logger = c.get('logger')
   const toiletId = c.req.param('id')
 
@@ -75,7 +76,7 @@ toiletApi.patch('/:id', validator('json', updateToiletSchema), async (c) => {
 })
 
 // GET /api/toilets/:id - Get a specific toilet
-toiletApi.get('/:id', async c => {
+toiletApi.get('/details/:id', async c => {
   const logger = c.get('logger')
   const toiletId = c.req.param('id')
 
@@ -128,6 +129,57 @@ toiletApi.post('/report', validator('json', reportToiletSchema), async (c) => {
   logger.info(`Toilet ${toiletId} reported`)
 
   return c.json({ report: updatedToilet }, 200)
+})
+
+// GET /api/toilets/nearby - Get toilets within a radius
+toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
+  const logger = c.get('logger')
+  const { latitude, longitude } = c.req.valid('query')
+
+  const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`
+
+  const nearbyToilets = await db
+    .select({
+      ...getTableColumns(toilets),
+      distance: sql`ST_Distance(${toilets.location}, ${sqlPoint})`,
+    })
+    .from(toilets)
+    .orderBy(sql`${toilets.location} <-> ${sqlPoint}`)
+    .limit(5);
+
+  logger.info(`Toilets fetched`)
+
+  return c.json({ toilets: nearbyToilets }, 200)
+})
+
+toiletApi.get('/search', validator('json', searchToiletSchema), async (c) => {
+  const logger = c.get('logger')
+  const { query, location, radius, handicapAvail, bidetAvail, showerAvail, sanitiserAvail } = c.req.valid('json')
+
+  // const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${location.x}, ${location.y}), 4326)`
+
+
+  return c.json({ toilets }, 200)
+})
+
+// GET /api/toilets/image/:id - Get a specific toilet's image
+toiletApi.get('/image/:id', validator('query', imageToiletSchema), async (c) => {
+  const logger = c.get('logger')
+  const { id } = c.req.valid('query')
+
+  // const [toilet] = await db
+  // .select()
+  // .from(toilets)
+  // .where(eq(toilets.id, Number(id)))
+
+  // if (!toilet) {
+  //   logger.error(`Toilet not found with ID: ${id}`)
+  //   return c.json({ error: 'Toilet not found' }, 404)
+  // }
+
+  // logger.info(`Toilet ${id} image fetched`)
+
+  return c.json({ image: undefined }, 200)
 })
 
 export default toiletApi

@@ -4,8 +4,8 @@ import { Client, DirectionsRoute, RouteLeg, TravelMode } from "@googlemaps/googl
 import { db } from "../../app"
 import { toilets } from "../../db/schema"
 import { and, eq, getTableColumns, sql } from "drizzle-orm"
-import { validator } from "../../lib/validator"
-import { createToiletSchema, imageToiletSchema, navigateToiletSchema, nearbyToiletSchema, reportToiletSchema, searchToiletSchema, updateToiletSchema } from "../../validators/api/toilets"
+import { validator } from "../../middleware/validator"
+import { createToiletSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdPramSchema, updateToiletSchema } from "../../validators/api/toilets"
 
 const NUM_REPORTS_DELETE = 3
 
@@ -16,7 +16,7 @@ const toiletApi = new Hono()
 
 toiletApi.onError((err, c) => {
   const logger = c.get('logger')
-  logger.error('Error in toilets API', err)
+  logger.error(`Error in toilets API ${err}`)
 
   return c.json({ error: err.message }, 500)
 })
@@ -54,9 +54,11 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
 })
 
 // PATCH /api/toilets/details/:id - Update an existing toilet
-toiletApi.patch('/details/:id', validator('json', updateToiletSchema), async (c) => {  
+toiletApi.patch('/details/:id', validator('query', toiletIdPramSchema), 
+  validator('json', updateToiletSchema), async (c) => {  
+  
   const logger = c.get('logger')
-  const toiletId = c.req.param('id')
+  const { id } = c.req.valid('query')
 
   const body = c.req.valid('json')
   
@@ -64,56 +66,56 @@ toiletApi.patch('/details/:id', validator('json', updateToiletSchema), async (c)
     const [ existingToilet ] = await db
       .select()
       .from(toilets)
-      .where(eq(toilets.id, toiletId));
+      .where(eq(toilets.id, id));
 
     if (!existingToilet) {
-      logger.error(`Toilet not found with ID: ${toiletId}`)
+      logger.error(`Toilet not found with ID: ${id}`)
       return c.json({ error: 'Toilet not found' }, 404);
     }
 
     const [ updatedToilet ] = await db
       .update(toilets)
       .set(body)
-      .where(eq(toilets.id, toiletId))
+      .where(eq(toilets.id, id))
       .returning()
 
-    logger.info(`Toilet ${toiletId} updated`)
+    logger.info(`Toilet ${id} updated`)
 
     return c.json({ toilet: updatedToilet}, 200)
 })
 
 // GET /api/toilets/:id - Get a specific toilet
-toiletApi.get('/details/:id', async c => {
+toiletApi.get('/details/:id', validator('query', toiletIdPramSchema), async (c) => {
   const logger = c.get('logger')
-  const toiletId = c.req.param('id')
+  const { id } = c.req.valid('query')
 
   const [toilet] = await db
   .select()
   .from(toilets)
-  .where(eq(toilets.id, toiletId))
+  .where(eq(toilets.id, id))
 
 if (!toilet) {
-  logger.error(`Toilet not found with ID: ${toiletId}`)
+  logger.error(`Toilet not found with ID: ${id}`)
   return c.json({ error: 'Toilet not found' }, 404)
 }
 
-logger.info(`Toilet ${toiletId} fetched`)
+logger.info(`Toilet ${id} fetched`)
 
 return c.json({ toilet }, 200)
 })
 
 // POST /api/toilets/report - Report a toilet
-toiletApi.post('/report', validator('json', reportToiletSchema), async (c) => {
+toiletApi.post('/report', validator('query', toiletIdPramSchema), async (c) => {
   const logger = c.get('logger')
-  const { toiletId } = c.req.valid('json')
+  const { id } = c.req.valid('query')
 
   const [ existingToilet ] = await db
     .select()
     .from(toilets)
-    .where(eq(toilets.id, toiletId))
+    .where(eq(toilets.id, id))
 
   if (!existingToilet) {
-    logger.error(`Toilet not found with ID: ${toiletId}`)
+    logger.error(`Toilet not found with ID: ${id}`)
     return c.json({ error: 'Toilet not found' }, 400)
   }
 
@@ -121,19 +123,19 @@ toiletApi.post('/report', validator('json', reportToiletSchema), async (c) => {
   const updatedReportCount = numReports + 1
 
   if (updatedReportCount >= NUM_REPORTS_DELETE) {
-    await db.delete(toilets).where(eq(toilets.id, toiletId))
-    logger.info(`Toilet ${toiletId} deleted due to ${NUM_REPORTS_DELETE} reports`)
+    await db.delete(toilets).where(eq(toilets.id, id))
+    logger.info(`Toilet ${id} deleted due to ${NUM_REPORTS_DELETE} reports`)
     
-    return c.json({ report: { id: Number(toiletId) } }, 200)
+    return c.json({ report: { id: Number(id) } }, 200)
   }
 
   const [ updatedToilet ] = await db
     .update(toilets)
     .set({ reportCount: updatedReportCount })
-    .where(eq(toilets.id, toiletId))
+    .where(eq(toilets.id, id))
     .returning()
 
-  logger.info(`Toilet ${toiletId} reported`)
+  logger.info(`Toilet ${id} reported`)
 
   return c.json({ report: updatedToilet }, 200)
 })
@@ -197,7 +199,7 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
 })
 
 // GET /api/toilets/image/:id - Get a specific toilet's image
-toiletApi.get('/image/:id', validator('query', imageToiletSchema), async (c) => {
+toiletApi.get('/image/:id', validator('query', toiletIdPramSchema), async (c) => {
   const logger = c.get('logger')
   const { id } = c.req.valid('query')
 

@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1744201882764,
+      "tag": "0000_daffy_franklin_richards",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1744201945149,
+      "tag": "0001_lazy_sabretooth",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1744202009089,
+      "tag": "0002_numerous_bloodscream",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1744210485390,
+      "tag": "0003_sad_forge",
+      "breakpoints": true
+    }
+  ]
+}

@@ -3,7 +3,6 @@ import { pgTable, index, text, boolean, integer, decimal, geometry } from 'drizz
 
 export const toilets = pgTable('toilets', {
   id: text('id').primaryKey(),
-  placesId: text('places_id'),
   name: text('name').notNull(),
   address: text('address').notNull(),
   location: geometry('location', { type: 'point', mode: 'xy', srid: 4326 }).notNull(),
@@ -13,6 +12,7 @@ export const toilets = pgTable('toilets', {
   sanitiserAvail: boolean('sanitiser_avail'),
   crowdLevel: integer('crowd_level').notNull().default(0),
   rating: decimal('rating', { precision: 3, scale: 2 }).default('0.00'),
+  imageToken: text('image_token'),
   reportCount: integer('report_count').default(0)
 },  (t) => [
   index('idx_toilets_id').on(t.id),

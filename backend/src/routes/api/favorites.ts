@@ -1,16 +1,16 @@
 import { Hono } from 'hono'
 import { db } from '../../app'
-import { favorites, toilets } from '../../db/schema'
+import { favorites } from '../../db/schema'
 import { eq, and, desc } from 'drizzle-orm'
-import { validator } from '../../lib/validator'
-import { addFavoriteSchema, deleteFavoriteSchema } from '../../validators/api/favorites'
+import { validator } from '../../middleware/validator'
+import { toiletIdPramSchema } from '../../validators/api/toilets'
 
 const favoritesApi = new Hono()
 
 // Route-wide error handler
 favoritesApi.onError((err, c) => {
   const logger = c.get('logger')
-  logger.error('Error in favorites API', err)
+  logger.error(`Error in favorites API: ${err}`)
 
   return c.json({ error: err.message }, 500)
 })
@@ -21,11 +21,11 @@ favoritesApi.get('/', async (c) => {
 })
 
 // POST /api/favorites/add - Add a toilet to favorites
-favoritesApi.post('/add', validator('json', addFavoriteSchema), async (c) => {
+favoritesApi.post('/add/:id', validator('query', toiletIdPramSchema), async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id
 
-  const { toiletId } = c.req.valid('json')
+  const { id } = c.req.valid('query')
 
   // Check if the toilet is already in favorites
   const [ existing ] = await db
@@ -34,7 +34,7 @@ favoritesApi.post('/add', validator('json', addFavoriteSchema), async (c) => {
     .where(
       and(
         eq(favorites.userId, userId),
-        eq(favorites.toiletId, toiletId)
+        eq(favorites.toiletId, id)
       )
     )
 
@@ -47,11 +47,11 @@ favoritesApi.post('/add', validator('json', addFavoriteSchema), async (c) => {
     .insert(favorites)
     .values({
       userId,
-      toiletId,
+      toiletId: id,
     })
     .returning()
 
-  logger.info(`User ${userId} added toilet ${toiletId} to favorites`)
+  logger.info(`User ${userId} added toilet ${id} to favorites`)
 
   return c.json({ favorite }, 201)
 })
@@ -79,17 +79,17 @@ favoritesApi.get('/me', async (c) => {
 })
 
 // DELETE /api/favorites/remove - Remove a favorite
-favoritesApi.delete('/remove', validator('json', deleteFavoriteSchema), async (c) => {
+favoritesApi.delete('/remove/:id', validator('query', toiletIdPramSchema), async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id
 
-  const { toiletId } = c.req.valid('json')
+  const { id } = c.req.valid('query')
 
   // Check if the favorite exists
   const [ favorite ] = await db
     .select()
     .from(favorites)
-    .where(and(eq(favorites.userId, userId), eq(favorites.toiletId, toiletId)))
+    .where(and(eq(favorites.userId, userId), eq(favorites.toiletId, id)))
 
   if (!favorite) {
     return c.json({ error: 'Favorite not found' }, 400)
@@ -98,7 +98,7 @@ favoritesApi.delete('/remove', validator('json', deleteFavoriteSchema), async (c
   // Delete the favorite
   await db.delete(favorites).where(eq(favorites.id, favorite.id))
 
-  logger.info(`User ${userId} removed favorite ${toiletId}`)
+  logger.info(`User ${userId} removed favorite ${id}`)
   
   return c.json({ message: 'Favorite removed successfully' }, 200)
 })

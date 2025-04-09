@@ -1,27 +1,26 @@
 import { z } from 'zod'
 
-export const createReviewSchema = z.object({
-    toiletId: z.number(),
+export const reviewIdSchema = z.object({
+  reviewId: z.number()
+})
+
+export const postReviewSchema = z.object({
+    toiletId: z.string(),
     rating: z.number().int().min(1).max(5),
     reviewText: z.string().optional(),
-    imageUrl: z.string().url().optional()
+    imageToken: z.string().optional()
   })
   
-  export const updateReviewSchema = z.object({
-    rating: z.number().int().min(1).max(5).optional(),
-    reviewText: z.string().optional(),
-    imageUrl: z.string().url().optional()
-  })
-  
-  export const deleteReviewSchema = z.object({
-    reviewId: z.number()
-  })
-  
-  export const reportReviewSchema = z.object({
-    reviewId: z.number()
-  })
+export const editReviewSchema = z.object({
+  reviewId: z.number(),
+  rating: z.number().int().min(1).max(5).optional(),
+  reviewText: z.string().optional(),
+  imageToken: z.string().optional()
+})
 
-  export const fetchReviewsSchema = z.object({
-    toiletId: z.number(),
-    sort: z.enum(['date', 'rating', 'report']).optional()
-  })
+export const fetchReviewsSchema = z.object({
+  toiletId: z.string(),
+  offset: z.number().optional().default(0),
+  sort: z.enum(['date', 'rating']).optional().default('date'),
+  order: z.enum(['asc', 'desc']).optional().default('desc')
+})

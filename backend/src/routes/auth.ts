@@ -6,7 +6,7 @@ import { db } from '../app'
 import { users } from '../db/schema'
 import { JWTPayload } from '../types/auth'
 import { registerSchema, loginSchema } from '../validators/auth'
-import { validator } from '../lib/validator'
+import { validator } from '../middleware/validator'
 
 const auth = new Hono()
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'

@@ -1,37 +1,29 @@
 import { Hono } from 'hono'
 import { db } from '../../app'
 import { reviews } from '../../db/schema'
-import { sql, eq, desc } from 'drizzle-orm'
-import { validator } from '../../lib/validator'
-import { createReviewSchema, updateReviewSchema, deleteReviewSchema, reportReviewSchema, fetchReviewsSchema } from '../../validators/api/reviews'
+import { sql, eq, desc, asc } from 'drizzle-orm'
+import { validator } from '../../middleware/validator'
+import { editReviewSchema, fetchReviewsSchema, postReviewSchema, reviewIdSchema } from '../../validators/api/reviews'
 
 const reviewApi = new Hono()
 
 reviewApi.onError((err, c) => {
   const logger = c.get('logger')
-  logger.error('Error in reviews API', err)
+  logger.error(`Error in reviews API ${err}`)
   return c.json({ error: err.message }, 500)
 })
 
 // GET /api/reviews - Health Check
 reviewApi.get('/', async (c) => {
-  const logger = c.get('logger')
   return c.json({ message: 'Reviews Endpoint Health Check'}, 200)
 })
 
-reviewApi.onError((err, c) => {
-  const logger = c.get('logger')
-  logger.error('Error in reviews API', err)
-
-  return c.json({ error: err.message }, 500)
-})
-
-// POST /api/reviews - Create a review
-reviewApi.post('/', validator('json', createReviewSchema), async (c) => {
+// POST /api/reviews/create - Post a review
+reviewApi.post('/create', validator('json', postReviewSchema), async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id
 
-  const { toiletId, rating, reviewText, imageUrl } = c.req.valid('json')
+  const { toiletId, rating, reviewText, imageToken } = c.req.valid('json')
 
   const [review] = await db
     .insert(reviews)
@@ -40,30 +32,30 @@ reviewApi.post('/', validator('json', createReviewSchema), async (c) => {
       userId,
       rating,
       reviewText,
-      imageUrl,
+      imageToken,
       createdAt: new Date(),
     })
     .returning()
 
   logger.info('Review created', review.id)
-  return c.json({ review }, 201)
+  return c.json({ review: review }, 201)
 })
 
-// GET /api/reviews/toilet/:toilet_id?sort=date|rating|report
+// GET /api/reviews/toilet/:toilet_id?sort=date|rating&order=asc|desc&offset=0
 reviewApi.get('/toilet/:toilet_id', validator('query', fetchReviewsSchema), async (c) => {
   const logger = c.get('logger')
-  const { toiletId, sort } = c.req.valid('query')
+  const { toiletId, offset, sort, order } = c.req.valid('query')
 
-  let orderBy
-  if (sort === 'rating') orderBy = desc(reviews.rating)
-  else if (sort === 'report') orderBy = desc(reviews.reportCount)
-  else orderBy = desc(reviews.createdAt)
+  let orderBy: any  
+  if (sort === 'rating') orderBy = order === 'asc' ? asc(reviews.rating) : desc(reviews.rating)
+  else orderBy = order === 'asc' ? asc(reviews.createdAt) : desc(reviews.createdAt)
 
   const result = await db
     .select()
     .from(reviews)
     .where(eq(reviews.toiletId, toiletId))
     .orderBy(orderBy)
+    .offset(offset || 0)
     .limit(10)
 
   logger.info(`Reviews fetched for toilet ${toiletId}`)
@@ -71,23 +63,30 @@ reviewApi.get('/toilet/:toilet_id', validator('query', fetchReviewsSchema), asyn
 })
 
 // PATCH /api/reviews/:id - Edit review
-reviewApi.patch('/:id', validator('json', updateReviewSchema), async (c) => {
+reviewApi.patch('/edit', validator('json', editReviewSchema), async (c) => {
   const logger = c.get('logger')
-  const reviewId = Number(c.req.param('id'))
+  const { reviewId, rating, reviewText, imageToken } = c.req.valid('json')
 
-  const body = c.req.valid('json')
+  // Check if at least one field is provided
+  if (rating === undefined && reviewText === undefined && imageToken === undefined) {
+    return c.json({ error: 'No fields to update' }, 400)
+  }
 
-  // check if review exists
-  const [existing] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
+  // Check if review exists
+  const [ existing ] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
 
   if (!existing) {
     logger.error(`Review not found with ID: ${reviewId}`)
-    return c.json({ error: 'Review not found' }, 404)
+    return c.json({ error: 'Review not found' }, 400)
+  }
+
+  if (existing.imageToken) {
+    // Delete image from S3 bucket
   }
 
   const [updated] = await db
     .update(reviews)
-    .set(body)
+    .set({ rating, reviewText, imageToken })
     .where(eq(reviews.id, reviewId))
     .returning()
 
@@ -95,10 +94,10 @@ reviewApi.patch('/:id', validator('json', updateReviewSchema), async (c) => {
   return c.json({ review: updated }, 200)
 })
 
-// DELETE /api/reviews/:id - Delete review
-reviewApi.delete('/:id', validator('json', deleteReviewSchema), async (c) => {
+// DELETE /api/reviews/delete/:reviewId - Delete review
+reviewApi.delete('/delete/:reviewId', validator('query', reviewIdSchema), async (c) => {
   const logger = c.get('logger')
-  const reviewId = Number(c.req.param('id'))
+  const { reviewId } = c.req.valid('query')
 
   const [existing] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
 
@@ -112,10 +111,10 @@ reviewApi.delete('/:id', validator('json', deleteReviewSchema), async (c) => {
   return c.json({ message: 'Review deleted successfully' }, 200)
 })
 
-// POST /api/reviews/:id/report - Report a review
-reviewApi.post('/:id/report', validator('json', reportReviewSchema), async (c) => {
+// POST /api/reviews/report/:reviewId - Report a review
+reviewApi.post('/report/:reviewId', validator('query', reviewIdSchema), async (c) => {
   const logger = c.get('logger')
-  const reviewId = Number(c.req.param('id'))
+  const { reviewId } = c.req.valid('query')
 
   const [review] = await db
     .select({ reportCount: reviews.reportCount })

@@ -2,7 +2,7 @@ import { Hono } from "hono"
 import { db } from "../../app"
 import { users } from "../../db/schema"
 import { eq } from "drizzle-orm"
-import { validator } from "../../lib/validator"
+import { validator } from "../../middleware/validator"
 import { updateUserSchema } from "../../validators/api/user"
 
 const userApi = new Hono()
@@ -10,8 +10,7 @@ const userApi = new Hono()
 // Route-wide error handler
 userApi.onError((err, c) => {
   const logger = c.get('logger')
-  logger.error('Error in user API', err)
-
+  logger.error(`Error in user API ${err}`)
   return c.json({ error: err.message }, 500)
 })
 

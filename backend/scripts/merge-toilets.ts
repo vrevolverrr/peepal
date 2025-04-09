@@ -231,11 +231,14 @@ async function mergeOsmToilets() {
     for (const osmToilet of osmToilets) {
         const duplicate = googleToilets.find((toilet) => {
             const distance = getDistanceBetweenPoints(osmToilet.latlong, toilet.latlong);
+            console.log(distance)
             return distance < 10;
         });
 
         if (!duplicate) {
             mergedToilets.push(osmToilet);
+        } else {
+            console.log(`Duplicate found: ${osmToilet.name}`)
         }
     }
 
@@ -254,7 +257,7 @@ async function cleanUpData() {
     const uniqueToilets: FullToiletData[] = [];
 
     for (const toilet of toilets) {
-        if (toilet.address.includes("Malaysia")) {
+        if (toilet.address.includes("Malaysia") || toilet.name.includes("Pte Ltd")) {
             continue;
         }
 
@@ -283,7 +286,39 @@ function getDistanceBetweenPoints(point1: { lat: number; lng: number }, point2: 
         Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
         Math.sin(dLng / 2) * Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Distance in kilometers
+    return R * c * 1000; // Distance in meters
+}
+
+async function addMissingPlaceDetails() {
+    const toiletsData = await fs.readFile('./scripts/data/final-toilets.json', 'utf-8');
+    const toilets: FinalToiletData[] = JSON.parse(toiletsData);
+
+    const finalToilets: FinalToiletData[] = [];
+
+    for (const toilet of toilets) {
+        if (toilet.address === "" || toilet.photoReference == undefined) {
+            const { data: placeDetailsData } = await client.placeDetails({
+                params: {
+                    key: process.env.GOOGLE_API_KEY || '',
+                    place_id: toilet.placeId
+                }
+            });
+
+            const placeDetails = placeDetailsData.result;
+            const photoReference = placeDetails.photos?.[0]?.photo_reference;
+
+            finalToilets.push({
+                ...toilet,
+                photoReference: photoReference || "",
+                address: placeDetails.formatted_address || "",
+                status: placeDetails.business_status || ""
+            })
+        } else {
+            finalToilets.push(toilet);
+        }
+        console.log(`Done ${finalToilets.length} of ${toilets.length}`)
+        await fs.writeFile('./scripts/data/final-toilets.json', JSON.stringify(finalToilets, null, 2));
+    }
 }
 
 // countToilets()
@@ -299,3 +334,5 @@ generateSeed();
 // mergeOsmToilets();
 
 // cleanUpData();
+
+// addMissingPlaceDetails()

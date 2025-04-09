@@ -1,5 +1,9 @@
 import { z } from 'zod'
 
+export const toiletIdPramSchema = z.object({
+  id: z.string(),
+})
+
 export const createToiletSchema = z.object({
   name: z.string().min(1).max(255),
   address: z.string().min(1).max(255),
@@ -47,7 +51,7 @@ export const searchToiletSchema = z.object({
 })
 
 export const imageToiletSchema = z.object({
-  id: z.number(),
+  toiletId: z.string(),
 })
 
 export const navigateToiletSchema = z.object({

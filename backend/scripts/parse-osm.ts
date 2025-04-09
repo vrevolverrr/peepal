@@ -47,7 +47,7 @@ type ToiletOutput = {
 type OSMGoogleOutput = {
     name: string;
   placeId: string;
-  status: string;
+  status: string | undefined;
   address: string;
   location: {
     lat: number;
@@ -91,7 +91,7 @@ async function getPlaceDetails(lat: number, lng: number): Promise<OSMGoogleOutpu
   return {
     placeId: place_id,
     name: placeDetails.name || 'Public Toilet',
-    status: placeDetailsData.status,
+    status: placeDetails.business_status,
     address: formatted_address,
     rating: placeDetails.rating || 0.0,
     location: {
@@ -133,7 +133,7 @@ async function main() {
 
       toiletRecords.push({
         placeId: placeDetails.placeId,
-        status: placeDetails.status,
+        status: placeDetails.status || 'OPERATIONAL',
         name: placeDetails.name,
         rating: placeDetails.rating,
         latlong: placeDetails.location,

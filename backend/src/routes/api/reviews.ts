@@ -8,6 +8,13 @@ const reviewApi = new Hono()
 // Export the router
 export default reviewApi
 
+reviewApi.onError((err, c) => {
+  const logger = c.get('logger')
+  logger.error('Error in reviews API', err)
+
+  return c.json({ error: err.message }, 500)
+})
+
 // POST /api/reviews - Create a review
 reviewApi.post('/', async (c) => {
   // Verify auth token

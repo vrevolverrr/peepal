@@ -1,0 +1,72 @@
+import * as Minio from 'minio'
+import fs from 'fs/promises'
+import path from 'path'
+import { FinalToiletData } from './merge-toilets'
+import { pool } from '../src/db/db'
+
+export const minio = new Minio.Client({
+    endPoint: process.env.S3_ENDPOINT || '',
+    port: 443,
+    pathStyle: true,
+    useSSL: true,
+    region: process.env.S3_REGION || '',
+    accessKey: process.env.S3_ACCESS_KEY || '',
+    secretKey: process.env.S3_SECRET_KEY || '',
+})
+
+const BUCKET_NAME = process.env.S3_BUCKET || ''
+const imagesDir = path.join(__dirname, 'downloaded_images')
+
+async function uploadImage(filePath: string, objectName: string) {
+    try {
+        await minio.fPutObject(BUCKET_NAME, objectName, filePath, {
+            'Content-Type': 'image/png'
+        })
+        console.log(`Successfully uploaded ${objectName}`)
+    } catch (err) {
+        console.error(`Error uploading ${objectName}:`, err)
+    }
+}
+
+async function generateSeed() {
+      const toiletsData = await fs.readFile('./scripts/data/final-toilets.json', 'utf-8');
+      const toilets: FinalToiletData[] = JSON.parse(toiletsData);
+      
+      var seedFile = "";
+  
+      for (const toilet of toilets) {
+          seedFile += `INSERT INTO images (token, type, user_id, filename) VALUES ('${toilet.placeId}', 'toilet', NULL, '${toilet.placeId}.png');\n`;
+      }
+  
+      await fs.writeFile('./scripts/data/toilet-images.sql', seedFile);
+}
+
+async function main() {
+    // Read final-toilets.json
+    const toiletsData = await fs.readFile('./scripts/data/final-toilets.json', 'utf-8')
+    const toilets: FinalToiletData[] = JSON.parse(toiletsData)
+
+    // Ensure bucket exists
+    const bucketExists = await minio.bucketExists(BUCKET_NAME)
+    if (!bucketExists) {
+        throw new Error(`Bucket ${BUCKET_NAME} does not exist`)
+    }
+
+    let i = 0
+    for (const toilet of toilets) {
+        i++
+        console.log(`Processing toilet ${i} of ${toilets.length}`)
+
+        const imagePath = path.join(imagesDir, `${toilet.id}.png`)
+        
+        try {
+            await fs.access(imagePath)
+            await uploadImage(imagePath, `${toilet.placeId}.png`)
+        } catch (err) {
+            console.log(`No image found for toilet ${toilet.id}`)
+            continue
+        }
+    }
+}
+
+main().catch(console.error)

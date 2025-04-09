@@ -6,14 +6,7 @@
       "request": "attach",
       "name": "Debug TypeScript",
       "skipFiles": ["<node_internals>/**"],
-      "port": 9229,
-      "envFile": "${workspaceFolder}/.env",
-      "env": {
-        "S3_BUCKET": "sc2006-qd1xg",
-        "S3_ACCESS_KEY": "0ed025429cb4a24e81fe93f9a9951b54",
-        "S3_SECRET_KEY": "fc61a1b79a917b35f1ef45abe64331f9e84f782d147ebfc1a8c4136f131b31f5",
-        "S3_ENDPOINT": "f6d1d15e6f0b37b4b8fcad3c41a7922d.r2.cloudflarestorage.com"
-      }
+      "port": 9229
     }
   ]
 }

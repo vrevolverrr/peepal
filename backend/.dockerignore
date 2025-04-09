@@ -1,0 +1,38 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Development
+.env
+.env.*
+.git
+.gitignore
+.vscode
+*.md
+scripts/
+scripts/downloaded_images/
+scripts/data/
+
+# Build
+dist
+coverage
+.nyc_output
+
+# IDE
+.idea
+*.swp
+*.swo
+
+# Testing
+src/test/
+__tests__
+test
+tests
+*.test.ts
+*.spec.ts
+
+# Misc
+.DS_Store
+*.log

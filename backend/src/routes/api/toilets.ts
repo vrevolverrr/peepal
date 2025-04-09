@@ -198,26 +198,6 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
   return c.json({ toilets: searchToiletResults }, 200)
 })
 
-// GET /api/toilets/image/:id - Get a specific toilet's image
-toiletApi.get('/image/:id', validator('query', toiletIdPramSchema), async (c) => {
-  const logger = c.get('logger')
-  const { id } = c.req.valid('query')
-
-  // const [toilet] = await db
-  // .select()
-  // .from(toilets)
-  // .where(eq(toilets.id, Number(id)))
-
-  // if (!toilet) {
-  //   logger.error(`Toilet not found with ID: ${id}`)
-  //   return c.json({ error: 'Toilet not found' }, 404)
-  // }
-
-  // logger.info(`Toilet ${id} image fetched`)
-
-  return c.json({ image: undefined }, 200)
-})
-
 toiletApi.post('/navigate', validator('json', navigateToiletSchema), async (c) => {
   const logger = c.get('logger')
   const { toiletId, latitude, longitude } = c.req.valid('json')

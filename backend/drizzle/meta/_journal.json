@@ -29,6 +29,13 @@
       "when": 1744210485390,
       "tag": "0003_sad_forge",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1744211354257,
+      "tag": "0004_omniscient_naoko",
+      "breakpoints": true
     }
   ]
 }

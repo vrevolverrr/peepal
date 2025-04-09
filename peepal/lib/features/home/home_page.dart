@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/features/favourites/favourites_page.dart';
-import 'package:peepal/features/nearby_toilets/nearby_toilets_page.dart';
+import 'package:peepal/features/nearby_toilets/view/nearby_toilets_page.dart';
 import 'package:peepal/features/app/bloc/app_bloc.dart';
-import 'package:peepal/features/toilet_map/toilet_map_page.dart';
+import 'package:peepal/features/toilet_map/view/toilet_map_page.dart';
+import 'package:peepal/features/profile_page/profile_page.dart'; // Make sure this exists
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,6 +17,8 @@ class _HomePageState extends State<HomePage> {
   late final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
+    final appPageCubit = context.read<AppPageCubit>();
+    
     return Scaffold(
       body: BlocListener<AppPageCubit, AppPageState>(
           listener: (context, state) => _pageController.jumpToPage(state.index),
@@ -23,10 +26,22 @@ class _HomePageState extends State<HomePage> {
             physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
             children: [
-              NearbyToiletsPage(),
-              ToiletMapPage(),
-              FavouritesPage(),
-              Center(child: Text("Profile Page")),
+              BlocProvider.value(
+                value: appPageCubit,
+                child: NearbyToiletsPage(),
+              ),
+              BlocProvider.value(
+                value: appPageCubit,
+                child: ToiletMapPage(),
+              ),
+              BlocProvider.value(
+                value: appPageCubit,
+                child: FavouritesPage(),
+              ),
+              BlocProvider.value(
+                value: appPageCubit,
+                child: ProfilePage(), // Use ProfilePage instead of Text widget
+              ),
             ],
           )),
       bottomNavigationBar: BlocBuilder<AppPageCubit, AppPageState>(

@@ -2,11 +2,22 @@ import { Hono } from 'hono'
 import { db } from '../../app'
 import { reviews } from '../../db/schema'
 import { sql, eq, desc } from 'drizzle-orm'
+import { validator } from '../../lib/validator'
+import { createReviewSchema, updateReviewSchema, deleteReviewSchema, reportReviewSchema, fetchReviewsSchema } from '../../validators/api/reviews'
 
 const reviewApi = new Hono()
 
-// Export the router
-export default reviewApi
+reviewApi.onError((err, c) => {
+  const logger = c.get('logger')
+  logger.error('Error in reviews API', err)
+  return c.json({ error: err.message }, 500)
+})
+
+// GET /api/reviews - Health Check
+reviewApi.get('/', async (c) => {
+  const logger = c.get('logger')
+  return c.json({ message: 'Reviews Endpoint Health Check'}, 200)
+})
 
 reviewApi.onError((err, c) => {
   const logger = c.get('logger')
@@ -16,199 +27,123 @@ reviewApi.onError((err, c) => {
 })
 
 // POST /api/reviews - Create a review
-reviewApi.post('/', async (c) => {
-  // Verify auth token
-  const user = c.get('user')
-  if (!user) {
-    return c.json({ error: 'Unauthorized' }, 401)
-  }
+reviewApi.post('/', validator('json', createReviewSchema), async (c) => {
   const logger = c.get('logger')
-  const body = await c.req.json()
+  const userId = c.get('user').id
 
-  const { toiletId, rating, reviewText, imageUrl } = body
+  const { toiletId, rating, reviewText, imageUrl } = c.req.valid('json')
 
-  if (!toiletId || !rating || rating < 1 || rating > 5) {
-    return c.json({ error: 'Invalid input' }, 400)
-  }
+  const [review] = await db
+    .insert(reviews)
+    .values({
+      toiletId,
+      userId,
+      rating,
+      reviewText,
+      imageUrl,
+      createdAt: new Date(),
+    })
+    .returning()
 
-  try {
-    const [review] = await db
-      .insert(reviews)
-      .values({
-        toiletId,
-        userId: user.id,
-        rating,
-        reviewText,
-        imageUrl,
-        createdAt: new Date(),
-      })
-      .returning()
-
-    logger.info('Review created', review.id)
-    return c.json({ review }, 201)
-  } catch (err) {
-    logger.error('Error creating review', err)
-    return c.json({ error: 'Internal server error' }, 500)
-  }
+  logger.info('Review created', review.id)
+  return c.json({ review }, 201)
 })
 
 // GET /api/reviews/toilet/:toilet_id?sort=date|rating|report
-reviewApi.get('/toilet/:toilet_id', async (c) => {
-  // Verify auth token
-  const user = c.get('user')
-  if (!user) {
-    return c.json({ error: 'Unauthorized' }, 401)
-  }
-  const toiletId = Number(c.req.param('toilet_id'))
-  if (isNaN(toiletId)) {
-    return c.json({ error: 'Invalid toilet ID' }, 400)
-  }
-  const sort = c.req.query('sort') || 'date'
+reviewApi.get('/toilet/:toilet_id', validator('query', fetchReviewsSchema), async (c) => {
   const logger = c.get('logger')
+  const { toiletId, sort } = c.req.valid('query')
 
   let orderBy
   if (sort === 'rating') orderBy = desc(reviews.rating)
   else if (sort === 'report') orderBy = desc(reviews.reportCount)
   else orderBy = desc(reviews.createdAt)
 
-  try {
-    const result = await db
-      .select()
-      .from(reviews)
-      .where(eq(reviews.toiletId, toiletId))
-      .orderBy(orderBy)
+  const result = await db
+    .select()
+    .from(reviews)
+    .where(eq(reviews.toiletId, toiletId))
+    .orderBy(orderBy)
+    .limit(10)
 
-    return c.json({ reviews: result }, 200)
-  } catch (err) {
-    logger.error('Error fetching reviews', err)
-    return c.json({ error: 'Failed to fetch reviews' }, 500)
-  }
+  logger.info(`Reviews fetched for toilet ${toiletId}`)
+  return c.json({ reviews: result }, 200)
 })
 
-// PUT /api/reviews/:id - Edit review
-reviewApi.put('/:id', async (c) => {
-  // Verify auth token
-  const user = c.get('user')
-  if (!user) {
-    return c.json({ error: 'Unauthorized' }, 401)
-  }
-  const reviewId = Number(c.req.param('id'))
-  if (isNaN(reviewId)) {
-    return c.json({ error: 'Invalid review ID' }, 400)
-  }
-  const body = await c.req.json()
+// PATCH /api/reviews/:id - Edit review
+reviewApi.patch('/:id', validator('json', updateReviewSchema), async (c) => {
   const logger = c.get('logger')
+  const reviewId = Number(c.req.param('id'))
 
-  try {
-    const [existing] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
+  const body = c.req.valid('json')
 
-    if (!existing) {
-      return c.json({ error: 'Review not found' }, 404)
-    }
+  // check if review exists
+  const [existing] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
 
-    if (existing.userId !== user.id) {
-      return c.json({ error: 'Not authorized' }, 403)
-    }
-
-    const updatedFields = {
-      reviewText: body.reviewText ?? existing.reviewText,
-      rating: body.rating ?? existing.rating,
-      imageUrl: body.imageUrl ?? existing.imageUrl,
-    }
-
-    const [updated] = await db
-      .update(reviews)
-      .set(updatedFields)
-      .where(eq(reviews.id, reviewId))
-      .returning()
-
-    logger.info('Review updated', reviewId)
-    return c.json({ review: updated }, 200)
-  } catch (err) {
-    logger.error('Error updating review', err)
-    return c.json({ error: 'Failed to update review' }, 500)
+  if (!existing) {
+    logger.error(`Review not found with ID: ${reviewId}`)
+    return c.json({ error: 'Review not found' }, 404)
   }
+
+  const [updated] = await db
+    .update(reviews)
+    .set(body)
+    .where(eq(reviews.id, reviewId))
+    .returning()
+
+  logger.info('Review updated', reviewId)
+  return c.json({ review: updated }, 200)
 })
 
 // DELETE /api/reviews/:id - Delete review
-reviewApi.delete('/:id', async (c) => {
-  // Verify auth token
-  const user = c.get('user')
-  if (!user) {
-    return c.json({ error: 'Unauthorized' }, 401)
-  }
-  const reviewId = Number(c.req.param('id'))
-  if (isNaN(reviewId)) {
-    return c.json({ error: 'Invalid review ID' }, 400)
-  }
+reviewApi.delete('/:id', validator('json', deleteReviewSchema), async (c) => {
   const logger = c.get('logger')
+  const reviewId = Number(c.req.param('id'))
 
-  try {
-    // Check if review exists and belongs to user
-    const [existing] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
+  const [existing] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
 
-    if (!existing) {
-      return c.json({ error: 'Review not found' }, 404)
-    }
-
-    if (existing.userId !== user.id) {
-      return c.json({ error: 'Not authorized' }, 403)
-    }
-
-    // Delete the review
-    await db.delete(reviews).where(eq(reviews.id, reviewId))
-    logger.info(`Review ${reviewId} deleted by user ${user.id}`)
-    return c.json({ message: 'Review deleted successfully' }, 200)
-  } catch (err) {
-    logger.error('Error deleting review', err)
-    return c.json({ error: 'Failed to delete review' }, 500)
+  if (!existing) {
+    logger.error(`Review not found with ID: ${reviewId}`)
+    return c.json({ error: 'Review not found' }, 404)
   }
+
+  await db.delete(reviews).where(eq(reviews.id, reviewId))
+  logger.info(`Review ${reviewId} deleted by user ${c.get('user').id}`)
+  return c.json({ message: 'Review deleted successfully' }, 200)
 })
 
 // POST /api/reviews/:id/report - Report a review
-reviewApi.post('/:id/report', async (c) => {
-  // Verify auth token
-  const user = c.get('user')
-  if (!user) {
-    return c.json({ error: 'Unauthorized' }, 401)
-  }
-  const reviewId = Number(c.req.param('id'))
-  if (isNaN(reviewId)) {
-    return c.json({ error: 'Invalid review ID' }, 400)
-  }
+reviewApi.post('/:id/report', validator('json', reportReviewSchema), async (c) => {
   const logger = c.get('logger')
+  const reviewId = Number(c.req.param('id'))
 
-  try {
-    // Step 1: Fetch current report count
-    const [review] = await db
-      .select({ reportCount: reviews.reportCount })
-      .from(reviews)
-      .where(eq(reviews.id, reviewId))
+  const [review] = await db
+    .select({ reportCount: reviews.reportCount })
+    .from(reviews)
+    .where(eq(reviews.id, reviewId))
 
-    if (!review) {
-      return c.json({ error: 'Review not found' }, 404)
-    }
-
-    const newCount = (review.reportCount ?? 0) + 1
-
-    // Step 2: If count >= 5, delete it
-    if (newCount >= 5) {
-      await db.delete(reviews).where(eq(reviews.id, reviewId))
-      logger.info(`Review ${reviewId} deleted after reaching ${newCount} reports`)
-      return c.json({ message: 'Review reported and deleted after reaching threshold' }, 200)
-    }
-
-    // Step 3: Otherwise, increment report count
-    await db.update(reviews)
-      .set({
-        reportCount: sql`${reviews.reportCount} + 1`,
-      })
-      .where(eq(reviews.id, reviewId))
-
-    logger.info(`Review ${reviewId} reported (${newCount} reports)`)
-    return c.json({ message: 'Review reported' }, 200)
-  } catch (err) {
-    logger.error('Error reporting review', err)
-    return c.json({ error: 'Internal server error' }, 500)
+  if (!review) {
+    logger.error(`Review not found with ID: ${reviewId}`)
+    return c.json({ error: 'Review not found' }, 404)
   }
+
+  const newCount = (review.reportCount ?? 0) + 1
+
+  if (newCount >= 3) {
+    await db.delete(reviews).where(eq(reviews.id, reviewId))
+    logger.info(`Review ${reviewId} deleted after reaching ${newCount} reports`)
+    return c.json({ message: 'Review reported and deleted after reaching threshold' }, 200)
+  }
+
+  await db.update(reviews)
+    .set({
+      reportCount: sql`${reviews.reportCount} + 1`,
+    })
+    .where(eq(reviews.id, reviewId))
+
+  logger.info(`Review ${reviewId} reported (${newCount} reports)`)
+  return c.json({ message: 'Review reported' }, 200)
 })
+
+// Export the router
+export default reviewApi

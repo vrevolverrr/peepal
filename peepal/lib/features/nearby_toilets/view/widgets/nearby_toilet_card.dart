@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peepal/features/toilet_map/model/toilet_location.dart';
-import 'package:peepal/features/navigation/navigation_page.dart';
+import 'package:peepal/features/navigation/view/navigation_page.dart';
 
 class NearbyToiletCard extends StatelessWidget {
   final String address;

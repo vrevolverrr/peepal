@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:peepal/shared/location/bloc/location_bloc.dart';
 import 'package:peepal/features/toilet_map/view/widgets/search_bar.dart';
 import 'package:peepal/features/toilet_map/model/toilet_data_service.dart';
 import 'package:peepal/features/toilet_map/model/toilet_location.dart';
 import 'package:peepal/features/toilet_map/view/widgets/toilet_location_card.dart';
+import 'package:peepal/features/navigation/view/navigation_page.dart';
 
 class ToiletMapPage extends StatefulWidget {
   const ToiletMapPage({super.key});
@@ -85,7 +84,7 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
   @override
   Widget build(BuildContext context) {
     // Set initial location to Singapore center
-    final LatLng initialLocation = const LatLng(1.3521, 103.8198);
+    final LatLng initialLocation = const LatLng(1.3349539, 103.7286225);
 
     return Stack(
       children: [
@@ -131,9 +130,14 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
                 });
               },
               onDirections: () {
-                // Implement directions functionality
-                // Could open Google Maps or similar
-                print('Getting directions to ${_selectedLocation!.name}');
+                // Navigate to the NavigationPage with the selected location
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => NavigationPage(
+                      destination: _selectedLocation!,
+                    ),
+                  ),
+                );
               },
             ),
           ),

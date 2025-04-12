@@ -21,7 +21,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   bool _isPasswordVisible = false;
   String? _selectedGender;
 
-  final List<String> _genders = ['Male', 'Female', 'Other', 'Prefer not to say'];
+  final List<String> _genders = ['Male', 'Female', 'Other',];
 
   @override
   void dispose() {

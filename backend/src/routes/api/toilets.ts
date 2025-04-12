@@ -5,7 +5,7 @@ import { db } from "../../app"
 import { toilets } from "../../db/schema"
 import { and, eq, getTableColumns, sql } from "drizzle-orm"
 import { validator } from "../../middleware/validator"
-import { createToiletSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdPramSchema, updateToiletSchema } from "../../validators/api/toilets"
+import { createToiletSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdParamSchema, updateToiletSchema } from "../../validators/api/toilets"
 
 const NUM_REPORTS_DELETE = 3
 
@@ -53,12 +53,12 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
   return c.json({ toilet: newToilet }, 201)
 })
 
-// PATCH /api/toilets/details/:id - Update an existing toilet
-toiletApi.patch('/details/:id', validator('query', toiletIdPramSchema), 
+// PATCH /api/toilets/details/:toiletId - Update an existing toilet
+toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema), 
   validator('json', updateToiletSchema), async (c) => {  
   
   const logger = c.get('logger')
-  const { id } = c.req.valid('query')
+  const { toiletId } = c.req.valid('param')
 
   const body = c.req.valid('json')
   
@@ -66,76 +66,76 @@ toiletApi.patch('/details/:id', validator('query', toiletIdPramSchema),
     const [ existingToilet ] = await db
       .select()
       .from(toilets)
-      .where(eq(toilets.id, id));
+      .where(eq(toilets.id, toiletId));
 
     if (!existingToilet) {
-      logger.error(`Toilet not found with ID: ${id}`)
+      logger.error(`Toilet not found with ID: ${toiletId}`)
       return c.json({ error: 'Toilet not found' }, 404);
     }
 
     const [ updatedToilet ] = await db
       .update(toilets)
       .set(body)
-      .where(eq(toilets.id, id))
+      .where(eq(toilets.id, toiletId))
       .returning()
 
-    logger.info(`Toilet ${id} updated`)
+    logger.info(`Toilet ${toiletId} updated`)
 
     return c.json({ toilet: updatedToilet}, 200)
 })
 
-// GET /api/toilets/:id - Get a specific toilet
-toiletApi.get('/details/:id', validator('query', toiletIdPramSchema), async (c) => {
+// GET /api/toilets/:toiletId - Get a specific toilet
+toiletApi.get('/details/:toiletId', validator('param', toiletIdParamSchema), async (c) => {
   const logger = c.get('logger')
-  const { id } = c.req.valid('query')
+  const { toiletId } = c.req.valid('param')
 
   const [toilet] = await db
   .select()
   .from(toilets)
-  .where(eq(toilets.id, id))
+  .where(eq(toilets.id, toiletId))
 
 if (!toilet) {
-  logger.error(`Toilet not found with ID: ${id}`)
+  logger.error(`Toilet not found with ID: ${toiletId}`)
   return c.json({ error: 'Toilet not found' }, 404)
 }
 
-logger.info(`Toilet ${id} fetched`)
+logger.info(`Toilet ${toiletId} fetched`)
 
 return c.json({ toilet }, 200)
 })
 
 // POST /api/toilets/report - Report a toilet
-toiletApi.post('/report', validator('query', toiletIdPramSchema), async (c) => {
+toiletApi.post('/report/:toiletId', validator('param', toiletIdParamSchema), async (c) => {
   const logger = c.get('logger')
-  const { id } = c.req.valid('query')
+  const { toiletId } = c.req.valid('param')
 
   const [ existingToilet ] = await db
     .select()
     .from(toilets)
-    .where(eq(toilets.id, id))
+    .where(eq(toilets.id, toiletId))
 
   if (!existingToilet) {
-    logger.error(`Toilet not found with ID: ${id}`)
-    return c.json({ error: 'Toilet not found' }, 400)
+    logger.error(`Toilet not found with ID: ${toiletId}`)
+    return c.json({ error: 'Toilet not found' }, 404)
   }
 
   const numReports = existingToilet.reportCount || 0
   const updatedReportCount = numReports + 1
 
   if (updatedReportCount >= NUM_REPORTS_DELETE) {
-    await db.delete(toilets).where(eq(toilets.id, id))
-    logger.info(`Toilet ${id} deleted due to ${NUM_REPORTS_DELETE} reports`)
+    await db.delete(toilets).where(eq(toilets.id, toiletId))
+    logger.info(`Toilet ${toiletId} deleted due to ${NUM_REPORTS_DELETE} reports`)
     
-    return c.json({ report: { id: Number(id) } }, 200)
+    return c.json({ report: { id: Number(toiletId) } }, 200)
   }
 
   const [ updatedToilet ] = await db
     .update(toilets)
     .set({ reportCount: updatedReportCount })
-    .where(eq(toilets.id, id))
+    .where(eq(toilets.id, toiletId))
     .returning()
 
-  logger.info(`Toilet ${id} reported`)
+  logger.info(`Toilet ${toiletId} reported`)
 
   return c.json({ report: updatedToilet }, 200)
 })

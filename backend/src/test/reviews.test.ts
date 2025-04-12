@@ -1,18 +1,26 @@
-import { describe, it, expect, beforeAll, afterAll, afterEach, beforeEach } from 'vitest'
+import { describe, it, expect, beforeAll, afterAll, afterEach, beforeEach, vi } from 'vitest'
 import { app, db } from '../app'
 import { users, toilets, reviews } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { nanoid } from 'nanoid'
+
+// Mock Minio client
+vi.mock('minio', () => {
+  return {
+    Client: vi.fn().mockImplementation(() => ({}))
+  }
+})
 
 interface ReviewResponse {
   review: {
     id: number
-    toiletId: number
-    userId: number
+    toiletId: string
+    userId: string
     rating: number
     reviewText?: string
-    imageUrl?: string
+    imageToken?: string
     createdAt: string
     reportCount?: number
   }
@@ -41,16 +49,32 @@ describe('Test Review API', () => {
 
   // Set up test database and create test user
   beforeAll(async () => {    
-    // Create test user
+    // Generate unique test data with timestamps
+    const timestamp = Date.now();
+    const testUsername = `toiletuser_${timestamp}`;
+    const testEmail = `toilet_${timestamp}@example.com`;
+    
+    // Create test user with UUID
     const passwordHash = await bcrypt.hash('testpassword', 10)
-    const [ user ] = await db.insert(users).values({
-    username: 'toiletuser',
-    email: 'toilet@example.com',
-    passwordHash,
-    gender: 'male'
-    }).returning()
+    
+    // First check if the user already exists
+    let user;
+    const existingUsers = await db.select().from(users).where(eq(users.email, testEmail));
+    
+    if (existingUsers.length === 0) {
+      const [newUser] = await db.insert(users).values({
+        username: testUsername,
+        email: testEmail,
+        passwordHash,
+        gender: 'male'
+      }).returning();
+      user = newUser;
+    } else {
+      user = existingUsers[0];
+    }
 
     const [toilet] = await db.insert(toilets).values({
+        id: nanoid(),
         name: 'Test Toilet',
         address: '123 Test Street',
         location: { x: 1.3521, y: 103.8198 },
@@ -64,13 +88,19 @@ describe('Test Review API', () => {
 
   // Clean up after all tests
   afterAll(async () => {
-    await db.delete(reviews).where(eq(reviews.userId, testUser.id))
-    await db.delete(toilets).where(eq(toilets.id, testToilet.id))
-    await db.delete(users).where(eq(users.email, 'toilet@example.com'))
+    if (testUser && testUser.id) {
+      await db.delete(reviews).where(eq(reviews.userId, testUser.id))
+    }
+    if (testToilet && testToilet.id) {
+      await db.delete(toilets).where(eq(toilets.id, testToilet.id))
+    }
+    if (testUser && testUser.email) {
+      await db.delete(users).where(eq(users.email, testUser.email))
+    }
   })
 
   // test create review
-  describe('POST /api/reviews', () => {
+  describe('POST /api/reviews/create', () => {
     afterEach(async () => {
       if (createdReviewId) {
         await db.delete(reviews).where(eq(reviews.id, createdReviewId))
@@ -82,10 +112,10 @@ describe('Test Review API', () => {
         toiletId: testToilet.id,
         rating: 4,
         reviewText: 'hello',
-        imageUrl: 'https://test.image.com'  // Valid URL format
+        imageToken: 'test-image-token'
       }
 
-      const res = await app.request('/api/reviews', {
+      const res = await app.request('/api/reviews/create', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -100,7 +130,7 @@ describe('Test Review API', () => {
       expect(data.review.toiletId).toBe(reviewData.toiletId)
       expect(data.review.rating).toBe(reviewData.rating)
       expect(data.review.reviewText).toBe(reviewData.reviewText)
-      expect(data.review.imageUrl).toBe(reviewData.imageUrl)
+      expect(data.review.imageToken).toBe(reviewData.imageToken)
       expect(data.review.userId).toBe(testUser.id)
       expect(data.review.reportCount).toBe(0)
       
@@ -108,15 +138,15 @@ describe('Test Review API', () => {
       createdReviewId = data.review.id
     })
 
-    it('should return 400 for invalid review data', async () => {
+    it('should return 400 for invalid review rating', async () => {
       const invalidReviewData = {
         toiletId: testToilet.id,
-        rating: 6,  // Invalid rating (should be 1-5)
+        rating: 6,
         reviewText: 'hello',
-        imageUrl: 'not-a-url'  // Invalid URL
+        imageToken: 'test-image-token'
       }
 
-      const res = await app.request('/api/reviews', {
+      const res = await app.request('/api/reviews/create', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -130,7 +160,7 @@ describe('Test Review API', () => {
   })
 
   // test update review
-  describe('PATCH /api/reviews/:id', () => {
+  describe('PATCH /api/reviews/edit/:reviewId', () => {
     let createdReviewId: number
 
     afterEach(async () => {
@@ -155,7 +185,7 @@ describe('Test Review API', () => {
         reviewText: 'Updated review'
       }
 
-      const res = await app.request(`/api/reviews/${createdReviewId}`, {
+      const res = await app.request(`/api/reviews/edit/${createdReviewId}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -176,7 +206,7 @@ describe('Test Review API', () => {
         reviewText: 'Updated review'
       }
 
-      const res = await app.request('/api/reviews/999999', {
+      const res = await app.request('/api/reviews/edit/999999', {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -190,16 +220,11 @@ describe('Test Review API', () => {
   })
 
   // test fetch reviews
-  describe('GET /api/reviews/toilet/:toilet_id', () => {
+  describe('GET /api/reviews/toilet/:toiletId', () => {
     let createdReviewId: number
 
-    afterEach(async () => {
-      if (createdReviewId) {
-        await db.delete(reviews).where(eq(reviews.id, createdReviewId))
-      }
-    })
-
-    beforeAll(async () => {
+    beforeEach(async () => {
+      // Ensure we're using the correct types for IDs
       const [ review ] = await db.insert(reviews).values({
         toiletId: testToilet.id,
         userId: testUser.id,
@@ -209,22 +234,31 @@ describe('Test Review API', () => {
       createdReviewId = review.id
     })
 
+    afterEach(async () => {
+      if (createdReviewId) {
+        await db.delete(reviews).where(eq(reviews.id, createdReviewId))
+      }
+    })
+
     it('should get reviews for a toilet', async () => {
-      const res = await app.request(`/api/reviews/toilet?toiletId=${testToilet.id}`, {
+      const res = await app.request(`/api/reviews/toilet/${testToilet.id}`, {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
       })
 
       expect(res.status).toBe(200)
-      const data = await res.json() as { reviews: ReviewResponse[] }
+      const data = await res.json() as { reviews: any[] }
+
       expect(data.reviews).toBeDefined()
       expect(data.reviews.length).toBe(1)
-      expect(data.reviews[0].review.id).toBe(createdReviewId)
+      // The reviews are returned directly, not wrapped in a 'review' property
+      expect(data.reviews[0].id).toBe(createdReviewId)
+      expect(data.reviews[0].toiletId).toBe(testToilet.id)
     })
 
     it('should return 404 for non-existent toilet', async () => {
-      const res = await app.request('/api/reviews/toilet?toiletId=999999', {
+      const res = await app.request('/api/reviews/toilet/999999', {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
@@ -234,10 +268,11 @@ describe('Test Review API', () => {
     })
   })
 
-  describe('POST /api/reviews/:id/report', () => {
+  describe('POST /api/reviews/report/:reviewId', () => {
     let createdReviewId: number
 
     beforeAll(async () => {
+      // Ensure we're using the correct types for IDs
       const [ review ] = await db.insert(reviews).values({
         toiletId: testToilet.id,
         userId: testUser.id,
@@ -252,38 +287,57 @@ describe('Test Review API', () => {
     })
 
     it('should increment report count', async () => {
-      const res = await app.request(`/api/reviews/${createdReviewId}/report`, {
+      const res = await app.request(`/api/reviews/report/${createdReviewId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ reviewId: createdReviewId })
+        body: JSON.stringify({})
       })
 
       expect(res.status).toBe(200)
-      const data = await res.json() as ReportMessageResponse
-      expect(data.message).toBe('Review reported')
+      
+      // Verify report count is incremented
+      const [review] = await db
+        .select()
+        .from(reviews)
+        .where(eq(reviews.id, createdReviewId))
+        .limit(1)
+      expect(review.reportCount).toBe(1)
     })
 
     it('should delete review after 3 reports', async () => {
-      // Report twice more
-      await app.request(`/api/reviews/${createdReviewId}/report`, {
+      // First, verify the review exists and has report count of 1 from previous test
+      let [reviewBefore] = await db
+        .select()
+        .from(reviews)
+        .where(eq(reviews.id, createdReviewId))
+        .limit(1)
+      
+      expect(reviewBefore).toBeDefined()
+      expect(reviewBefore.reportCount).toBe(1)
+      
+      // Report a second time
+      const secondReport = await app.request(`/api/reviews/report/${createdReviewId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ reviewId: createdReviewId })
+        body: JSON.stringify({})
       })
-
-      const finalReport = await app.request(`/api/reviews/${createdReviewId}/report`, {
+      
+      expect(secondReport.status).toBe(200)
+      
+      // Report a third time - this should trigger deletion
+      const finalReport = await app.request(`/api/reviews/report/${createdReviewId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ reviewId: createdReviewId })
+        body: JSON.stringify({})
       })
 
       expect(finalReport.status).toBe(200)
@@ -291,23 +345,23 @@ describe('Test Review API', () => {
       expect(data.message).toBe('Review reported and deleted after reaching threshold')
 
       // Verify review is deleted
-      const [ review ] = await db
+      const [reviewAfter] = await db
         .select()
         .from(reviews)
         .where(eq(reviews.id, createdReviewId))
         .limit(1)
       
-      expect(review).toBeUndefined()
+      expect(reviewAfter).toBeUndefined()
     })
 
     it('should return 404 for non-existent review', async () => {
-      const res = await app.request(`/api/reviews/999999/report`, {
+      const res = await app.request('/api/reviews/report/999999', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ reviewId: 999999 })
+        body: JSON.stringify({})
       })
 
       expect(res.status).toBe(404)
@@ -318,6 +372,7 @@ describe('Test Review API', () => {
     let testReviewId: number
 
     beforeEach(async () => {
+      // Ensure we're using the correct types for IDs
       const [review] = await db.insert(reviews).values({
         toiletId: testToilet.id,
         userId: testUser.id,
@@ -332,13 +387,13 @@ describe('Test Review API', () => {
     })
 
     it('should delete a review', async () => {
-      const res = await app.request(`/api/reviews/${testReviewId}`, {
+      const res = await app.request(`/api/reviews/delete/${testReviewId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ reviewId: testReviewId })
+        body: JSON.stringify({})
       })
 
       expect(res.status).toBe(200)
@@ -357,17 +412,17 @@ describe('Test Review API', () => {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ reviewId: 999999 })
+        body: JSON.stringify({})
       })
 
       expect(res.status).toBe(404)
     })
 
     it('should require authentication', async () => {
-      const res = await app.request(`/api/reviews/${testReviewId}`, {
+      const res = await app.request(`/api/reviews/delete/${testReviewId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reviewId: testReviewId })
+        body: JSON.stringify({})
       })
 
       expect(res.status).toBe(401)

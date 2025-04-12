@@ -1,9 +1,17 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest'
 import { app } from '../app'
 import { AuthResponse, ErrorResponse, ProtectedResponse } from '../types/responses'
 import { db } from '../app'
 import { users } from '../db/schema'
 import { eq } from 'drizzle-orm'
+
+// Mock Minio client
+vi.mock('minio', () => {
+  return {
+    Client: vi.fn().mockImplementation(() => ({
+    }))
+  }
+})
 
 describe('Test Auth API', () => {
   // Delete the test user after all tests

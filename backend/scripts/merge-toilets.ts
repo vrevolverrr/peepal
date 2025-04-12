@@ -107,10 +107,10 @@ async function generateSeed() {
     var seedFile = "";
 
     for (const toilet of toilets) {
-        seedFile += `INSERT INTO toilets (id, name, address, location, handicap_avail, bidet_avail, shower_avail, sanitiser_avail, crowd_level, rating) VALUES ('${toilet.id}', '${toilet.name.replaceAll("'", "''")}', '${toilet.address.replaceAll("'", "''")}', ST_SetSRID(ST_MakePoint(${toilet.latlong.lng}, ${toilet.latlong.lat}), 4326), ${toilet.hasHandicap}, ${toilet.hasBidet}, ${toilet.hasShower}, ${toilet.hasSanitiser}, 0, ${toilet.rating || 0.00});\n`;
+        seedFile += `INSERT INTO toilets (id, name, address, location, handicap_avail, bidet_avail, shower_avail, sanitiser_avail, crowd_level, rating, image_token) VALUES ('${toilet.id}', '${toilet.name.replaceAll("'", "''")}', '${toilet.address.replaceAll("'", "''")}', ST_SetSRID(ST_MakePoint(${toilet.latlong.lng}, ${toilet.latlong.lat}), 4326), ${toilet.hasHandicap}, ${toilet.hasBidet}, ${toilet.hasShower}, ${toilet.hasSanitiser}, 0, ${toilet.rating || 0.00}, '${toilet.placeId}');\n`;
     }
 
-    await fs.writeFile('./scripts/data/toilets.sql', seedFile);
+    await fs.writeFile('./scripts/sql/toilets.sql', seedFile);
 }
 
 async function countDuplicates() {

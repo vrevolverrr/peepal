@@ -1,15 +1,23 @@
-import { describe, it, expect, beforeAll, beforeEach, afterAll, afterEach } from 'vitest'
+import { describe, it, expect, beforeAll, beforeEach, afterAll, afterEach, vi } from 'vitest'
 import { app, db } from '../app'
 import { users, toilets, favorites } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { nanoid } from 'nanoid'
+
+// Mock Minio client
+vi.mock('minio', () => {
+  return {
+    Client: vi.fn().mockImplementation(() => ({}))
+  }
+})
 
 interface FavoriteResponse {
   favorite: {
     id: number
     userId: string
-    toiletId: number
+    toiletId: string // Update to string since toilet IDs are text
   }
 }
 
@@ -17,9 +25,9 @@ interface FavoritesListResponse {
   favorites: Array<{
     id: number
     userId: string
-    toiletId: number
+    toiletId: string // Update to string since toilet IDs are text
     toilet: {
-      id: number
+      id: string // Update to string since toilet IDs are text
       name: string
       address: string
       location: {
@@ -43,23 +51,38 @@ interface ErrorResponse {
 describe('Test Favorites API', () => {
   let testUser: any
   let authToken: string
-  let testToiletId: number
+  let testToiletId: string
 
   beforeAll(async () => {
+    // Generate unique test data with timestamps
+    const timestamp = Date.now();
+    const testUsername = `favorites_test_user_${timestamp}`;
+    const testEmail = `favorites_${timestamp}@example.com`;
+    
     // Create test user
     const passwordHash = await bcrypt.hash('password123', 10)
-
-    const [user] = await db.insert(users).values({
-      username: 'favorites_test_user',
-      email: 'favorites@example.com',
-      passwordHash
-    }).returning()
+    
+    // First check if the user already exists
+    let user;
+    const existingUsers = await db.select().from(users).where(eq(users.email, testEmail));
+    
+    if (existingUsers.length === 0) {
+      const [newUser] = await db.insert(users).values({
+        username: testUsername,
+        email: testEmail,
+        passwordHash
+      }).returning();
+      user = newUser;
+    } else {
+      user = existingUsers[0];
+    }
     testUser = user
 
     authToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'your-secret-key')
 
     // Create test toilet
     const [toilet] = await db.insert(toilets).values({
+      id: nanoid(), // Add ID field using nanoid
       name: 'Favorites Test Toilet',
       address: '123 Test Street',
       location: { x: 1.3521, y: 103.8198 },
@@ -71,9 +94,15 @@ describe('Test Favorites API', () => {
 
   // Clean up after tests
   afterAll(async () => {
-    await db.delete(toilets).where(eq(toilets.id, testToiletId))
-    await db.delete(users).where(eq(users.email, 'favorites@example.com'))
-    await db.delete(favorites).where(eq(favorites.userId, testUser.id))
+    if (testToiletId) {
+      await db.delete(toilets).where(eq(toilets.id, testToiletId))
+    }
+    if (testUser && testUser.email) {
+      await db.delete(users).where(eq(users.email, testUser.email))
+    }
+    if (testUser && testUser.id) {
+      await db.delete(favorites).where(eq(favorites.userId, testUser.id))
+    }
   })
 
   describe('POST /api/favorites/add', () => {
@@ -82,13 +111,12 @@ describe('Test Favorites API', () => {
     })
 
     it('should add a toilet to favorites', async () => {
-      const res = await app.request('/api/favorites/add', {
+      const res = await app.request(`/api/favorites/add/${testToiletId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ toiletId: testToiletId })
+        }
       })
 
       expect(res.status).toBe(201)
@@ -100,23 +128,21 @@ describe('Test Favorites API', () => {
 
     it('should reject duplicate favorites', async () => {
       // Add first time
-      await app.request('/api/favorites/add', {
+      await app.request(`/api/favorites/add/${testToiletId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ toiletId: testToiletId })
+        }
       })
 
       // Try to add again
-      const res = await app.request('/api/favorites/add', {
+      const res = await app.request(`/api/favorites/add/${testToiletId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ toiletId: testToiletId })
+        }
       })
 
       expect(res.status).toBe(400)
@@ -125,10 +151,9 @@ describe('Test Favorites API', () => {
     })
 
     it('should require authentication', async () => {
-      const res = await app.request('/api/favorites/add', {
+      const res = await app.request(`/api/favorites/add/${testToiletId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ toiletId: testToiletId })
+        headers: { 'Content-Type': 'application/json' }
       })
 
       expect(res.status).toBe(401)
@@ -179,13 +204,12 @@ describe('Test Favorites API', () => {
     })
 
     it('should remove a favorite', async () => {
-      const res = await app.request('/api/favorites/remove', {
+      const res = await app.request(`/api/favorites/remove/${testToiletId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ toiletId: testToiletId })
+        }
       })
 
       expect(res.status).toBe(200)
@@ -197,23 +221,21 @@ describe('Test Favorites API', () => {
     })
 
     it('should return 400 for non-existent favorite', async () => {
-      const res = await app.request('/api/favorites/remove', {
+      const res = await app.request('/api/favorites/remove/non-existent-id', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ toiletId: 999999 })
+        }
       })
 
       expect(res.status).toBe(400)
     })
 
     it('should require authentication', async () => {
-      const res = await app.request('/api/favorites/remove', {
+      const res = await app.request(`/api/favorites/remove/${testToiletId}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ toiletId: testToiletId })
+        headers: { 'Content-Type': 'application/json' }
       })
 
       expect(res.status).toBe(401)

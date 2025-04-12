@@ -1,9 +1,17 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest'
 import { app, db } from '../app'
 import { users } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+
+// Mock Minio client
+vi.mock('minio', () => {
+  return {
+    Client: vi.fn().mockImplementation(() => ({
+    }))
+  }
+})
 
 interface UserResponse {
   user: {
@@ -29,14 +37,29 @@ describe('Test User API', () => {
 
   // Set up test database and create test user
   beforeAll(async () => {    
+    // Generate unique test data with timestamps
+    const timestamp = Date.now();
+    const testUsername = `testuser_${timestamp}`;
+    const testEmail = `test_${timestamp}@example.com`;
+    
     // Create test user
     const passwordHash = await bcrypt.hash('testpassword', 10)
-    const [ user ] = await db.insert(users).values({
-      username: 'testuser2',
-      email: 'test2@example.com',
-      passwordHash,
-      gender: 'male'
-    }).returning()
+    
+    // First check if the user already exists
+    let user;
+    const existingUsers = await db.select().from(users).where(eq(users.email, testEmail));
+    
+    if (existingUsers.length === 0) {
+      const [newUser] = await db.insert(users).values({
+        username: testUsername,
+        email: testEmail,
+        passwordHash,
+        gender: 'male'
+      }).returning();
+      user = newUser;
+    } else {
+      user = existingUsers[0];
+    }
 
     testUser = user
     authToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'your-secret-key')
@@ -44,7 +67,9 @@ describe('Test User API', () => {
 
   // Delete the test user after all tests
   afterAll(async () => {
-    await db.delete(users).where(eq(users.email, 'test2@example.com'))
+    if (testUser && testUser.email) {
+      await db.delete(users).where(eq(users.email, testUser.email))
+    }
   })
 
   describe('GET /api/user/me', () => {
@@ -58,8 +83,8 @@ describe('Test User API', () => {
       expect(res.status).toBe(200)
       const data = await res.json() as UserResponse
       expect(data.user).toBeDefined()
-      expect(data.user.username).toBe('testuser2')
-      expect(data.user.email).toBe('test2@example.com')
+      expect(data.user.username).toBe(testUser.username)
+      expect(data.user.email).toBe(testUser.email)
       expect(data.user.gender).toBe('male')
     })
 
@@ -71,6 +96,9 @@ describe('Test User API', () => {
 
   describe('PUT /api/user/update', () => {
     it('should update username successfully', async () => {
+      // Generate a unique username with timestamp
+      const uniqueUsername = `newuser_${Date.now()}`;
+      
       const res = await app.request('/api/user/update', {
         method: 'PUT',
         headers: {
@@ -78,16 +106,19 @@ describe('Test User API', () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: 'newusername'
+          username: uniqueUsername
         })
       })
 
       expect(res.status).toBe(200)
       const data = await res.json() as UserResponse
-      expect(data.user.username).toBe('newusername')
+      expect(data.user.username).toBe(uniqueUsername)
     })
 
     it('should update email successfully', async () => {
+      // Generate a unique email with timestamp
+      const uniqueEmail = `newemail_${Date.now()}@example.com`;
+      
       const res = await app.request('/api/user/update', {
         method: 'PUT',
         headers: {
@@ -95,13 +126,13 @@ describe('Test User API', () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: 'newemail@example.com'
+          email: uniqueEmail
         })
       })
 
       expect(res.status).toBe(200)
       const data = await res.json() as UserResponse
-      expect(data.user.email).toBe('newemail@example.com')
+      expect(data.user.email).toBe(uniqueEmail)
     })
 
     it('should update gender successfully', async () => {

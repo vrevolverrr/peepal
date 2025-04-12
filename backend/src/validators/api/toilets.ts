@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-export const toiletIdPramSchema = z.object({
-  id: z.string(),
+export const toiletIdParamSchema = z.object({
+  toiletId: z.string(),
 })
 
 export const createToiletSchema = z.object({

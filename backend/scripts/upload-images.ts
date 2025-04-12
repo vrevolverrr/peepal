@@ -29,16 +29,29 @@ async function uploadImage(filePath: string, objectName: string) {
 }
 
 async function generateSeed() {
-      const toiletsData = await fs.readFile('./scripts/data/final-toilets.json', 'utf-8');
-      const toilets: FinalToiletData[] = JSON.parse(toiletsData);
+    const images = await fs.readdir(imagesDir)
+
+    const toilets = await fs.readFile('./scripts/data/final-toilets.json', 'utf-8')
+    const toiletsData: FinalToiletData[] = JSON.parse(toilets)
+
+    // Create a map of toilet id to place id
+    const toiletsMap = new Map(toiletsData.map(toilet => [toilet.id, toilet.placeId]))
+
       
       var seedFile = "";
   
-      for (const toilet of toilets) {
-          seedFile += `INSERT INTO images (token, type, user_id, filename) VALUES ('${toilet.placeId}', 'toilet', NULL, '${toilet.placeId}.png');\n`;
+      for (const image of images) {
+        if (image.startsWith(".")) {
+            continue;
+        }
+
+        const token = toiletsMap.get(image.split('.')[0])
+        const extension = image.split('.')[1]
+        const filename = `${token}.${extension}`
+        seedFile += `INSERT INTO images (token, type, user_id, filename) VALUES ('${token}', 'toilet', NULL, '${filename}');\n`;
       }
   
-      await fs.writeFile('./scripts/data/toilet-images.sql', seedFile);
+      await fs.writeFile('./scripts/sql/toilet-images.sql', seedFile);
 }
 
 async function main() {
@@ -69,4 +82,6 @@ async function main() {
     }
 }
 
-main().catch(console.error)
+// main().catch(console.error)
+
+generateSeed().catch(console.error)

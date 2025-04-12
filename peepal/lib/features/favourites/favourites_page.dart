@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peepal/features/favourites/repository/favourites_repository.dart';
-import 'package:peepal/shared/toilet/model/toilet.dart';
+import 'package:peepal/bloc/toilet/model/toilet.dart';
 import 'package:peepal/features/favourites/widget/toilet_card.dart';
 
 class FavouritesPage extends StatefulWidget {

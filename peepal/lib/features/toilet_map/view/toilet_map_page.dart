@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:peepal/shared/location/bloc/location_bloc.dart';
+import 'package:peepal/bloc/location/bloc/location_bloc.dart';
 import 'package:peepal/features/toilet_map/view/widgets/search_bar.dart';
 import 'package:peepal/features/toilet_map/model/toilet_data_service.dart';
 import 'package:peepal/features/toilet_map/model/toilet_location.dart';
@@ -32,25 +32,27 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
   void _loadMarkers() {
     final locations = _dataService.getAllLocations();
     print('Loading ${locations.length} toilet locations as markers');
-    
-    final newMarkers = locations.map((location) => 
-      Marker(
-        markerId: MarkerId(location.id),
-        position: LatLng(location.latitude, location.longitude),
-        // Make markers more visible with a different color
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: InfoWindow(
-          title: location.name,
-          snippet: location.address + (location.rating != null ? ' (${location.rating}★)' : ''),
-        ),
-        onTap: () {
-          _selectLocation(location);
-        },
-      )
-    ).toSet();
-    
+
+    final newMarkers = locations
+        .map((location) => Marker(
+              markerId: MarkerId(location.id),
+              position: LatLng(location.latitude, location.longitude),
+              // Make markers more visible with a different color
+              icon: BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueRed),
+              infoWindow: InfoWindow(
+                title: location.name,
+                snippet: location.address +
+                    (location.rating != null ? ' (${location.rating}★)' : ''),
+              ),
+              onTap: () {
+                _selectLocation(location);
+              },
+            ))
+        .toSet();
+
     print('Created ${newMarkers.length} markers');
-    
+
     setState(() {
       _markers = newMarkers;
     });
@@ -60,7 +62,7 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
     setState(() {
       _selectedLocation = location;
     });
-    
+
     // Animate camera to the selected location
     _controller.future.then((controller) {
       controller.animateCamera(
@@ -101,7 +103,7 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
             onMapCreated: (GoogleMapController controller) {
               if (!_controller.isCompleted) {
                 _controller.complete(controller);
-                
+
                 // Load markers after map is created
                 if (!_mapsInitialized) {
                   _mapsInitialized = true;
@@ -116,7 +118,7 @@ class _ToiletMapPageState extends State<ToiletMapPage> {
           onSearch: _handleSearch,
           onLocationSelected: _selectLocation,
         ),
-        
+
         // Location details card at the bottom
         if (_selectedLocation != null)
           Positioned(

@@ -14,10 +14,10 @@ export async function logger(c: Context, next: Next) {
     },
   })
 
-  logger.info({ method: c.req.method, url: c.req.url })
-
   c.set('logger', logger)
   
   // Forward the request to the next handler
   await next()
+
+  logger.info({ method: c.req.method, url: c.req.url, status: c.res.status })
 }

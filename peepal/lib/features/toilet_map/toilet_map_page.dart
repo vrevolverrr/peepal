@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:peepal/shared/location/bloc/location_bloc.dart';
+import 'package:peepal/bloc/location/bloc/location_bloc.dart';
 import 'package:peepal/features/toilet_map/view/widgets/search_bar.dart';
 
 class ToiletMapPage extends StatefulWidget {

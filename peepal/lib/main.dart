@@ -3,13 +3,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
-import 'package:peepal/features/login_page/view/login_page.dart';
-import 'package:peepal/shared/location/repository/location_repository.dart';
+import 'package:peepal/features/login_page/login_page.dart';
+import 'package:peepal/bloc/location/repository/location_repository.dart';
+
+bool debugMode = false;
 
 void main() {
-  // Initialize WidgetsBinding before doing any work
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Setup logging
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
@@ -30,7 +31,7 @@ class App extends StatelessWidget {
             create: (context) => LocationRepository()..checkPermission(),
           ),
           // You can add AuthRepository here when ready to connect to backend
-        ], 
+        ],
         child: const PeePalApp(),
       );
 }
@@ -48,7 +49,6 @@ class PeePalApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         useMaterial3: true,
       ),
-      // Start with the login page
       home: const LoginPage(),
     );
   }

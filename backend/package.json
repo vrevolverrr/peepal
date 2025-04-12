@@ -6,7 +6,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
     "debug": "ts-node-dev --inspect --respawn --transpile-only src/main.ts",
     "build": "tsc",
-    "start": "node dist/main.js",
+    "start": "tsc && node dist/main.js",
     "generate": "drizzle-kit generate",
     "up": "drizzle-kit up",
     "push": "drizzle-kit push",

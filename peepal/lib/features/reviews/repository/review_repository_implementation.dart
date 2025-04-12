@@ -1,3 +1,4 @@
+import 'package:peepal/client/auth/model/user.dart';
 import 'package:peepal/features/reviews/model/review.dart';
 import 'package:peepal/shared/auth/model/user.dart';
 import 'package:peepal/features/reviews/repository/review_repository.dart';

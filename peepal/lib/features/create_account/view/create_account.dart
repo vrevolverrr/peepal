@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/features/app/bloc/app_bloc.dart';
 import 'package:peepal/features/home/home_page.dart';
-import 'package:peepal/features/login_page/view/login_page.dart';
-import 'package:peepal/shared/location/bloc/location_bloc.dart';
-import 'package:peepal/shared/location/repository/location_repository.dart';
+import 'package:peepal/features/login_page/login_page.dart';
+import 'package:peepal/bloc/location/bloc/location_bloc.dart';
+import 'package:peepal/bloc/location/repository/location_repository.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({Key? key}) : super(key: key);
+  const CreateAccountPage({super.key});
 
   @override
   State<CreateAccountPage> createState() => _CreateAccountPageState();
@@ -15,19 +15,27 @@ class CreateAccountPage extends StatefulWidget {
 
 class _CreateAccountPageState extends State<CreateAccountPage> {
   final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   bool _isPasswordVisible = false;
   String? _selectedGender;
 
-  final List<String> _genders = ['Male', 'Female', 'Other', 'Prefer not to say'];
+  final List<String> _genders = [
+    'Male',
+    'Female',
+    'Other',
+    'Prefer not to say'
+  ];
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+
     super.dispose();
   }
 
@@ -73,7 +81,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('Create Account', style: TextStyle(color: Colors.black)),
+        title:
+            const Text('Create Account', style: TextStyle(color: Colors.black)),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -90,7 +99,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   child: Icon(Icons.person_add, size: 50, color: Colors.white),
                 ),
                 const SizedBox(height: 32),
-                
+
                 // Name Field
                 TextFormField(
                   controller: _nameController,
@@ -115,7 +124,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   },
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Email Field
                 TextFormField(
                   controller: _emailController,
@@ -143,7 +152,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   },
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Password Field
                 TextFormField(
                   controller: _passwordController,
@@ -160,7 +169,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                        _isPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                         color: Colors.grey,
                       ),
                       onPressed: () {
@@ -181,7 +192,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   },
                 ),
                 const SizedBox(height: 24),
-                
+
                 // Gender Selection
                 DropdownButtonFormField<String>(
                   value: _selectedGender,
@@ -215,7 +226,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   },
                 ),
                 const SizedBox(height: 32),
-                
+
                 // Create Account Button
                 ElevatedButton(
                   onPressed: _createAccount,
@@ -233,7 +244,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                
+
                 // Back to Login
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -242,7 +253,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
                         );
                       },
                       child: const Text(

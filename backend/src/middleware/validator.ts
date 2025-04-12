@@ -9,6 +9,6 @@ export const validator = <T extends ZodSchema, Target extends keyof ValidationTa
   zValidator(target, schema, (result, c) => {
     if (!result.success) {
       c.get('logger').error(result.error.message)
-      return c.json({ error: result.error.message }, 400)
+      return c.json({ error: `Bad request: ${Object.keys(result.error.flatten().fieldErrors).join(', ')}` }, 400)
     }
   })

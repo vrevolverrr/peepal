@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/shared/toilet/model/toilet.dart';
-import 'package:peepal/shared/toilet/model/toilet_crowd_level.dart';
-import 'package:peepal/features/toilets/view/toilet_page.dart';
+import 'package:peepal/bloc/toilet/model/toilet.dart';
+import 'package:peepal/bloc/toilet/model/toilet_crowd_level.dart';
+import 'package:peepal/features/toilets/toilet_page.dart';
 
 class ToiletCard extends StatelessWidget {
   final PPToilet toilet;
@@ -28,7 +28,8 @@ class ToiletCard extends StatelessWidget {
           children: [
             // Toilet Image
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
               child: Image.asset(
                 'assets/images/toilet.jpeg', // Replace with toilet.imagePath if available
                 height: 150,

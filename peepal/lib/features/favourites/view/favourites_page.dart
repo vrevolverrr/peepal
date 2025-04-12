@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peepal/features/favourites/repository/favourites_repository.dart';
-import 'package:peepal/shared/toilet/model/toilet.dart';
+import 'package:peepal/bloc/toilet/model/toilet.dart';
 import 'package:peepal/features/favourites/widget/toilet_card.dart';
 
 class FavouritesPage extends StatefulWidget {
@@ -11,7 +11,8 @@ class FavouritesPage extends StatefulWidget {
 }
 
 class _FavouritesState extends State<FavouritesPage> {
-  final FavouritesRespository _repository = MockFavouritesRepository(); // Use the concrete implementation
+  final FavouritesRespository _repository =
+      MockFavouritesRepository(); // Use the concrete implementation
   late Future<List<PPToilet>> _favouriteToilets;
 
   @override
@@ -22,7 +23,8 @@ class _FavouritesState extends State<FavouritesPage> {
 
   Future<List<PPToilet>> _fetchFavourites() async {
     final collection = await _repository.getFavourites();
-    return collection.toilets; // Assuming `PPToiletCollection` has a `toilets` property
+    return collection
+        .toilets; // Assuming `PPToiletCollection` has a `toilets` property
   }
 
   @override
@@ -54,4 +56,3 @@ class _FavouritesState extends State<FavouritesPage> {
     );
   }
 }
-

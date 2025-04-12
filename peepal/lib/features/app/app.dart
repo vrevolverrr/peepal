@@ -5,9 +5,9 @@ import 'package:peepal/features/favourites/favourites_page.dart';
 import 'package:peepal/features/nearby_toilets/view/nearby_toilets_page.dart';
 import 'package:peepal/features/profile_page/profile_page.dart';
 import 'package:peepal/features/toilet_map/view/toilet_map_page.dart';
-import 'package:peepal/shared/location/bloc/location_bloc.dart';
-import 'package:peepal/shared/location/repository/location_repository.dart';
-import 'package:peepal/shared/toilet/repository/toilet_repository.dart';
+import 'package:peepal/bloc/location/bloc/location_bloc.dart';
+import 'package:peepal/bloc/location/repository/location_repository.dart';
+import 'package:peepal/bloc/toilet/repository/toilet_repository.dart';
 
 class PeePalApp extends StatefulWidget {
   const PeePalApp({super.key});

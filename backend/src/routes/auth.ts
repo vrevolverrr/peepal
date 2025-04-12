@@ -35,7 +35,7 @@ auth.post('/signup', validator('json', registerSchema), async (c) => {
   
   if (existingUser != undefined) {
     // Bad request, user already exists
-    log.info(`User ${existingUser.id} exists, returning 400`)
+    log.info(`User ${existingUser.id} exists`)
     return c.json({ error: 'User already exists' }, 400)
   }
 
@@ -68,6 +68,7 @@ auth.post('/login', validator('json', loginSchema), async (c) => {
 
   // Fetch user from DB
   const [ user ] = await db.select().from(users).where(eq(users.email, email)).limit(1)
+  
   if (!user) {
     return c.json({ error: 'Invalid credentials' }, 401)
   }
@@ -86,7 +87,8 @@ auth.post('/login', validator('json', loginSchema), async (c) => {
     user: {
       id: user.id,
       username: user.username,
-      email: user.email
+      email: user.email,
+      gender: user.gender
     },
     token
   })

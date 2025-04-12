@@ -27,7 +27,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     'Male',
     'Female',
     'Other',
-    'Prefer not to say'
   ];
 
   @override

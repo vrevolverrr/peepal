@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peepal/features/nearby_toilets/view/widgets/nearby_toilet_card.dart';
 import 'package:peepal/features/toilet_map/model/toilet_location.dart';
-import 'package:peepal/features/navigation/navigation_page.dart';
+import 'package:peepal/features/navigation/view/navigation_page.dart';
 
 final List<Map<String, dynamic>> toilets = [
   {

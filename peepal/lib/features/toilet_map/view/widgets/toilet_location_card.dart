@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peepal/features/toilet_map/model/toilet_location.dart';
-import 'package:peepal/features/navigation/navigation_page.dart'; // Add this import
+import 'package:peepal/features/navigation/view/navigation_page.dart'; // Add this import
 
 class ToiletLocationCard extends StatelessWidget {
   final ToiletLocation location;

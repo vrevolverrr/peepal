@@ -153,9 +153,9 @@ toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
     })
     .from(toilets)
     // Default radius is 5km and clamp at 5km
-    .where(sql`ST_DWithin(${toilets.location}, ${sqlPoint}, ${Math.max(0, Math.min(radius ?? 5.0, 5.0))}::double precision)`)
+    .where(sql`ST_DWithin(${toilets.location}, ${sqlPoint}, ${Math.max(0, Math.min(Number(radius ?? 5.0), 5.0))}::double precision)`)
     .orderBy(sql`${toilets.location} <-> ${sqlPoint}`)
-    .limit(limit ?? 5);
+    .limit(Number(limit ?? 5));
 
   logger.info(`Toilets fetched`)
 
@@ -164,7 +164,7 @@ toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
 
 toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
   const logger = c.get('logger')
-  const { query, latitude, longitude, radius, handicapAvail, bidetAvail, showerAvail, sanitiserAvail } = c.req.valid('json')
+  const { query, latitude, longitude, handicapAvail, bidetAvail, showerAvail, sanitiserAvail } = c.req.valid('json')
 
   const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`
 
@@ -174,12 +174,9 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
   })
     .from(toilets)
     .where(
-      and(
-        sql`ST_DWithin(${toilets.location}, ${sqlPoint}, ${radius ?? 99999.0}::double precision)`,
-        sql`to_tsvector('english', ${toilets.address}) @@ plainto_tsquery('english', ${query})`
-      )
+      sql`to_tsvector('english', ${toilets.address}) @@ plainto_tsquery('english', ${query})`
     )
-    .orderBy(sql`${toilets.location} <-> ${sqlPoint}`)
+    .orderBy(sql`ts_rank(to_tsvector('english', address), plainto_tsquery('english', ${query})) DESC`)
     .limit(5)
 
   const searchToiletResults: typeof searchedToilets = []
@@ -196,7 +193,13 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
 
   logger.info(`Toilets fetched`)
 
-  return c.json({ toilets: searchToiletResults }, 200)
+  return c.json({ toilets: searchToiletResults.map(t => ({
+    id: t.id,
+    name: t.name,
+    rating: t.rating,
+    distance: t.distance,
+    imageToken: t.imageToken,
+  })) }, 200)
 })
 
 toiletApi.post('/navigate/:toiletId', validator('param', toiletIdParamSchema), 

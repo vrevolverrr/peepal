@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/bloc/location/bloc/location_bloc.dart';
 import 'package:peepal/bloc/toilets/toilets_bloc.dart';
 import 'package:peepal/features/nearby_toilets/widgets/nearby_toilet_card.dart';
 import 'package:peepal/features/app/bloc/app_bloc.dart';
+import 'package:peepal/features/toilet_details/toilet_details_page.dart';
 import 'package:peepal/features/toilet_map/bloc/toilet_map_bloc.dart';
 
 class NearbyToiletsPage extends StatefulWidget {
@@ -78,10 +80,20 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
               SizedBox(height: 8.0),
               BlocBuilder<ToiletsBloc, ToiletsState>(
                 builder: (context, state) {
-                  final toilets = state.toilets;
-
-                  if (toilets.isEmpty) {
+                  if (state.toilets.isEmpty) {
                     return Center(child: Text("No toilets found"));
+                  }
+
+                  List<PPToilet> toilets;
+
+                  if (locationCubit.state is LocationStateWithLocation) {
+                    toilets = state.getNearest(
+                        location:
+                            (locationCubit.state as LocationStateWithLocation)
+                                .location,
+                        limit: 5);
+                  } else {
+                    toilets = state.toilets;
                   }
 
                   return SizedBox(
@@ -115,14 +127,22 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
                               ),
                             );
                           },
-                          child: NearbyToiletCard(
-                              toilet: toilet,
-                              onNavigate: () {
-                                context
-                                    .read<ToiletMapCubit>()
-                                    .selectToilet(toilet);
-                                context.read<AppPageCubit>().changeToSearch();
-                              }),
+                          child: GestureDetector(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ToiletDetailsPage(toilet: toilet),
+                                )),
+                            child: NearbyToiletCard(
+                                toilet: toilet,
+                                onNavigate: () {
+                                  context
+                                      .read<ToiletMapCubit>()
+                                      .selectToilet(toilet);
+                                  context.read<AppPageCubit>().changeToSearch();
+                                }),
+                          ),
                         );
                       },
                     ),

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/features/nearby_toilets/widgets/rating_widget.dart';
@@ -31,7 +32,7 @@ class NearbyToiletCard extends StatelessWidget {
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
-              child: ToiletImage(
+              child: PPImageWidget(
                 image: toilet.image,
                 height: height * 0.5,
                 width: double.infinity,
@@ -47,12 +48,15 @@ class NearbyToiletCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          toilet.name,
-                          style: const TextStyle(
-                              fontSize: 22.0, fontWeight: FontWeight.bold),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        SizedBox(
+                          width: 245.0,
+                          child: AutoSizeText(
+                            toilet.name,
+                            style: const TextStyle(
+                                fontSize: 22.0, fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         RatingWidget(rating: toilet.rating),
                       ],

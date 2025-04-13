@@ -20,6 +20,8 @@ class PPReviewsApi extends PPApiClient {
 
   final PPImagesApi imageApi;
 
+  final Map<String, List<PPReview>> _reviewsCache = {};
+
   PPReviewsApi({required super.dio, required this.imageApi});
 
   Future<List<PPReview>> getReviewsByToilet(
@@ -27,6 +29,9 @@ class PPReviewsApi extends PPApiClient {
       int offset = 0,
       PPSortField sort = PPSortField.date,
       PPSortOrder order = PPSortOrder.desc}) async {
+    if (_reviewsCache.containsKey(toilet.id)) {
+      return _reviewsCache[toilet.id]!;
+    }
     try {
       final Response<Map<String, dynamic>> response =
           await dio.get("$endpoint/toilet/${toilet.id}", queryParameters: {
@@ -47,13 +52,14 @@ class PPReviewsApi extends PPApiClient {
         throw PPUnexpectedServerError(message: 'Failed to get reviews');
       }
 
-      final List<Map<String, dynamic>> reviewsData = response.data!['reviews'];
+      final List<dynamic> reviewsData = response.data!['reviews'];
 
       final List<PPReview> reviews =
           reviewsData.map((e) => PPReview.fromJson(e)).toList();
 
       logger.info('Reviews fetched for toilet ${toilet.id}');
 
+      _reviewsCache[toilet.id] = reviews;
       return reviews;
     } catch (e) {
       logger.severe('Failed to get reviews: $e');

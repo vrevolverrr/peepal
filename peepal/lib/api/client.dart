@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:peepal/api/auth/auth_api.dart';
 import 'package:peepal/api/images/images_api.dart';
+import 'package:peepal/api/reviews/reviews_api.dart';
 import 'package:peepal/api/toilets/toilet_api.dart';
 import 'package:peepal/api/auth/exceptions.dart';
 import 'package:peepal/api/constants.dart';
@@ -21,6 +22,7 @@ final class PPClient {
   static late final PPToiletApi toilets;
   static late final PPUserApi user;
   static late final PPImagesApi images;
+  static late final PPReviewsApi reviews;
 
   static Future<void> init() async {
     if (_isInitialized) return;
@@ -72,7 +74,7 @@ final class PPClient {
     toilets = PPToiletApi(dio: dio);
     user = PPUserApi(dio: dio);
     images = PPImagesApi(dio: dio);
-
+    reviews = PPReviewsApi(dio: dio, imageApi: images);
     _isInitialized = true;
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:peepal/api/toilets/model/latlng.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/bloc/location/bloc/location_bloc.dart';
 import 'package:peepal/bloc/toilets/toilets_bloc.dart';
@@ -11,7 +12,7 @@ import 'package:peepal/features/toilet_map/bloc/toilet_map_bloc.dart';
 import 'package:peepal/features/toilet_map/widgets/search_bar.dart';
 import 'package:peepal/features/toilet_map/widgets/toilet_location_card.dart';
 import 'package:peepal/features/navigation/navigation_page.dart';
-import 'package:peepal/features/toilets/toilet_page.dart';
+import 'package:peepal/features/toilet_details/toilet_details_page.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ToiletMapPage extends StatefulWidget {
@@ -80,7 +81,6 @@ class _ToiletMapPageState extends State<ToiletMapPage>
           },
           builder: (context, state) {
             return GoogleMap(
-              myLocationButtonEnabled: true,
               myLocationEnabled: true,
               mapType: MapType.normal,
               initialCameraPosition: CameraPosition(
@@ -89,6 +89,22 @@ class _ToiletMapPageState extends State<ToiletMapPage>
               ),
               markers: state.toiletMarkers,
               polylines: state.activePolylines,
+              onCameraIdle: () async {
+                final GoogleMapController controller = await _controller.future;
+                final LatLng center =
+                    await controller.getLatLng(ScreenCoordinate(
+                        // ignore: use_build_context_synchronously
+                        x: MediaQuery.of(context).size.width ~/ 2,
+                        // ignore: use_build_context_synchronously
+                        y: MediaQuery.of(context).size.height ~/ 2));
+
+                toiletsBloc.add(ToiletEventFetchNearby(
+                  location: PPLatLng(
+                      latitude: center.latitude, longitude: center.longitude),
+                  radius: 800,
+                  limit: 10,
+                ));
+              },
               onMapCreated: (GoogleMapController controller) async {
                 if (!_controller.isCompleted) {
                   _controller.complete(controller);
@@ -124,12 +140,7 @@ class _ToiletMapPageState extends State<ToiletMapPage>
             );
           },
         ),
-        ToiletSearchBar(
-          onSearch: _handleSearch,
-          onLocationSelected: (toilet) {
-            toiletMapCubit.selectToilet(toilet);
-          },
-        ),
+        ToiletSearchBar(),
         BlocBuilder<ToiletMapCubit, ToiletMapState>(builder: (context, state) {
           if (state.selectedToilet == null) {
             return const SizedBox.shrink();
@@ -142,7 +153,7 @@ class _ToiletMapPageState extends State<ToiletMapPage>
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ToiletPage(toilet: state.selectedToilet!),
+                        ToiletDetailsPage(toilet: state.selectedToilet!),
                   )),
               child: ToiletLocationCard(
                 toilet: state.selectedToilet!,

@@ -1,21 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:peepal/api/user/model/user.dart';
 import 'package:peepal/api/images/model/image.dart';
 
 @immutable
 class PPReview extends Equatable {
   final int id;
-  final PPUser user;
+  final String username;
   final int rating;
   final String reviewText;
   final int reportCount;
-  final PPImage image;
   final DateTime createdAt;
+  final PPImage? image;
 
   const PPReview({
     required this.id,
-    required this.user,
+    required this.username,
     required this.rating,
     required this.reviewText,
     required this.reportCount,
@@ -26,18 +25,20 @@ class PPReview extends Equatable {
   factory PPReview.fromJson(Map<String, dynamic> json) {
     return PPReview(
       id: json['id'],
-      user: PPUser.fromJson(json['user']),
+      username: json['username'],
       rating: json['rating'],
       reviewText: json['reviewText'],
       reportCount: json['reportCount'],
-      image: PPImage(token: json['imageToken']),
+      image: json['imageToken'] != null
+          ? PPImage(token: json['imageToken'])
+          : null,
       createdAt: DateTime.parse(json['createdAt']),
     );
   }
 
   @override
   List<Object?> get props => [
-        user,
+        username,
         rating,
         reviewText,
         reportCount,

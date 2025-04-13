@@ -1,16 +1,20 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maps_toolkit/maps_toolkit.dart';
 import 'package:peepal/api/client.dart';
 import 'package:peepal/api/toilets/model/latlng.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'toilets_state.dart';
 part 'toilet_event.dart';
 
-class ToiletsBloc extends Bloc<ToiletsEvent, ToiletsState> {
+class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
   ToiletsBloc() : super(ToiletsStateInitial()) {
-    on<ToiletEventFetchNearby>(_onFetchNearby);
+    on<ToiletEventFetchNearby>(_onFetchNearby,
+        transformer: _debounceSequential<ToiletEventFetchNearby>(
+            const Duration(seconds: 1)));
   }
 
   void _onFetchNearby(
@@ -26,5 +30,10 @@ class ToiletsBloc extends Bloc<ToiletsEvent, ToiletsState> {
     } catch (e) {
       emit(ToiletStateError(toilets: state.toilets, error: e.toString()));
     }
+  }
+
+  EventTransformer<T> _debounceSequential<T>(Duration duration) {
+    return (events, mapper) =>
+        sequential<T>().call(events.throttleTime(duration), mapper);
   }
 }

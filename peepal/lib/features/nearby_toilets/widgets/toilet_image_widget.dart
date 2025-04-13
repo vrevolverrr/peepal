@@ -4,12 +4,14 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:peepal/api/client.dart';
 import 'package:peepal/api/images/model/image.dart';
 
-class ToiletImage extends StatelessWidget {
+class PPImageWidget extends StatelessWidget {
   final PPImage? image;
   final double? height;
   final double? width;
+  final BoxFit? fit;
 
-  const ToiletImage({super.key, required this.image, this.height, this.width});
+  const PPImageWidget(
+      {super.key, required this.image, this.height, this.width, this.fit});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class ToiletImage extends StatelessWidget {
             fadeOutDuration: 300.ms,
             height: height,
             width: width,
-            fit: BoxFit.cover,
+            fit: fit ?? BoxFit.cover,
           );
         } else {
           return loadingWidget;

@@ -21,11 +21,11 @@ reviewsApi.get('/', async (c) => {
 
 // GET /api/reviews/toilet/:toiletId?sort=date|rating&order=asc|desc&offset=0
 reviewsApi.get('/toilet/:toiletId', 
-  validator('param', toiletIdParamSchema), validator('query', fetchReviewsSchema), async (c) => {
+  validator('param', toiletIdParamSchema), validator('json', fetchReviewsSchema), async (c) => {
   const logger = c.get('logger')
   logger.error(c.req.param())
   const { toiletId } = c.req.valid('param')
-  const { offset, sort, order } = c.req.valid('query')
+  const { offset, sort, order } = c.req.valid('json')
 
   // First check if toilet exists
   const [ toilet ] = await db.select().from(toilets).where(eq(toilets.id, toiletId))

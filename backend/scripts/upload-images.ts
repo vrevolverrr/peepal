@@ -28,6 +28,24 @@ async function uploadImage(filePath: string, objectName: string) {
     }
 }
 
+async function transformNames() {
+    const images = await fs.readdir(imagesDir)
+
+    const toilets = await fs.readFile('./scripts/data/final-toilets.json', 'utf-8')
+    const toiletsData: FinalToiletData[] = JSON.parse(toilets)
+
+     // Create a map of toilet id to place id
+     const toiletsMap = new Map(toiletsData.map(toilet => [toilet.id, toilet.placeId]))
+
+    for (const image of images) {
+        if (image.startsWith(".")) {
+            continue;
+        }
+
+        await fs.rename(path.join(imagesDir, image), path.join(imagesDir, toiletsMap.get(image.split('.')[0]) + ".png"))
+    }
+ }
+
 async function generateSeed() {
     const images = await fs.readdir(imagesDir)
 
@@ -37,21 +55,48 @@ async function generateSeed() {
     // Create a map of toilet id to place id
     const toiletsMap = new Map(toiletsData.map(toilet => [toilet.id, toilet.placeId]))
 
-      
-      var seedFile = "";
+    var seedFile = "";
+
+    const includedImages: Record<string, boolean> = {};
   
-      for (const image of images) {
+    for (const image of images) {
+    if (image.startsWith(".")) {
+        continue;
+    }
+
+    const token = toiletsMap.get(image.split('.')[0])
+    const extension = image.split('.')[1]
+    const filename = `${token}.${extension}`
+
+    if (includedImages[filename]) {
+        continue;
+    }
+    
+    seedFile += `INSERT INTO images (token, type, user_id, filename) VALUES ('${token}', 'toilet', NULL, '${filename}');\n`;
+    includedImages[filename] = true;
+    }
+  
+    await fs.writeFile('./scripts/sql/toilet-images.sql', seedFile);
+}
+
+async function generateSeedTransformed() {
+    const images = await fs.readdir(imagesDir)
+
+    var seedFile = "";
+  
+    for (const image of images) {
         if (image.startsWith(".")) {
             continue;
         }
 
-        const token = toiletsMap.get(image.split('.')[0])
+        const token = image.split('.')[0]
         const extension = image.split('.')[1]
         const filename = `${token}.${extension}`
+
         seedFile += `INSERT INTO images (token, type, user_id, filename) VALUES ('${token}', 'toilet', NULL, '${filename}');\n`;
-      }
+    }
   
-      await fs.writeFile('./scripts/sql/toilet-images.sql', seedFile);
+    await fs.writeFile('./scripts/sql/images.sql', seedFile);
 }
 
 async function main() {
@@ -84,4 +129,6 @@ async function main() {
 
 // main().catch(console.error)
 
-generateSeed().catch(console.error)
+// generateSeed().catch(console.error)
+
+generateSeedTransformed().catch(console.error)

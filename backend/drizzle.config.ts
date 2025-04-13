@@ -12,5 +12,6 @@ export default {
     password: process.env.DB_PASSWORD || 'sc2006',
     database: process.env.DB_NAME || 'sc2006',
     ssl: false
-  }
+  },
+  tablesFilter: ['!us_gaz', '!us_rules', '!us_lex']
 } satisfies Config

@@ -1,4 +1,5 @@
 import { sql } from 'drizzle-orm';
+import { images } from './images'
 import { pgTable, index, text, boolean, integer, decimal, geometry } from 'drizzle-orm/pg-core'
 
 export const toilets = pgTable('toilets', {
@@ -12,7 +13,7 @@ export const toilets = pgTable('toilets', {
   sanitiserAvail: boolean('sanitiser_avail'),
   crowdLevel: integer('crowd_level').notNull().default(0),
   rating: decimal('rating', { precision: 3, scale: 2 }).default('0.00'),
-  imageToken: text('image_token'),
+  imageToken: text('image_token').references(() => images.token, { onDelete: 'set null' }),
   reportCount: integer('report_count').default(0)
 },  (t) => [
   index('idx_toilets_id').on(t.id),

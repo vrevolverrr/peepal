@@ -1,5 +1,5 @@
 {
-  "id": "41ad5809-61a4-4530-b68a-bd040412201a",
+  "id": "74a6d4e5-a83a-4a78-be25-8eaf9f1e9e19",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -127,12 +127,6 @@
           "primaryKey": true,
           "notNull": true
         },
-        "places_id": {
-          "name": "places_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "name": {
           "name": "name",
           "type": "text",
@@ -250,7 +244,21 @@
           "with": {}
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "toilets_image_token_images_token_fk": {
+          "name": "toilets_image_token_images_token_fk",
+          "tableFrom": "toilets",
+          "tableTo": "images",
+          "columnsFrom": [
+            "image_token"
+          ],
+          "columnsTo": [
+            "token"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -271,13 +279,13 @@
           "name": "user_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "toilet_id": {
           "name": "toilet_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "rating": {
           "name": "rating",
@@ -523,14 +531,20 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.notifications": {
-      "name": "notifications",
+    "public.images": {
+      "name": "images",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
+        "token": {
+          "name": "token",
+          "type": "text",
           "primaryKey": true,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "user_id": {
@@ -539,21 +553,14 @@
           "primaryKey": false,
           "notNull": false
         },
-        "message": {
-          "name": "message",
+        "filename": {
+          "name": "filename",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "is_read": {
-          "name": "is_read",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
-        },
-        "created_at": {
-          "name": "created_at",
+        "uploaded_at": {
+          "name": "uploaded_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -562,9 +569,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "notifications_user_id_users_id_fk": {
-          "name": "notifications_user_id_users_id_fk",
-          "tableFrom": "notifications",
+        "images_user_id_users_id_fk": {
+          "name": "images_user_id_users_id_fk",
+          "tableFrom": "images",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -572,7 +579,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "no action"
         }
       },

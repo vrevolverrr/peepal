@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:peepal/client/auth/exceptions.dart';
-import 'package:peepal/client/client.dart';
-import 'package:peepal/client/auth/model/user.dart';
+import 'package:peepal/api/auth/exceptions.dart';
+import 'package:peepal/api/client.dart';
+import 'package:peepal/api/user/model/user.dart';
 
 part 'auth_state.dart';
 part 'auth_event.dart';
@@ -15,7 +15,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventSignOut>(_onAuthEventSignOut);
   }
 
-  void _onAuthEventInit(AuthEventInit event, Emitter<AuthState> emit) async {}
+  void _onAuthEventInit(AuthEventInit event, Emitter<AuthState> emit) async {
+    final isAuthenticated = PPClient.auth.isAuthenticated;
+    if (isAuthenticated) {
+      try {
+        final PPUser user = await PPClient.user.getCurrentUser();
+        emit(AuthStateAuthenticated(user));
+      } catch (e) {
+        emit(AuthStateLoggedOut());
+      }
+    } else {
+      emit(AuthStateLoggedOut());
+    }
+  }
 
   void _onAuthEventSignIn(
       AuthEventSignIn event, Emitter<AuthState> emit) async {

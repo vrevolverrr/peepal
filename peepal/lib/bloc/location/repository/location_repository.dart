@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:geolocator/geolocator.dart';
-import 'package:peepal/bloc/location/model/location.dart';
+import 'package:peepal/api/toilets/model/latlng.dart';
 
 abstract interface class LocationRepository {
   Future<bool> checkPermission();
   Future<bool> requestPermission();
-  Future<PPLocation> getCurrentLocation();
-  Stream<PPLocation> getLocationStream();
+  Future<PPLatLng> getCurrentLocation();
+  Stream<PPLatLng> getLocationStream();
 
   factory LocationRepository() => LocationRepositoryImpl();
 }
@@ -15,7 +15,7 @@ abstract interface class LocationRepository {
 class LocationRepositoryImpl implements LocationRepository {
   bool _hasPermission = false;
 
-  Stream<PPLocation>? _positionStream;
+  Stream<PPLatLng>? _positionStream;
 
   @override
   Future<bool> checkPermission() async {
@@ -42,7 +42,7 @@ class LocationRepositoryImpl implements LocationRepository {
   }
 
   @override
-  Future<PPLocation> getCurrentLocation() async {
+  Future<PPLatLng> getCurrentLocation() async {
     final hasPermission = await checkPermission();
 
     if (!hasPermission) {
@@ -51,17 +51,17 @@ class LocationRepositoryImpl implements LocationRepository {
 
     final position = await Geolocator.getCurrentPosition();
 
-    return PPLocationAdapter(position);
+    return PPLatLng(latitude: position.latitude, longitude: position.longitude);
   }
 
   @override
-  Stream<PPLocation> getLocationStream() {
+  Stream<PPLatLng> getLocationStream() {
     if (!_hasPermission) {
       throw Exception("Location permission is not granted");
     }
 
-    _positionStream ??=
-        Geolocator.getPositionStream().map((event) => PPLocationAdapter(event));
+    _positionStream ??= Geolocator.getPositionStream().map((event) =>
+        PPLatLng(latitude: event.latitude, longitude: event.longitude));
 
     return _positionStream!;
   }

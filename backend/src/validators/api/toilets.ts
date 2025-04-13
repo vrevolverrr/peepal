@@ -33,6 +33,8 @@ export const updateToiletSchema = z.object({
 export const nearbyToiletSchema = z.object({
   latitude: z.string(),
   longitude: z.string(),
+  radius: z.number().optional(),
+  limit: z.number().optional(),
 })
 
 export const searchToiletSchema = z.object({
@@ -47,7 +49,6 @@ export const searchToiletSchema = z.object({
 })
 
 export const navigateToiletSchema = z.object({
-  toiletId: z.string(),
   latitude: z.number(),
   longitude: z.number(),
 })

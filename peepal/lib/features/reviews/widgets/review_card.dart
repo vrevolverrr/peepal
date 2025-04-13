@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/features/reviews/model/review.dart';
+import 'package:intl/intl.dart';
+import 'package:peepal/api/reviews/model/review.dart';
 
 class ReviewCard extends StatelessWidget {
-  final Review review;
+  final PPReview review;
 
-  const ReviewCard({Key? key, required this.review}) : super(key: key);
+  const ReviewCard({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,9 @@ class ReviewCard extends StatelessWidget {
             // Profile Picture
             CircleAvatar(
               radius: 24,
-              backgroundImage: AssetImage(review.profilePicture),
+              backgroundImage: AssetImage("assets/images/loopy1.png"),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 16.0),
 
             // Review Details
             Expanded(
@@ -33,14 +34,14 @@ class ReviewCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        review.user.name,
+                        review.user.username,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
                       Text(
-                        review.timeAgo,
+                        DateFormat('yyyy-MM-dd HH:mm').format(review.createdAt),
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 12,
@@ -48,11 +49,11 @@ class ReviewCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 8.0),
 
                   // Comment
                   Text(
-                    review.comment,
+                    review.reviewText,
                     style: const TextStyle(fontSize: 14),
                   ),
                   const SizedBox(height: 8),
@@ -62,11 +63,9 @@ class ReviewCard extends StatelessWidget {
                     children: List.generate(
                       5,
                       (index) => Icon(
-                        index < review.rating
-                            ? Icons.star
-                            : Icons.star_border,
+                        index < review.rating ? Icons.star : Icons.star_border,
                         color: Colors.amber,
-                        size: 16,
+                        size: 16.0,
                       ),
                     ),
                   ),

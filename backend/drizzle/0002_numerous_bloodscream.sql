@@ -1,1 +1,0 @@
-ALTER TABLE "toilets" DROP COLUMN "places_id";

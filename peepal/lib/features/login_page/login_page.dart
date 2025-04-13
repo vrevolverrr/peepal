@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/features/home/home_page.dart';
+import 'package:peepal/bloc/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:peepal/features/app/bloc/app_bloc.dart';
-import 'package:peepal/bloc/location/bloc/location_bloc.dart';
-import 'package:peepal/bloc/location/repository/location_repository.dart';
-import 'package:peepal/features/create_account/view/create_account.dart';
+import 'package:peepal/features/create_account/create_account.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,42 +26,22 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      final email = _emailController.text;
-      final password = _passwordController.text;
+  void _handleLogin() {
+    final bool isValid = _formKey.currentState!.validate();
 
-      // Mock backend logic for testing
-      if (email == 'test@example.com' && password == 'password123') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Logging in...')),
-        );
-
-        // Navigate to the HomePage with AppPageCubit provided
-        Future.delayed(const Duration(seconds: 1), () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MultiBlocProvider(
-                providers: [
-                  BlocProvider(create: (context) => AppPageCubit()),
-                  BlocProvider(
-                    create: (context) => LocationCubit(
-                      context.read<LocationRepository>(),
-                    ),
-                  ),
-                ],
-                child: const HomePage(),
-              ),
-            ),
-          );
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid email or password')),
-        );
-      }
+    if (!isValid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields')),
+      );
+      return;
     }
+
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    context
+        .read<AuthBloc>()
+        .add(AuthEventSignIn(email: email, password: password));
   }
 
   @override
@@ -123,15 +100,13 @@ class _LoginPageState extends State<LoginPage> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isPasswordVisible
-                          ? Icons
-                              .visibility_off // Show when password is visible
-                          : Icons.visibility, // Show when password is hidden
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: Colors.grey,
                     ),
                     onPressed: () {
                       setState(() {
-                        _isPasswordVisible =
-                            !_isPasswordVisible; // Toggle visibility
+                        _isPasswordVisible = !_isPasswordVisible;
                       });
                     },
                   ),
@@ -148,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 32),
               ElevatedButton(
-                onPressed: _login,
+                onPressed: _handleLogin,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   padding:

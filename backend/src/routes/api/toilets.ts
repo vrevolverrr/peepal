@@ -1,9 +1,9 @@
 import { nanoid } from "nanoid";
 import { Hono } from "hono";
+import { and, eq, getTableColumns, sql } from "drizzle-orm"
 import { Client, DirectionsRoute, RouteLeg, TravelMode } from "@googlemaps/google-maps-services-js";
 import { db } from "../../app"
 import { toilets } from "../../db/schema"
-import { and, eq, getTableColumns, sql } from "drizzle-orm"
 import { validator } from "../../middleware/validator"
 import { createToiletSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdParamSchema, updateToiletSchema } from "../../validators/api/toilets"
 
@@ -126,35 +126,36 @@ toiletApi.post('/report/:toiletId', validator('param', toiletIdParamSchema), asy
     await db.delete(toilets).where(eq(toilets.id, toiletId))
     logger.info(`Toilet ${toiletId} deleted due to ${NUM_REPORTS_DELETE} reports`)
     
-    return c.json({ report: { id: Number(toiletId) } }, 200)
+    return c.json({ message: 'Toilet reported and deleted after reaching threshold', deleted: true }, 200)
   }
 
-  const [ updatedToilet ] = await db
+  await db
     .update(toilets)
     .set({ reportCount: updatedReportCount })
     .where(eq(toilets.id, toiletId))
-    .returning()
 
   logger.info(`Toilet ${toiletId} reported`)
 
-  return c.json({ report: updatedToilet }, 200)
+  return c.json({ message: 'Toilet reported', deleted: false }, 200)
 })
 
-// GET /api/toilets/nearby - Get toilets within a radius
+// GET /api/toilets/nearby - Get nearest toilets
 toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
   const logger = c.get('logger')
-  const { latitude, longitude } = c.req.valid('query')
+  const { latitude, longitude, radius, limit } = c.req.valid('query')
 
   const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`
 
   const nearbyToilets = await db
     .select({
       ...getTableColumns(toilets),
-      distance: sql`ST_Distance(${toilets.location}, ${sqlPoint})`,
+      distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography))`,
     })
     .from(toilets)
+    // Default radius is 5km and clamp at 5km
+    .where(sql`ST_DWithin(${toilets.location}, ${sqlPoint}, ${Math.max(0, Math.min(radius ?? 5.0, 5.0))}::double precision)`)
     .orderBy(sql`${toilets.location} <-> ${sqlPoint}`)
-    .limit(5);
+    .limit(limit ?? 5);
 
   logger.info(`Toilets fetched`)
 
@@ -174,7 +175,7 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
     .from(toilets)
     .where(
       and(
-        sql`ST_DWithin(${toilets.location}, ${sqlPoint}, ${radius ?? 1000.0}::double precision)`,
+        sql`ST_DWithin(${toilets.location}, ${sqlPoint}, ${radius ?? 99999.0}::double precision)`,
         sql`to_tsvector('english', ${toilets.address}) @@ plainto_tsquery('english', ${query})`
       )
     )
@@ -198,23 +199,25 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
   return c.json({ toilets: searchToiletResults }, 200)
 })
 
-toiletApi.post('/navigate', validator('json', navigateToiletSchema), async (c) => {
+toiletApi.post('/navigate/:toiletId', validator('param', toiletIdParamSchema), 
+validator('json', navigateToiletSchema), async (c) => {
   const logger = c.get('logger')
-  const { toiletId, latitude, longitude } = c.req.valid('json')
+  const { toiletId } = c.req.valid('param')
+  const { latitude, longitude } = c.req.valid('json')
 
-  const toilet = await db.select().from(toilets).where(eq(toilets.id, toiletId))
+  const [ toilet ] = await db.select().from(toilets).where(eq(toilets.id, toiletId)).limit(1)
 
   if (!toilet) {
     logger.error(`Toilet not found with ID: ${toiletId}`)
-    return c.json({ error: 'Toilet not found' }, 400)
+    return c.json({ error: 'Toilet not found' }, 404)
   }
 
   const response = await client.directions({
     params: {
       origin: `${latitude},${longitude}`,
-      destination: `${toilet[0].location.y},${toilet[0].location.x}`,
+      destination: `${toilet.location.y},${toilet.location.x}`,
       mode: TravelMode.walking,
-      key: "AIzaSyDSifuva40JMqVs8o-MsON4QjmELzP4AMA"
+      key: process.env.GOOGLE_API_KEY || ''
     }
   })
 
@@ -236,21 +239,26 @@ toiletApi.post('/navigate', validator('json', navigateToiletSchema), async (c) =
       polyline: step.polyline.points,
       start_location: step.start_location,
       end_location: step.end_location,
-      instructions: step.html_instructions.replaceAll("<b>", "").replaceAll("</b>", "")
+      // Remove HTML tags from instructions
+      instructions: step.html_instructions
+        .replaceAll("<b>", "").replaceAll("</b>", "")
+        .replace(/<div[^>]*>/, '. ').replace(/<\/div>/, '')
     })
   }
 
   logger.info(`Navigation requested from ${latitude}, ${longitude} to ${toiletId}`)
 
-  return c.json({ 
-    overview_polyline: route.overview_polyline.points, 
-    start_address: leg.start_address,
-    end_address: leg.end_address,
-    start_location: leg.start_location,
-    end_location: leg.end_location,
-    distance: leg.distance.text, 
-    duration: leg.duration.text,
-    directions: directions
+  return c.json({
+    route: { 
+      overview_polyline: route.overview_polyline.points, 
+      start_address: leg.start_address,
+      end_address: leg.end_address,
+      start_location: leg.start_location,
+      end_location: leg.end_location,
+      distance: leg.distance.text, 
+      duration: leg.duration.text,
+      directions: directions
+    }
   }, 200)
 })
 

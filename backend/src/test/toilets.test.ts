@@ -37,10 +37,8 @@ interface ErrorResponse {
 }
 
 interface ReportResponse {
-  report: {
-    id: string
-    reportCount?: number
-  }
+  reportCount?: number
+  deleted?: boolean
 }
 
 describe('Test Toilet API', () => {
@@ -291,7 +289,16 @@ describe('Test Toilet API', () => {
 
       expect(res.status).toBe(200)
       const data = await res.json() as ReportResponse
-      expect(data.report.reportCount).toBe(1)
+      expect(data.deleted).toBe(false)
+
+      // Verify toilet report count is incremented
+      const [ toilet ] = await db
+        .select()
+        .from(toilets)
+        .where(eq(toilets.id, testToiletId))
+        .limit(1)
+          
+      expect(toilet!.reportCount).toBe(1)
     })
 
     it('should delete toilet after 3 reports', async () => {
@@ -313,6 +320,8 @@ describe('Test Toilet API', () => {
       })
 
       expect(finalReport.status).toBe(200)
+      const data = await finalReport.json() as ReportResponse
+      expect(data.deleted).toBe(true)
 
       // Verify toilet is deleted
       const [ toilet ] = await db

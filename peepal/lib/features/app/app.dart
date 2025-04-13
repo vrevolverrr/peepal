@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peepal/bloc/auth/auth_bloc.dart';
+import 'package:peepal/bloc/toilets/toilets_bloc.dart';
 import 'package:peepal/features/app/bloc/app_bloc.dart';
-import 'package:peepal/features/favourites/favourites_page.dart';
-import 'package:peepal/features/nearby_toilets/view/nearby_toilets_page.dart';
+import 'package:peepal/features/login_page/login_page.dart';
+import 'package:peepal/features/nearby_toilets/nearby_toilets_page.dart';
 import 'package:peepal/features/profile_page/profile_page.dart';
-import 'package:peepal/features/toilet_map/view/toilet_map_page.dart';
+import 'package:peepal/features/toilet_map/bloc/toilet_map_bloc.dart';
+import 'package:peepal/features/toilet_map/toilet_map_page.dart';
 import 'package:peepal/bloc/location/bloc/location_bloc.dart';
 import 'package:peepal/bloc/location/repository/location_repository.dart';
-import 'package:peepal/bloc/toilet/repository/toilet_repository.dart';
 
 class PeePalApp extends StatefulWidget {
   const PeePalApp({super.key});
@@ -22,8 +24,11 @@ class _PeePalAppState extends State<PeePalApp> {
 
   late final PageController _pageController = PageController();
 
+  late final LocationCubit locationCubit;
+
   @override
   void initState() {
+    locationCubit = LocationCubit(locationRepository)..init();
     super.initState();
   }
 
@@ -33,33 +38,47 @@ class _PeePalAppState extends State<PeePalApp> {
       title: "PeePal",
       theme: ThemeData(
           scaffoldBackgroundColor: Color(0xffF4F6F8), fontFamily: "MazzardH"),
-      home: MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => AppPageCubit()),
-            BlocProvider(
-              lazy: false,
-              create: (context) =>
-                  LocationCubit(context.read<LocationRepository>())..init(),
-            )
-          ],
-          child: Scaffold(
-            body: BlocListener<AppPageCubit, AppPageState>(
-                listener: (context, state) =>
-                    _pageController.jumpToPage(state.index),
-                child: PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _pageController,
-                  children: [
-                    NearbyToiletsPage(),
-                    ToiletMapPage(),
-                    FavouritesPage(),
-                    ProfilePage(),
-                  ],
-                )),
-            bottomNavigationBar: BlocBuilder<AppPageCubit, AppPageState>(
-              builder: _buildBottomNavBar,
-            ),
-          )),
+      home: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthStateInitial) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (state is AuthStateLoggedOut) {
+            return const LoginPage();
+          }
+
+          return MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => AppPageCubit()),
+                BlocProvider.value(value: locationCubit),
+                BlocProvider(create: (context) => ToiletsBloc()),
+                BlocProvider(
+                    create: (context) =>
+                        ToiletMapCubit(locationCubit: locationCubit))
+              ],
+              child: Scaffold(
+                body: BlocListener<AppPageCubit, AppPageState>(
+                    listener: (context, state) =>
+                        _pageController.jumpToPage(state.index),
+                    child: PageView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      controller: _pageController,
+                      children: [
+                        NearbyToiletsPage(),
+                        ToiletMapPage(),
+                        // FavouritesPage(),
+                        ProfilePage(),
+                      ],
+                    )),
+                bottomNavigationBar: BlocBuilder<AppPageCubit, AppPageState>(
+                  builder: _buildBottomNavBar,
+                ),
+              ));
+        },
+      ),
     );
   }
 

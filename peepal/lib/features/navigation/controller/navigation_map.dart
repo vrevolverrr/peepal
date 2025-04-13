@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -12,9 +11,9 @@ class NavigationMap extends StatelessWidget {
   final Function(GoogleMapController) onMapCreated;
   final Position? currentPosition;
   final VoidCallback? onCenterLocation; // New callback for centering
-  
+
   const NavigationMap({
-    Key? key,
+    super.key,
     required this.markers,
     required this.polylines,
     required this.circles,
@@ -23,7 +22,7 @@ class NavigationMap extends StatelessWidget {
     required this.onMapCreated,
     this.currentPosition,
     this.onCenterLocation,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class NavigationMap extends StatelessWidget {
             onMapCreated: onMapCreated,
           ),
         ),
-        
+
         // Custom location button
         Positioned(
           right: 16,

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
-import 'package:peepal/bloc/location/model/location.dart';
+import 'package:peepal/api/toilets/model/latlng.dart';
 import 'package:peepal/bloc/location/repository/location_repository.dart';
 
 part 'location_state.dart';
@@ -38,7 +38,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
 
     try {
-      final PPLocation location = await repository.getCurrentLocation();
+      final PPLatLng location = await repository.getCurrentLocation();
 
       log.info("Current location: $location");
       emit(LocationStateWithLocation(location: location));
@@ -46,5 +46,19 @@ class LocationCubit extends Cubit<LocationState> {
       log.severe("Error getting current location: $e");
       emit(LocationStateError(error: e.toString()));
     }
+  }
+
+  void requestPermission() async {
+    log.info("Requesting location permission");
+
+    final hasPermission = await repository.requestPermission();
+
+    if (!hasPermission) {
+      log.warning("Location permission is not granted");
+      emit(LocationStateNoPermission());
+    }
+
+    log.info("Location permission is granted");
+    emit(LocationStatePermissionGranted());
   }
 }

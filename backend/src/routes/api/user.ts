@@ -26,9 +26,9 @@ userApi.get('/me', async (c) => {
 
   const [ user ] = await db.select().from(users).where(eq(users.id, userId))
   
-  if (user == undefined) {
+  if (!user) {
     logger.info('User requested does not exist', userId)
-    return c.json( {error: "User does not exist"}, 400)
+    return c.json( {error: "User does not exist"}, 404)
   }
   
   return c.json({ user: user }, 200)

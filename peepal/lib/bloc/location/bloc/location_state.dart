@@ -31,7 +31,7 @@ final class LocationStateError extends LocationState {
 }
 
 final class LocationStateWithLocation extends LocationState {
-  final PPLocation location;
+  final PPLatLng location;
 
   const LocationStateWithLocation({
     required this.location,

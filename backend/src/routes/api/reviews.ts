@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
-import { db } from '../../app'
+import { db, minio } from '../../app'
 import { reviews, toilets } from '../../db/schema'
-import { sql, eq, desc, asc } from 'drizzle-orm'
+import { eq, desc, asc } from 'drizzle-orm'
 import { validator } from '../../middleware/validator'
 import { editReviewSchema, fetchReviewsSchema, postReviewSchema, reviewIdSchema } from '../../validators/api/reviews'
 import { toiletIdParamSchema } from '../../validators/api/toilets'
@@ -29,6 +29,7 @@ reviewsApi.get('/toilet/:toiletId',
 
   // First check if toilet exists
   const [ toilet ] = await db.select().from(toilets).where(eq(toilets.id, toiletId))
+
   if (!toilet) {
     logger.error(`Toilet not found with ID: ${toiletId}`)
     return c.json({ error: 'Toilet not found' }, 404)
@@ -93,8 +94,14 @@ reviewsApi.patch('/edit/:reviewId',
     return c.json({ error: 'Review not found' }, 404)
   }
 
-  if (existing.imageToken) {
-    // Delete image from S3 bucket
+  if (existing.userId !== c.get('user').id) {
+    logger.error(`User ${c.get('user').id} is not authorized to edit review ${reviewId}`)
+    return c.json({ error: 'You are not authorized to edit this review' }, 403)
+  }
+
+  if (existing.imageToken && imageToken !== existing.imageToken) {
+    // Delete existing image from S3 bucket
+    await minio.removeObject(process.env.S3_BUCKET || '', existing.imageToken)
   }
 
   const [updated] = await db
@@ -125,7 +132,7 @@ reviewsApi.post('/report/:reviewId', validator('param', reviewIdSchema), async (
   if (updatedReportCount >= 3) {
     await db.delete(reviews).where(eq(reviews.id, reviewId))
     logger.info(`Review ${reviewId} deleted due to 3 reports`)
-    return c.json({ message: 'Review reported and deleted after reaching threshold' }, 200)
+    return c.json({ message: 'Review reported and deleted after reaching threshold', deleted: true }, 200)
   }
 
   const [ updated ] = await db
@@ -135,7 +142,7 @@ reviewsApi.post('/report/:reviewId', validator('param', reviewIdSchema), async (
     .returning()
 
   logger.info(`Review ${reviewId} reported`)
-  return c.json({ message: 'Review reported' }, 200)
+  return c.json({ message: 'Review reported', deleted: false }, 200)
 })
 
 // DELETE /api/reviews/delete/:reviewId - Delete review
@@ -143,11 +150,21 @@ reviewsApi.delete('/delete/:reviewId', validator('param', reviewIdSchema), async
   const logger = c.get('logger')
   const { reviewId } = c.req.valid('param')
 
-  const [existing] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
+  const [ existing ] = await db.select().from(reviews).where(eq(reviews.id, reviewId))
 
   if (!existing) {
     logger.error(`Review not found with ID: ${reviewId}`)
     return c.json({ error: 'Review not found' }, 404)
+  }
+
+  if (existing.userId != c.get('user').id) {
+    logger.error(`User ${c.get('user').id} is not authorized to delete review ${reviewId}`)
+    return c.json({ error: 'You are not authorized to delete this review' }, 403)
+  }
+
+  // Delete existing image from S3 bucket
+  if (existing.imageToken) {
+    await minio.removeObject(process.env.S3_BUCKET || '', existing.imageToken)
   }
 
   await db.delete(reviews).where(eq(reviews.id, reviewId))

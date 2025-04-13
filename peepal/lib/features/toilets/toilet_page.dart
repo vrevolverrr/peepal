@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/bloc/toilet/model/toilet.dart';
-import 'package:peepal/bloc/toilet/model/toilet_crowd_level.dart';
-import 'package:peepal/features/reviews/model/review.dart';
+import 'package:peepal/api/reviews/model/review.dart';
+import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/features/reviews/widgets/review_card.dart';
-import 'package:peepal/features/reviews/repository/review_repository_implementation.dart';
 import 'package:peepal/features/reviews/widgets/add_review_bottom_sheet.dart';
 
 class ToiletPage extends StatefulWidget {
   final PPToilet toilet;
 
-  const ToiletPage({Key? key, required this.toilet}) : super(key: key);
+  const ToiletPage({super.key, required this.toilet});
 
   @override
   _ToiletPageState createState() => _ToiletPageState();
 }
 
 class _ToiletPageState extends State<ToiletPage> {
-  late Future<List<Review>> _reviewsFuture;
+  late Future<List<PPReview>> _reviewsFuture;
 
   @override
   void initState() {
     super.initState();
-    final reviewRepository = ReviewRepositoryImpl();
-    _reviewsFuture =
-        reviewRepository.fetchReviewsByToiletId(widget.toilet.id.toString());
   }
 
   @override
@@ -105,21 +100,20 @@ class _ToiletPageState extends State<ToiletPage> {
                         const Text("Toilet Crowd",
                             style: TextStyle(fontWeight: FontWeight.w600)),
                         const SizedBox(width: 16),
-                        Text(
-                          _getCrowdStatusText(
-                              widget.toilet.crowdStatus.crowdLevel),
-                          style: TextStyle(
-                            color: _getCrowdStatusColor(
-                                widget.toilet.crowdStatus.crowdLevel),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        CircleAvatar(
-                          radius: 4,
-                          backgroundColor: _getCrowdStatusColor(
-                              widget.toilet.crowdStatus.crowdLevel),
-                        ),
+                        // Text(
+                        //   _getCrowdStatusText(widget.toilet.crowdLevel),
+                        //   style: TextStyle(
+                        //     color:
+                        //         _getCrowdStatusColor(widget.toilet.crowdLevel),
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        // const SizedBox(width: 6),
+                        // CircleAvatar(
+                        //   radius: 4,
+                        //   backgroundColor:
+                        //       _getCrowdStatusColor(widget.toilet.crowdLevel),
+                        // ),
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -132,16 +126,20 @@ class _ToiletPageState extends State<ToiletPage> {
                       spacing: 16,
                       runSpacing: 8,
                       children: [
-                        if (widget.toilet.features.hasBidet)
+                        if (widget.toilet.bidetAvail != null &&
+                            widget.toilet.bidetAvail!)
                           const Text("✓  Bidet available",
                               style: TextStyle(fontWeight: FontWeight.w500)),
-                        if (widget.toilet.features.hasAccessibility)
+                        if (widget.toilet.handicapAvail != null &&
+                            widget.toilet.handicapAvail!)
                           const Text("✓  OKU friendly",
                               style: TextStyle(fontWeight: FontWeight.w500)),
-                        if (widget.toilet.features.hasShower)
+                        if (widget.toilet.showerAvail != null &&
+                            widget.toilet.showerAvail!)
                           const Text("✓  Shower",
                               style: TextStyle(fontWeight: FontWeight.w500)),
-                        if (widget.toilet.features.hasSanitizer)
+                        if (widget.toilet.sanitiserAvail != null &&
+                            widget.toilet.sanitiserAvail!)
                           const Text("✓  Sanitizer",
                               style: TextStyle(fontWeight: FontWeight.w500)),
                       ],
@@ -160,31 +158,14 @@ class _ToiletPageState extends State<ToiletPage> {
 
                     const SizedBox(height: 12),
 
-                    FutureBuilder<List<Review>>(
-                      future: _reviewsFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}");
-                        } else if (!snapshot.hasData ||
-                            snapshot.data!.isEmpty) {
-                          return const Text("No reviews available.");
-                        } else {
-                          final reviews = snapshot.data!;
-                          return Column(
-                            children: reviews
-                                .map((review) => Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 16.0),
-                                      child: ReviewCard(review: review),
-                                    ))
-                                .toList(),
-                          );
-                        }
-                      },
-                    ),
+                    Column(
+                      children: []
+                          .map((review) => Padding(
+                                padding: const EdgeInsets.only(bottom: 16.0),
+                                child: ReviewCard(review: review),
+                              ))
+                          .toList(),
+                    )
                   ],
                 ),
               ),
@@ -219,31 +200,32 @@ class _ToiletPageState extends State<ToiletPage> {
     );
   }
 
-  // Helper method to get crowd status text
-  String _getCrowdStatusText(PPToiletCrowdLevel crowdLevel) {
-    switch (crowdLevel) {
-      case PPToiletCrowdLevel.empty:
-        return 'Empty';
-      case PPToiletCrowdLevel.moderate:
-        return 'Moderate';
-      case PPToiletCrowdLevel.crowded:
-        return 'Crowded';
-      default:
-        return 'Unknown';
-    }
-  }
+  // // Helper method to get crowd status text
+  // String _getCrowdStatusText(PPToiletCrowdLevel crowdLevel) {
+  //   switch (crowdLevel) {
+  //     case PPToiletCrowdLevel.empty:
+  //       return 'Empty';
+  //     case PPToiletCrowdLevel.moderate:
+  //       return 'Moderate';
+  //     case PPToiletCrowdLevel.crowded:
+  //       return 'Crowded';
+  //     default:
+  //       return 'Unknown';
+  //   }
+  // }
 
-  // Helper method to get crowd status color
-  Color _getCrowdStatusColor(PPToiletCrowdLevel crowdLevel) {
-    switch (crowdLevel) {
-      case PPToiletCrowdLevel.empty:
-        return Colors.green;
-      case PPToiletCrowdLevel.moderate:
-        return Colors.orange;
-      case PPToiletCrowdLevel.crowded:
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
+  // // Helper method to get crowd status color
+  // Color _getCrowdStatusColor(PPToilet crowdLevel) {
+  //   return Colors.grey;
+  //   // switch (crowdLevel) {
+  //   //   case PPToiletCrowdLevel.empty:
+  //   //     return Colors.green;
+  //   //   case PPToiletCrowdLevel.moderate:
+  //   //     return Colors.orange;
+  //   //   case PPToiletCrowdLevel.crowded:
+  //   //     return Colors.red;
+  //   //   default:
+  //   //     return Colors.grey;
+  //   // }
+  // }
 }

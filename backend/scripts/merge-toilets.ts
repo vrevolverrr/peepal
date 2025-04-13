@@ -1,6 +1,7 @@
 import {nanoid } from 'nanoid';
 import { Client } from '@googlemaps/google-maps-services-js';
 import * as fs from 'fs/promises';
+import path from 'path';
 
 const client = new Client();
 
@@ -101,13 +102,20 @@ export interface FinalToiletData extends FullToiletData {
 }
 
 async function generateSeed() {
+    const imagesDir = path.join(__dirname, 'downloaded_images')
+    const images = await fs.readdir(imagesDir)
+
     const toiletsData = await fs.readFile('./scripts/data/final-toilets.json', 'utf-8');
     const toilets: FinalToiletData[] = JSON.parse(toiletsData);
     
     var seedFile = "";
 
     for (const toilet of toilets) {
-        seedFile += `INSERT INTO toilets (id, name, address, location, handicap_avail, bidet_avail, shower_avail, sanitiser_avail, crowd_level, rating, image_token) VALUES ('${toilet.id}', '${toilet.name.replaceAll("'", "''")}', '${toilet.address.replaceAll("'", "''")}', ST_SetSRID(ST_MakePoint(${toilet.latlong.lng}, ${toilet.latlong.lat}), 4326), ${toilet.hasHandicap}, ${toilet.hasBidet}, ${toilet.hasShower}, ${toilet.hasSanitiser}, 0, ${toilet.rating || 0.00}, '${toilet.placeId}');\n`;
+        if (images.includes(toilet.placeId + ".png")) {
+            seedFile += `INSERT INTO toilets (id, name, address, location, handicap_avail, bidet_avail, shower_avail, sanitiser_avail, crowd_level, rating, image_token) VALUES ('${toilet.id}', '${toilet.name.replaceAll("'", "''")}', '${toilet.address.replaceAll("'", "''")}', ST_SetSRID(ST_MakePoint(${toilet.latlong.lng}, ${toilet.latlong.lat}), 4326), ${toilet.hasHandicap}, ${toilet.hasBidet}, ${toilet.hasShower}, ${toilet.hasSanitiser}, 0, ${toilet.rating || 0.00}, '${toilet.placeId}');\n`;
+        } else {
+            seedFile += `INSERT INTO toilets (id, name, address, location, handicap_avail, bidet_avail, shower_avail, sanitiser_avail, crowd_level, rating, image_token) VALUES ('${toilet.id}', '${toilet.name.replaceAll("'", "''")}', '${toilet.address.replaceAll("'", "''")}', ST_SetSRID(ST_MakePoint(${toilet.latlong.lng}, ${toilet.latlong.lat}), 4326), ${toilet.hasHandicap}, ${toilet.hasBidet}, ${toilet.hasShower}, ${toilet.hasSanitiser}, 0, ${toilet.rating || 0.00}, NULL);\n`;
+        }
     }
 
     await fs.writeFile('./scripts/sql/toilets.sql', seedFile);

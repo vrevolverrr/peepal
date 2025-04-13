@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/features/reviews/model/review.dart';
-import 'package:peepal/shared/auth/model/user.dart';
+import 'package:peepal/api/reviews/model/review.dart';
 
 class AddReviewBottomSheet extends StatefulWidget {
   final String toiletId;
-  final Function(Review) onReviewAdded;
+  final Function(PPReview review) onReviewAdded;
 
   const AddReviewBottomSheet({
-    Key? key,
+    super.key,
     required this.toiletId,
     required this.onReviewAdded,
-  }) : super(key: key);
+  });
 
   @override
   _AddReviewBottomSheetState createState() => _AddReviewBottomSheetState();
@@ -25,25 +24,6 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
   void dispose() {
     _commentController.dispose();
     super.dispose();
-  }
-
-  void _submitReview() {
-    if (_formKey.currentState!.validate()) {
-      final newReview = Review(
-        user: const PPUser(
-          id: "current_user_id", // Replace with the actual logged-in user ID
-          name: "Current User", // Replace with the actual logged-in user name
-          email: "currentuser@example.com", // Replace with the actual logged-in user email
-        ),
-        profilePicture: "assets/profile_placeholder.png", // Replace with actual profile picture
-        timeAgo: "Just now",
-        comment: _commentController.text,
-        rating: _rating,
-      );
-
-      widget.onReviewAdded(newReview);
-      Navigator.pop(context); // Close the bottom sheet
-    }
   }
 
   @override
@@ -82,7 +62,8 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  const Text("Rating", style: TextStyle(fontWeight: FontWeight.bold)),
+                  const Text("Rating",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                   Slider(
                     value: _rating,
                     onChanged: (value) {
@@ -99,7 +80,7 @@ class _AddReviewBottomSheetState extends State<AddReviewBottomSheet> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      onPressed: _submitReview,
+                      onPressed: () => {},
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(120, 48),
                       ),

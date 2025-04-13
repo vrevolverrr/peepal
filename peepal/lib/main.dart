@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
-import 'package:peepal/features/login_page/login_page.dart';
+import 'package:peepal/api/client.dart';
 import 'package:peepal/bloc/location/repository/location_repository.dart';
+import 'package:peepal/features/app/app.dart';
+import 'package:peepal/bloc/auth/auth_bloc.dart';
 
-bool debugMode = false;
+bool debugMode = true;
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Setup logging
@@ -16,6 +18,8 @@ void main() {
   Logger.root.onRecord.listen((record) {
     log('[${record.loggerName}] ${record.level.name}: ${record.time}: ${record.message}');
   });
+
+  await PPClient.init();
 
   runApp(const App());
 }
@@ -30,26 +34,8 @@ class App extends StatelessWidget {
           RepositoryProvider(
             create: (context) => LocationRepository()..checkPermission(),
           ),
-          // You can add AuthRepository here when ready to connect to backend
+          BlocProvider(create: (context) => AuthBloc()..add(AuthEventInit())),
         ],
-        child: const PeePalApp(),
+        child: PeePalApp(),
       );
-}
-
-class PeePalApp extends StatelessWidget {
-  const PeePalApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PeePal',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        useMaterial3: true,
-      ),
-      home: const LoginPage(),
-    );
-  }
 }

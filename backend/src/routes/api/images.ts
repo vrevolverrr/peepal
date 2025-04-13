@@ -24,6 +24,8 @@ imageApi.get('/:token', validator('query', imageTokenSchema), async (c) => {
     filename: images.filename
   }).from(images).where(eq(images.token, token)).limit(1))[0]?.filename
 
+  logger.info(`Image found in DB: ${objectName}`)
+
   if (!objectName) {
     logger.error(`Image not found in DB for token: ${token}`)
     return c.json({ error: 'Image not found' }, 400)

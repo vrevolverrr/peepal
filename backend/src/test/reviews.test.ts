@@ -240,8 +240,8 @@ describe('Test Review API', () => {
       }
     })
 
-    it('should get reviews for a toilet', async () => {
-      const res = await app.request(`/api/reviews/toilet/${testToilet.id}`, {
+    it('should get reviews for a toilet with default sorting', async () => {
+      const res = await app.request(`/api/reviews/toilet/${testToilet.id}?offset=0&sort=date&order=desc`, {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
@@ -252,9 +252,22 @@ describe('Test Review API', () => {
 
       expect(data.reviews).toBeDefined()
       expect(data.reviews.length).toBe(1)
-      // The reviews are returned directly, not wrapped in a 'review' property
       expect(data.reviews[0].id).toBe(createdReviewId)
       expect(data.reviews[0].toiletId).toBe(testToilet.id)
+      expect(data.reviews[0].username).toBeDefined()
+    })
+
+    it('should get reviews sorted by rating', async () => {
+      const res = await app.request(`/api/reviews/toilet/${testToilet.id}?offset=0&sort=rating&order=asc`, {
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
+      })
+
+      expect(res.status).toBe(200)
+      const data = await res.json() as { reviews: any[] }
+      expect(data.reviews).toBeDefined()
+      expect(data.reviews[0].rating).toBeDefined()
     })
 
     it('should return 404 for non-existent toilet', async () => {
@@ -268,6 +281,7 @@ describe('Test Review API', () => {
     })
   })
 
+  // test report review
   describe('POST /api/reviews/report/:reviewId', () => {
     let createdReviewId: number
 
@@ -368,6 +382,7 @@ describe('Test Review API', () => {
     })
   })
 
+  // test delete review
   describe('DELETE /api/reviews/:id', () => {
     let testReviewId: number
 

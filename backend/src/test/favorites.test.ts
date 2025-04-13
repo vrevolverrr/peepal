@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, beforeEach, afterAll, afterEach, vi } from 'vitest'
 import { app, db } from '../app'
 import { users, toilets, favorites } from '../db/schema'
-import { eq } from 'drizzle-orm'
+import { eq, inArray } from 'drizzle-orm'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { nanoid } from 'nanoid'
@@ -23,24 +23,8 @@ interface FavoriteResponse {
 
 interface FavoritesListResponse {
   favorites: Array<{
-    id: number
-    userId: string
-    toiletId: string // Update to string since toilet IDs are text
-    toilet: {
-      id: string // Update to string since toilet IDs are text
-      name: string
-      address: string
-      location: {
-        x: number
-        y: number
-      }
-      handicapAvail: boolean
-      bidetAvail: boolean
-      showerAvail: boolean
-      sanitiserAvail: boolean
-      rating: string
-      reportCount: number
-    }
+    toiletId: string
+    createdAt: string
   }>
 }
 
@@ -161,27 +145,112 @@ describe('Test Favorites API', () => {
   })
 
   describe('GET /api/favorites/me', () => {
+    const testToilets = [
+      { 
+        id: 'test-toilet-1', 
+        name: 'Toilet A', 
+        address: '123 Street A',
+        location: { x: 1.3521, y: 103.8198 },
+        handicapAvail: true,
+        bidetAvail: true,
+        rating: '4.5',
+        reportCount: 0
+      },
+      { 
+        id: 'test-toilet-2', 
+        name: 'Toilet B', 
+        address: '123 Street B',
+        location: { x: 1.3522, y: 103.8199 },
+        handicapAvail: true,
+        bidetAvail: true,
+        rating: '3.5',
+        reportCount: 0
+      },
+      { 
+        id: 'test-toilet-3', 
+        name: 'Toilet C', 
+        address: '123 Street C',
+        location: { x: 1.3523, y: 103.8200 },
+        handicapAvail: true,
+        bidetAvail: true,
+        rating: '5.0',
+        reportCount: 0
+      },
+      { 
+        id: 'test-toilet-4', 
+        name: 'Toilet D', 
+        address: '123 Street D',
+        location: { x: 1.3524, y: 103.8201 },
+        handicapAvail: true,
+        bidetAvail: true,
+        rating: '2.5',
+        reportCount: 0
+      }
+    ]
+
     beforeAll(async () => {
-      // Add a favorite for testing
-      await db.insert(favorites).values({
-        userId: testUser.id,
-        toiletId: testToiletId
-      })
+      // Insert test toilets
+      for (const toilet of testToilets) {
+        await db.insert(toilets).values({
+          id: toilet.id,
+          name: toilet.name,
+          address: toilet.address,
+          location: toilet.location,
+          handicapAvail: toilet.handicapAvail,
+          bidetAvail: toilet.bidetAvail,
+          rating: toilet.rating,
+          reportCount: toilet.reportCount
+        })
+      }
+
+      // Add favorites with different creation times
+      for (const toilet of testToilets) {
+        await db.insert(favorites).values({
+          userId: testUser.id,
+          toiletId: toilet.id
+        })
+        // Wait a bit to ensure different creation times
+        await new Promise(resolve => setTimeout(resolve, 100))
+      }
     })
 
     afterAll(async () => {
+      // Clean up test toilets and favorites
       await db.delete(favorites).where(eq(favorites.userId, testUser.id))
+      await db.delete(toilets).where(inArray(toilets.id, testToilets.map(t => t.id)))
     })
 
-    it('should list user favorites with toilet details', async () => {
+    it('should list user favorites with correct format', async () => {
       const res = await app.request('/api/favorites/me', {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
 
       expect(res.status).toBe(200)
       const data = await res.json() as FavoritesListResponse
-      expect(data.favorites).toHaveLength(1)
-      expect(data.favorites[0].toiletId).toBe(testToiletId)
+      expect(data.favorites).toHaveLength(testToilets.length)
+      
+      // Verify each favorite has the correct structure
+      for (const favorite of data.favorites) {
+        expect(favorite).toHaveProperty('toiletId')
+        expect(favorite).toHaveProperty('createdAt')
+      }
+    })
+
+    it('should return favorites sorted by creation time (desc)', async () => {
+      const res = await app.request('/api/favorites/me', {
+        headers: { 'Authorization': `Bearer ${authToken}` }
+      })
+
+      expect(res.status).toBe(200)
+      const data = await res.json() as FavoritesListResponse
+      expect(data.favorites).toHaveLength(testToilets.length)
+      
+      // Verify sorting by creation time (desc)
+      for (let i = 0; i < data.favorites.length - 1; i++) {
+        const currentTimestamp = new Date(data.favorites[i].createdAt).getTime()
+        const nextTimestamp = new Date(data.favorites[i + 1].createdAt).getTime()
+        expect(currentTimestamp).toBeGreaterThan(nextTimestamp)
+      }
     })
 
     it('should require authentication', async () => {

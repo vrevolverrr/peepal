@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { db, minio } from '../../app'
-import { reviews, toilets } from '../../db/schema'
-import { eq, desc, asc } from 'drizzle-orm'
+import { reviews, toilets, users } from '../../db/schema'
+import { eq, desc, asc, getTableColumns } from 'drizzle-orm'
 import { validator } from '../../middleware/validator'
 import { editReviewSchema, fetchReviewsSchema, postReviewSchema, reviewIdSchema } from '../../validators/api/reviews'
 import { toiletIdParamSchema } from '../../validators/api/toilets'
@@ -40,8 +40,12 @@ reviewsApi.get('/toilet/:toiletId',
   else orderBy = order === 'asc' ? asc(reviews.createdAt) : desc(reviews.createdAt)
 
   const result = await db
-    .select()
+    .select({
+      ...getTableColumns(reviews),
+      username: users.username
+    })
     .from(reviews)
+    .innerJoin(users, eq(reviews.userId, users.id))
     .where(eq(reviews.toiletId, toiletId))
     .orderBy(orderBy)
     .offset(offset || 0)

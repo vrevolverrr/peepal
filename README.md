@@ -139,7 +139,7 @@ flutter run
 
 ## External APIs & Services
 
-### MapKit API
+### MapKit API and Google Maps API
 - Used for location services and map display
 - Provides real-time location updates
 - Handles route calculations and directions

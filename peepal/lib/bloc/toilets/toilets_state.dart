@@ -2,8 +2,12 @@ part of 'toilets_bloc.dart';
 
 sealed class ToiletsState extends Equatable {
   final List<PPToilet> toilets;
+  final List<PPToilet> searchResults;
 
-  const ToiletsState({this.toilets = const []});
+  const ToiletsState({
+    this.toilets = const [],
+    this.searchResults = const [],
+  });
 
   List<PPToilet> getNearest({required PPLatLng location, int limit = 5}) {
     final List<PPToilet> sortedToilets = List.from(toilets);
@@ -19,7 +23,7 @@ sealed class ToiletsState extends Equatable {
   }
 
   @override
-  List<Object> get props => [toilets];
+  List<Object> get props => [toilets, searchResults];
 }
 
 final class ToiletsStateInitial extends ToiletsState {
@@ -27,10 +31,13 @@ final class ToiletsStateInitial extends ToiletsState {
 }
 
 final class ToiletStateLoaded extends ToiletsState {
-  const ToiletStateLoaded({required super.toilets});
+  const ToiletStateLoaded({
+    required super.toilets,
+    super.searchResults = const [],
+  });
 
   @override
-  List<Object> get props => [toilets];
+  List<Object> get props => [toilets, searchResults];
 }
 
 final class ToiletStateError extends ToiletsState {

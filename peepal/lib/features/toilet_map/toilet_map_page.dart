@@ -1,9 +1,8 @@
 import 'dart:async';
 
+import 'package:apple_maps_flutter/apple_maps_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:peepal/api/toilets/model/latlng.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/bloc/location/bloc/location_bloc.dart';
@@ -24,7 +23,7 @@ class ToiletMapPage extends StatefulWidget {
 
 class _ToiletMapPageState extends State<ToiletMapPage>
     with AutomaticKeepAliveClientMixin {
-  final Completer<GoogleMapController> _controller = Completer();
+  final Completer<AppleMapController> _controller = Completer();
   @override
   bool get wantKeepAlive => true;
 
@@ -47,19 +46,16 @@ class _ToiletMapPageState extends State<ToiletMapPage>
 
   @override
   void dispose() {
-    _controller.future.then((controller) => controller.dispose());
     _subscriptions.cancel();
 
     super.dispose();
   }
 
-  void _handleSearch(String query) {}
-
   void _handleAnimateCameraToToilet(PPToilet toilet) async {
-    final GoogleMapController controller = await _controller.future;
+    final AppleMapController controller = await _controller.future;
     controller.animateCamera(
       CameraUpdate.newLatLngZoom(
-        toilet.location.toGmLatLng(),
+        toilet.location.toAmLatLng(),
         17.0,
       ),
     );
@@ -80,23 +76,26 @@ class _ToiletMapPageState extends State<ToiletMapPage>
             }
           },
           builder: (context, state) {
-            return GoogleMap(
+            if (state.activePolylines.isNotEmpty) {
+              debugPrint(state.activePolylines.first.hashCode.toString());
+            }
+
+            return AppleMap(
               myLocationEnabled: true,
-              mapType: MapType.normal,
+              mapType: MapType.standard,
               initialCameraPosition: CameraPosition(
                 target: initialLocation,
                 zoom: 11.0,
               ),
-              markers: state.toiletMarkers,
+              annotations: state.toiletMarkers,
               polylines: state.activePolylines,
               onCameraIdle: () async {
-                final GoogleMapController controller = await _controller.future;
-                final LatLng center =
-                    await controller.getLatLng(ScreenCoordinate(
-                        // ignore: use_build_context_synchronously
-                        x: MediaQuery.of(context).size.width ~/ 2,
-                        // ignore: use_build_context_synchronously
-                        y: MediaQuery.of(context).size.height ~/ 2));
+                final AppleMapController controller = await _controller.future;
+                final LatLngBounds bounds = await controller.getVisibleRegion();
+                final LatLng center = LatLng(
+                    (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+                    (bounds.northeast.longitude + bounds.southwest.longitude) /
+                        2);
 
                 toiletsBloc.add(ToiletEventFetchNearby(
                   location: PPLatLng(
@@ -105,7 +104,7 @@ class _ToiletMapPageState extends State<ToiletMapPage>
                   limit: 10,
                 ));
               },
-              onMapCreated: (GoogleMapController controller) async {
+              onMapCreated: (AppleMapController controller) async {
                 if (!_controller.isCompleted) {
                   _controller.complete(controller);
 
@@ -120,10 +119,9 @@ class _ToiletMapPageState extends State<ToiletMapPage>
 
                     if (locationState is LocationStateWithLocation) {
                       controller.animateCamera(
-                        duration: 0.8.seconds,
                         CameraUpdate.newCameraPosition(CameraPosition(
                             zoom: 17.0,
-                            target: locationState.location.toGmLatLng())),
+                            target: locationState.location.toAmLatLng())),
                       );
                     }
 

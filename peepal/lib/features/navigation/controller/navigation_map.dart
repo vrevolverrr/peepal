@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:apple_maps_flutter/apple_maps_flutter.dart';
 
 class NavigationMap extends StatelessWidget {
-  final Set<Marker> markers;
+  final Set<Annotation> markers;
   final Set<Polyline> polylines;
   final Set<Circle> circles;
   final double initialLatitude;
   final double initialLongitude;
-  final Function(GoogleMapController) onMapCreated;
+  final Function(AppleMapController) onMapCreated;
   final Position? currentPosition;
   final VoidCallback? onCenterLocation; // New callback for centering
 
@@ -31,12 +31,12 @@ class NavigationMap extends StatelessWidget {
         SizedBox(
           height: 300,
           width: double.infinity,
-          child: GoogleMap(
+          child: AppleMap(
             initialCameraPosition: CameraPosition(
               target: LatLng(initialLatitude, initialLongitude),
               zoom: 17,
             ),
-            markers: markers,
+            annotations: markers,
             polylines: polylines,
             circles: circles,
             // Using our custom circle instead of built-in location

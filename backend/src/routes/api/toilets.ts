@@ -1,18 +1,66 @@
 import { nanoid } from "nanoid";
 import { Hono } from "hono";
-import { and, eq, getTableColumns, sql } from "drizzle-orm"
-import { Client, DirectionsRoute, RouteLeg, TravelMode } from "@googlemaps/google-maps-services-js";
+import axios from "axios";
+import simplify from "simplify-js";
+import { encode, LatLng } from "@googlemaps/polyline-codec";
+import { eq, getTableColumns, sql } from "drizzle-orm"
+import {  MapKitAccessToken, MKRoute, MKStep, MKDirections, MKCoordinate, RouteDirection, Route } from "../../types/mapkit";
 import { db } from "../../app"
 import { toilets } from "../../db/schema"
 import { validator } from "../../middleware/validator"
 import { createToiletSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdParamSchema, updateToiletSchema } from "../../validators/api/toilets"
+import pino from "pino";
 
 const NUM_REPORTS_DELETE = 3
 
-// Google Maps API Client
-const client = new Client()
+// MapKit API Client
+const mapKitAxios = axios.create({
+  baseURL: 'https://maps-api.apple.com/v1',
+  headers: {
+    'Authorization': `Bearer ${process.env.MAPKIT_API_KEY}`
+  }
+})
 
 const toiletApi = new Hono()
+
+var mapsAccessToken: MapKitAccessToken | undefined = undefined
+
+const getMapKitAccessToken = async (logger: pino.Logger) => {
+  if (mapsAccessToken && mapsAccessToken.expiresAt > new Date()) {
+    logger.info("Using cached MapKit access token");
+    return mapsAccessToken.accessToken
+  } 
+
+  logger.info("MapKit access token expired, refreshing token");
+  const response: any = await mapKitAxios.get('/token')
+
+  const accessToken = response.data.accessToken
+  const expiresAt = new Date(Date.now() + response.data.expiresInSeconds * 1000)
+  
+  mapsAccessToken = { accessToken, expiresAt }
+  
+  logger.info("Obtained new MapKit access token");
+  return accessToken
+}
+
+const formatDuration = (seconds: number) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  if (hours > 0) {
+    return `${hours} hr ${minutes} min`;
+  }
+
+  return `${minutes} min`;
+}
+
+const formatDistance = (meters: number) => {
+  if (meters < 1000) {
+    return `${meters} meters`;
+  }
+
+  return `${(meters / 1000).toFixed(1)} km`;  
+}
 
 toiletApi.onError((err, c) => {
   const logger = c.get('logger')
@@ -170,14 +218,15 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
 
   const searchedToilets = await db.select({
     ...getTableColumns(toilets),
-    distance: sql`ST_Distance(${toilets.location}, ${sqlPoint})`,
+    distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography))`,
   })
     .from(toilets)
     .where(
-      sql`to_tsvector('english', ${toilets.address}) @@ plainto_tsquery('english', ${query})`
+      sql`${toilets.address} ILIKE ${'%' + query + '%'}`
     )
-    .orderBy(sql`ts_rank(to_tsvector('english', address), plainto_tsquery('english', ${query})) DESC`)
-    .limit(5)
+    .orderBy(sql`ts_rank(to_tsvector('english', address), plainto_tsquery('english', ${query})) ASC`,
+      sql`ST_Distance(${toilets.location}, ${sqlPoint})`)
+    .limit(6)
 
   const searchToiletResults: typeof searchedToilets = []
 
@@ -188,18 +237,12 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
     if (showerAvail !== undefined && t.showerAvail !== null && t.showerAvail !== showerAvail) continue
     if (sanitiserAvail !== undefined && t.sanitiserAvail !== null && t.sanitiserAvail !== sanitiserAvail) continue
 
-    searchToiletResults.push({ ...t, distance: Math.round(t.distance as number) })
+    searchToiletResults.push(t)
   }
 
   logger.info(`Toilets fetched`)
 
-  return c.json({ toilets: searchToiletResults.map(t => ({
-    id: t.id,
-    name: t.name,
-    rating: t.rating,
-    distance: t.distance,
-    imageToken: t.imageToken,
-  })) }, 200)
+  return c.json({ toilets: searchToiletResults }, 200)
 })
 
 toiletApi.post('/navigate/:toiletId', validator('param', toiletIdParamSchema), 
@@ -215,54 +258,117 @@ validator('json', navigateToiletSchema), async (c) => {
     return c.json({ error: 'Toilet not found' }, 404)
   }
 
-  const response = await client.directions({
-    params: {
-      origin: `${latitude},${longitude}`,
-      destination: `${toilet.location.y},${toilet.location.x}`,
-      mode: TravelMode.walking,
-      key: process.env.GOOGLE_API_KEY || ''
+  const accessToken = await getMapKitAccessToken(logger)
+  const directionsResponse = await mapKitAxios.get<MKDirections>(
+    '/directions', {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+      params: {
+        'origin': `${latitude},${longitude}`,
+        'destination': `${toilet.location.y},${toilet.location.x}`,
+        'transportType': 'Walking',
+      }
     }
-  })
+  )
+  // return c.json(directionsResponse.data);
 
-  const route: DirectionsRoute = response.data.routes[0]
-  const leg: RouteLeg = route.legs[0]
+  // logger.info(directionsResponse.data);
+  
+  const mkRoute: MKRoute = directionsResponse.data.routes[0]
+  const mkSteps: MKStep[] = directionsResponse.data.steps
+  const mkStepPaths: MKCoordinate[][] = directionsResponse.data.stepPaths
 
-  if (!route) {
-    logger.error(`No route found from ${latitude}, ${longitude} to ${toiletId}`)
-    return c.json({ error: 'No route found' }, 400)
-  }
+  const stepPathTransformed: LatLng[][] = mkStepPaths.map(stepPath => stepPath.map(coord => ({ lat: coord.latitude, lng: coord.longitude })))
+  const stepPathPolylines: string[] = stepPathTransformed.map(path => encode(path))
 
-  const steps = leg.steps
-  const directions: any = []
+  const directions: RouteDirection[] = []
 
-  for (const step of steps) {
+  for (const step of mkSteps) {
     directions.push({
-      distance: step.distance.text,
-      duration: step.duration.text,
-      polyline: step.polyline.points,
-      start_location: step.start_location,
-      end_location: step.end_location,
-      // Remove HTML tags from instructions
-      instructions: step.html_instructions
-        .replaceAll("<b>", "").replaceAll("</b>", "")
-        .replace(/<div[^>]*>/, '. ').replace(/<\/div>/, '')
+      distance: formatDistance(step.distanceMeters),
+      duration: formatDuration(step.durationSeconds),
+      polyline: stepPathPolylines[step.stepPathIndex],
+      start_location: stepPathTransformed[step.stepPathIndex][0],
+      end_location: stepPathTransformed[step.stepPathIndex][stepPathTransformed[step.stepPathIndex].length - 1],
+      instructions: step.instructions
     })
   }
 
-  logger.info(`Navigation requested from ${latitude}, ${longitude} to ${toiletId}`)
+  const overviewPolylinePoints: {
+    x: number;
+    y: number;
+  }[] = stepPathTransformed.flat().map(coord => ({ x: coord.lng, y: coord.lat }))
 
-  return c.json({
-    route: { 
-      overview_polyline: route.overview_polyline.points, 
-      start_address: leg.start_address,
-      end_address: leg.end_address,
-      start_location: leg.start_location,
-      end_location: leg.end_location,
-      distance: leg.distance.text, 
-      duration: leg.duration.text,
-      directions: directions
-    }
-  }, 200)
+  const overviewPolyline: string = encode(simplify(overviewPolylinePoints, 0.0001, false).map(coord => [coord.y, coord.x]))
+
+  const distanceString: string = formatDistance(mkRoute.distanceMeters)
+  const durationString: string = formatDuration(mkRoute.durationSeconds)
+
+  const route: Route = {
+    overview_polyline: overviewPolyline,
+    start_location: {
+      lat: directionsResponse.data.origin.coordinate.latitude,
+      lng: directionsResponse.data.origin.coordinate.longitude
+    },
+    end_location: {
+      lat: directionsResponse.data.destination.coordinate.latitude,
+      lng: directionsResponse.data.destination.coordinate.longitude
+    },
+    distance: distanceString,
+    duration: durationString,
+    directions: directions
+  }
+  
+  return c.json({ route: route }, 200);
+  // const response = await client.directions({
+  //   params: {
+  //     origin: `${latitude},${longitude}`,
+  //     destination: `${toilet.location.y},${toilet.location.x}`,
+  //     mode: TravelMode.walking,
+  //     key: process.env.GOOGLE_API_KEY || ''
+  //   }
+  // })
+
+  // const route: DirectionsRoute = response.data.routes[0]
+  // const leg: RouteLeg = route.legs[0]
+
+  // if (!route) {
+  //   logger.error(`No route found from ${latitude}, ${longitude} to ${toiletId}`)
+  //   return c.json({ error: 'No route found' }, 400)
+  // }
+
+  // const steps = leg.steps
+  // const directions: any = []
+
+  // for (const step of steps) {
+  //   directions.push({
+  //     distance: step.distance.text,
+  //     duration: step.duration.text,
+  //     polyline: step.polyline.points,
+  //     start_location: step.start_location,
+  //     end_location: step.end_location,
+  //     // Remove HTML tags from instructions
+  //     instructions: step.html_instructions
+  //       .replaceAll("<b>", "").replaceAll("</b>", "")
+  //       .replace(/<div[^>]*>/, '. ').replace(/<\/div>/, '')
+  //   })
+  // }
+
+  // logger.info(`Navigation requested from ${latitude}, ${longitude} to ${toiletId}`)
+
+  // return c.json({
+  //   route: { 
+  //     overview_polyline: route.overview_polyline.points, 
+  //     start_address: leg.start_address,
+  //     end_address: leg.end_address,
+  //     start_location: leg.start_location,
+  //     end_location: leg.end_location,
+  //     distance: leg.distance.text, 
+  //     duration: leg.duration.text,
+  //     directions: directions
+  //   }
+  // }, 200)
 })
 
 export default toiletApi

@@ -1,10 +1,15 @@
 part of 'location_bloc.dart';
 
 sealed class LocationState extends Equatable {
-  const LocationState();
+  final PPLatLng location;
+
+  const LocationState({
+    // Default location center of Singapore
+    this.location = const PPLatLng(latitude: 1.287953, longitude: 103.851957),
+  });
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [location];
 }
 
 final class LocationStateUnknown extends LocationState {
@@ -31,10 +36,8 @@ final class LocationStateError extends LocationState {
 }
 
 final class LocationStateWithLocation extends LocationState {
-  final PPLatLng location;
-
   const LocationStateWithLocation({
-    required this.location,
+    required super.location,
   });
 
   @override

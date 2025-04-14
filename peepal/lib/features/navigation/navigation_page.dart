@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'package:apple_maps_flutter/apple_maps_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:maps_toolkit/maps_toolkit.dart' hide LatLng;
+import 'package:maps_toolkit/maps_toolkit.dart' as mtk;
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/features/navigation/controller/mock_navigation_service.dart';
 import 'package:peepal/features/navigation/controller/location_service.dart';
 import 'package:peepal/features/navigation/controller/navigation_simulator.dart';
-import 'package:peepal/features/navigation/controller/map_utils.dart';
 import 'package:peepal/features/navigation/controller/navigation_map.dart';
 import 'package:peepal/features/navigation/widgets/navigation_header.dart';
 import 'package:peepal/features/navigation/widgets/direction_list.dart';
@@ -24,7 +25,7 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  final Completer<GoogleMapController> _controller = Completer();
+  final Completer<AppleMapController> _controller = Completer();
   final MockNavigationService _navigationService = MockNavigationService();
 
   // Services
@@ -45,7 +46,7 @@ class _NavigationPageState extends State<NavigationPage> {
 
   // Map elements
   Set<Polyline> _polylines = {};
-  Set<Marker> _markers = {};
+  Set<Annotation> _markers = {};
   Set<Circle> _circles = {};
 
   // Default current location
@@ -73,7 +74,7 @@ class _NavigationPageState extends State<NavigationPage> {
     // Initialize circle for current location
     _circles = {
       Circle(
-        circleId: const CircleId('current_location'),
+        circleId: CircleId('current_location'),
         center: LatLng(_currentLatitude, _currentLongitude),
         radius: 8,
         fillColor: Colors.blue.withAlpha(178),
@@ -103,29 +104,31 @@ class _NavigationPageState extends State<NavigationPage> {
 
       // Create polyline from overview_polyline
       final List<LatLng> polylinePoints =
-          MapUtils.decodePolyline(data['overview_polyline']);
+          PolygonUtil.decode(data['overview_polyline'])
+              .map((point) => LatLng(point.latitude, point.longitude))
+              .toList();
 
       final polyline = Polyline(
-        polylineId: const PolylineId('overview_route'),
+        polylineId: PolylineId('overview_route'),
         color: Colors.blue,
         width: 5,
         points: polylinePoints,
       );
 
       // Create markers for start and end points
-      final startMarker = Marker(
-        markerId: const MarkerId('start'),
+      final startMarker = Annotation(
+        annotationId: AnnotationId('start'),
         position: LatLng(
             data['start_location']['lat'], data['start_location']['lng']),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         infoWindow: InfoWindow(title: 'Start', snippet: data['start_address']),
       );
 
-      final endMarker = Marker(
-        markerId: const MarkerId('destination'),
+      final endMarker = Annotation(
+        annotationId: AnnotationId('destination'),
         position:
             LatLng(data['end_location']['lat'], data['end_location']['lng']),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        icon: await BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(size: Size(12, 12)), "assets/images/marker.png"),
         infoWindow: InfoWindow(
             title: widget.destination.name, snippet: data['end_address']),
       );
@@ -161,7 +164,7 @@ class _NavigationPageState extends State<NavigationPage> {
       await Future.delayed(const Duration(milliseconds: 300));
 
       // Move camera to show the full route
-      final GoogleMapController controller = await _controller.future;
+      final AppleMapController controller = await _controller.future;
 
       // Calculate bounds that include both start and destination
       final LatLngBounds bounds = LatLngBounds(
@@ -198,10 +201,10 @@ class _NavigationPageState extends State<NavigationPage> {
       // Update circle for current location
       _circles = {
         Circle(
-          circleId: const CircleId('current_location'),
+          circleId: CircleId('current_location'),
           center: LatLng(position.latitude, position.longitude),
           radius: 8,
-          fillColor: Colors.blue.withOpacity(0.7),
+          fillColor: Colors.blue.withValues(alpha: 0.7),
           strokeColor: Colors.white,
           strokeWidth: 2,
           zIndex: 2,
@@ -231,14 +234,15 @@ class _NavigationPageState extends State<NavigationPage> {
 
     for (int i = 0; i < directions.length; i++) {
       final step = directions[i];
-      final stepPoints = MapUtils.decodePolyline(step['polyline']);
+      final stepPoints = PolygonUtil.decode(step['polyline']);
 
       for (final point in stepPoints) {
-        final distance = MapUtils.calculateDistance(position.latitude,
-            position.longitude, point.latitude, point.longitude);
+        final distance = SphericalUtil.computeDistanceBetween(
+            mtk.LatLng(position.latitude, position.longitude),
+            mtk.LatLng(point.latitude, point.longitude));
 
         if (distance < closestDistance) {
-          closestDistance = distance;
+          closestDistance = distance.toDouble();
           closestStepIndex = i;
         }
       }
@@ -255,8 +259,9 @@ class _NavigationPageState extends State<NavigationPage> {
     if (_navigationData == null || _destinationReached) return;
 
     final endLocation = _navigationData!['end_location'];
-    final distanceToEnd = MapUtils.calculateDistance(position.latitude,
-        position.longitude, endLocation['lat'], endLocation['lng']);
+    final distanceToEnd = SphericalUtil.computeDistanceBetween(
+        mtk.LatLng(position.latitude, position.longitude),
+        mtk.LatLng(endLocation['lat'], endLocation['lng']));
 
     if (distanceToEnd < 0.02) {
       // Within 20 meters
@@ -365,7 +370,7 @@ class _NavigationPageState extends State<NavigationPage> {
           circles: _circles,
           initialLatitude: _currentLatitude,
           initialLongitude: _currentLongitude,
-          onMapCreated: (controller) {
+          onMapCreated: (AppleMapController controller) {
             _controller.complete(controller);
           },
           currentPosition: _currentPosition,

@@ -1,7 +1,7 @@
 part of 'toilet_map_bloc.dart';
 
 final class ToiletMapState extends Equatable {
-  final Set<Marker> toiletMarkers;
+  final Set<Annotation> toiletMarkers;
   final PPToilet? selectedToilet;
   final Set<Polyline> activePolylines;
   final PPRoute? activeRoute;
@@ -15,7 +15,7 @@ final class ToiletMapState extends Equatable {
 
   ToiletMapState copyWith(
       {required PPToilet? selectedToilet,
-      Set<Marker>? toiletMarkers,
+      Set<Annotation>? toiletMarkers,
       Set<Polyline>? activePolylines,
       PPRoute? activeRoute}) {
     return ToiletMapState(
@@ -28,5 +28,5 @@ final class ToiletMapState extends Equatable {
 
   @override
   List<Object> get props =>
-      [toiletMarkers, selectedToilet ?? const {}, activePolylines];
+      [toiletMarkers, selectedToilet ?? 0, activePolylines, activeRoute ?? 0];
 }

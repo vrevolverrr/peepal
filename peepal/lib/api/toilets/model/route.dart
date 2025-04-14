@@ -9,8 +9,6 @@ class PPRoute extends Equatable {
   final String duration;
   final PPLatLng startLocation;
   final PPLatLng endLocation;
-  final String startAddress;
-  final String endAddress;
   final String overviewPolyline;
   final List<PPRouteDirection> directions;
 
@@ -19,8 +17,6 @@ class PPRoute extends Equatable {
     required this.duration,
     required this.startLocation,
     required this.endLocation,
-    required this.startAddress,
-    required this.endAddress,
     required this.overviewPolyline,
     required this.directions,
   });
@@ -37,8 +33,6 @@ class PPRoute extends Equatable {
       duration: json['duration'],
       startLocation: PPLatLng.fromLatLng(json['start_location']),
       endLocation: PPLatLng.fromLatLng(json['end_location']),
-      startAddress: json['start_address'],
-      endAddress: json['end_address'],
       overviewPolyline: json['overview_polyline'],
       directions: (json['directions'] as List<dynamic>)
           .map((e) => PPRouteDirection.fromJson(e))
@@ -53,8 +47,6 @@ class PPRoute extends Equatable {
         endLocation,
         distance,
         duration,
-        startAddress,
-        endAddress,
       ];
 }
 

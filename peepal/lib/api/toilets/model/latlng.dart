@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:maps_toolkit/maps_toolkit.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart' as gm;
+import 'package:apple_maps_flutter/apple_maps_flutter.dart' as am;
 
 @immutable
 final class PPLatLng extends Equatable {
@@ -39,8 +39,8 @@ final class PPLatLng extends Equatable {
     return LatLng(latitude, longitude);
   }
 
-  gm.LatLng toGmLatLng() {
-    return gm.LatLng(latitude, longitude);
+  am.LatLng toAmLatLng() {
+    return am.LatLng(latitude, longitude);
   }
 
   @override

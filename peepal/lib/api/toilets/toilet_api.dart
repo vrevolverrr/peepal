@@ -5,7 +5,6 @@ import 'package:peepal/api/base.dart';
 import 'package:peepal/api/toilets/exceptions.dart';
 import 'package:peepal/api/toilets/model/latlng.dart';
 import 'package:peepal/api/toilets/model/route.dart';
-import 'package:peepal/api/toilets/model/search_results.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 
 final class PPToiletApi extends PPApiClient {
@@ -194,7 +193,7 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
-  Future<List<PPSearchResult>> searchToilets({
+  Future<List<PPToilet>> searchToilets({
     required String query,
     required PPLatLng location,
     bool? handicapAvail,
@@ -206,7 +205,8 @@ final class PPToiletApi extends PPApiClient {
       final Response<Map<String, dynamic>> response =
           await dio.post('$endpoint/search', data: {
         'query': query,
-        'location': location.toJson(),
+        'latitude': location.latitude,
+        'longitude': location.longitude,
         if (handicapAvail != null) 'handicapAvail': handicapAvail,
         if (bidetAvail != null) 'bidetAvail': bidetAvail,
         if (showerAvail != null) 'showerAvail': showerAvail,
@@ -221,8 +221,8 @@ final class PPToiletApi extends PPApiClient {
         throw PPUnexpectedServerError(message: 'Failed to search toilets');
       }
 
-      final List<PPSearchResult> toilets = (response.data!['toilets'] as List)
-          .map((e) => PPSearchResult.fromJson(e))
+      final List<PPToilet> toilets = (response.data!['toilets'] as List)
+          .map((e) => PPToilet.fromJson(e))
           .toList();
 
       logger.info('Toilets searched');

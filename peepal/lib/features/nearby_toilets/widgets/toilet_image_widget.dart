@@ -21,7 +21,11 @@ class PPImageWidget extends StatelessWidget {
         height: height,
         color: Colors.grey[200],
         child: Center(
-          child: Icon(Icons.image, size: 24.0),
+          child: Icon(
+            Icons.wc,
+            size: 24.0,
+            color: Colors.grey[600],
+          ),
         ),
       );
     }

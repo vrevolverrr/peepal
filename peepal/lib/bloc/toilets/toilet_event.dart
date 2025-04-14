@@ -25,3 +25,7 @@ final class ToiletEventSearch extends ToiletEvent {
     required this.location,
   });
 }
+
+final class ToiletEventClearSearch extends ToiletEvent {
+  const ToiletEventClearSearch();
+}

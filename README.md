@@ -21,7 +21,7 @@ Peepal is a modern toilet finder application that helps users locate nearby toil
 - **State Management**: BLoC Pattern
 - **Navigation**: Flutter Navigation
 - **UI Components**: Custom widgets with Material Design
-- **Maps**: MapKit API
+- **Maps**: MapKit API, Google Maps API
 - **Location Services**: Core Location Framework
 
 ## Architecture & Design Patterns

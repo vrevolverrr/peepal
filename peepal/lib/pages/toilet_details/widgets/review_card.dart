@@ -37,9 +37,12 @@ class ReviewCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 6.0),
-              Text(
-                review.reviewText,
-                style: const TextStyle(fontSize: 14),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  review.reviewText,
+                  style: const TextStyle(fontSize: 14),
+                ),
               ),
               const SizedBox(height: 6.0),
               _buildRating(review.rating),

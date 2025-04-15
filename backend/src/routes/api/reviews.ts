@@ -62,7 +62,7 @@ reviewsApi.post('/create', validator('json', postReviewSchema), async (c) => {
 
   const { toiletId, rating, reviewText, imageToken } = c.req.valid('json')
 
-  const [review] = await db
+  const [ review ] = await db
     .insert(reviews)
     .values({
       toiletId,
@@ -71,11 +71,19 @@ reviewsApi.post('/create', validator('json', postReviewSchema), async (c) => {
       reviewText,
       imageToken,
       createdAt: new Date(),
-    })
-    .returning()
+    }).returning()
+
+    const [ updatedReview ] = await db
+      .select({
+        ...getTableColumns(reviews),
+        username: users.username
+      })
+      .from(reviews)
+      .innerJoin(users, eq(reviews.userId, users.id))
+      .where(eq(reviews.id, review.id))
 
   logger.info('Review created', review.id)
-  return c.json({ review: review }, 201)
+  return c.json({ review: updatedReview }, 201)
 })
 
 // PATCH /api/reviews/edit - Edit review

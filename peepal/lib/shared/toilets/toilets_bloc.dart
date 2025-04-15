@@ -24,6 +24,8 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
     on<ToiletEventClearSearch>(_onClearSearch);
 
     on<ToiletEventUpdateToilet>(_onUpdateToilet);
+
+    on<ToiletEventFetchToiletById>(_onFetchToiletById);
   }
 
   void _onFetchNearby(
@@ -34,6 +36,28 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
         radius: event.radius,
         limit: event.limit,
       );
+
+      emit(ToiletStateLoaded(
+          toilets: {...state.toilets, ...toilets}.toList(),
+          searchResults: state.searchResults));
+    } catch (e) {
+      emit(ToiletStateError(toilets: state.toilets, error: e.toString()));
+    }
+  }
+
+  void _onFetchToiletById(
+      ToiletEventFetchToiletById event, Emitter<ToiletsState> emit) async {
+    try {
+      final List<String> filteredIds = event.toiletIds
+          .where((id) => !state.toilets.any((toilet) => toilet.id == id))
+          .toList();
+
+      if (filteredIds.isEmpty) {
+        return;
+      }
+
+      final List<PPToilet> toilets =
+          await PPClient.toilets.getToiletByIds(toiletIds: filteredIds);
 
       emit(ToiletStateLoaded(
           toilets: {...state.toilets, ...toilets}.toList(),
@@ -65,19 +89,31 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
     emit(ToiletStateLoaded(toilets: state.toilets, searchResults: const []));
   }
 
-  EventTransformer<T> _debounceSequential<T>(Duration duration) {
-    return (events, mapper) =>
-        sequential<T>().call(events.throttleTime(duration), mapper);
-  }
-
   void _onUpdateToilet(
       ToiletEventUpdateToilet event, Emitter<ToiletsState> emit) {
     final List<PPToilet> newList = List.from(state.toilets);
+
+    final existingToilet = newList.firstWhere(
+      (toilet) => toilet.id == event.toilet.id,
+      orElse: () => event.toilet,
+    );
+
     newList.removeWhere((toilet) => toilet.id == event.toilet.id);
 
-    newList.add(event.toilet);
+    if (!event.shouldRemove) {
+      final updatedToilet = event.toilet.copyWith(
+        distance: existingToilet.distance,
+      );
+
+      newList.add(updatedToilet);
+    }
 
     emit(ToiletStateLoaded(
         toilets: newList, searchResults: state.searchResults));
+  }
+
+  EventTransformer<T> _debounceSequential<T>(Duration duration) {
+    return (events, mapper) =>
+        sequential<T>().call(events.throttleTime(duration), mapper);
   }
 }

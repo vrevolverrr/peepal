@@ -98,6 +98,7 @@ class _ToiletSearchBarState extends State<ToiletSearchBar> {
                     ),
                   ),
                   onTap: () {
+                    FocusScope.of(context).unfocus();
                     controller.closeView(toilet.name);
                     controller.clear();
                     toiletsBloc.add(const ToiletEventClearSearch());

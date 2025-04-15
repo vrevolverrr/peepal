@@ -1,14 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/api/client.dart';
 import 'package:peepal/api/reviews/model/review.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
+import 'package:peepal/pages/favourites/bloc/favorites_bloc.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/rating_widget.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/toilet_image_widget.dart';
 import 'package:peepal/pages/toilet_details/widgets/edit_toilet_modal.dart';
+import 'package:peepal/pages/toilet_details/widgets/report_toilet_modal.dart';
 import 'package:peepal/pages/toilet_details/widgets/review_card.dart';
-import 'package:peepal/pages/toilet_details/widgets/add_review_bottom_sheet.dart';
+import 'package:peepal/pages/toilet_details/widgets/add_review_modal.dart';
+import 'package:peepal/shared/toilets/toilets_bloc.dart';
+import 'package:peepal/shared/widgets/pp_button.dart';
 
 class ToiletDetailsPage extends StatefulWidget {
   final PPToilet toilet;
@@ -20,11 +25,89 @@ class ToiletDetailsPage extends StatefulWidget {
 }
 
 class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
-  late Future<List<PPReview>> _reviewsFuture;
+  late List<PPReview> _reviews;
+
+  late final ToiletsBloc toiletsBloc;
+
+  late PPToilet _toilet;
 
   @override
   void initState() {
+    toiletsBloc = context.read<ToiletsBloc>();
+    _toilet = widget.toilet;
     super.initState();
+  }
+
+  Future<List<PPReview>> _fetchReviews() async {
+    _reviews = await PPClient.reviews.getReviewsByToilet(toilet: _toilet);
+    _reviews.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return _reviews;
+  }
+
+  Future<void> _handleAddReview() async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.0),
+        ),
+      ),
+      builder: (context) => AddReviewModal(
+        toilet: _toilet,
+        height: 650.0,
+        onConfirm: ({required int rating, required String comment}) async {
+          final PPReview review = await PPClient.reviews.postReview(
+            toilet: _toilet,
+            rating: rating,
+            reviewText: comment,
+          );
+
+          setState(() {
+            _reviews.add(review);
+          });
+        },
+      ),
+    );
+  }
+
+  Future<void> _handleReportToilet() async {
+    final ToiletsBloc toiletsBloc = context.read<ToiletsBloc>();
+
+    final BuildContext current = context;
+
+    await showModalBottomSheet(
+        context: context,
+        builder: (context) => ReportToiletModal(
+            height: 400.0,
+            onConfirm: () async {
+              final bool shouldRemove =
+                  await PPClient.toilets.reportToilet(toilet: _toilet);
+
+              toiletsBloc.add(ToiletEventUpdateToilet(
+                  toilet: _toilet, shouldRemove: shouldRemove));
+
+              if (!current.mounted) {
+                return;
+              }
+
+              if (shouldRemove) {
+                ScaffoldMessenger.of(current).showSnackBar(
+                  const SnackBar(
+                    content: Text('Non-existent toilet removed successfully'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+                Navigator.pop(current);
+              } else {
+                ScaffoldMessenger.of(current).showSnackBar(
+                  const SnackBar(
+                    content: Text('Toilet reported successfully'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
+            }));
   }
 
   Future<void> _handleSuggestChanges() async {
@@ -37,22 +120,33 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
         ),
       ),
       builder: (context) => EditToiletModal(
-        height: MediaQuery.of(context).size.height * 0.8,
+        height: 420.0,
         initialEdits: ToiletFeatureEdits(
-            handicapAvail: widget.toilet.handicapAvail ?? false,
-            bidetAvail: widget.toilet.bidetAvail ?? false,
-            showerAvail: widget.toilet.showerAvail ?? false,
-            sanitiserAvail: widget.toilet.sanitiserAvail ?? false),
+            handicapAvail: _toilet.handicapAvail ?? false,
+            bidetAvail: _toilet.bidetAvail ?? false,
+            showerAvail: _toilet.showerAvail ?? false,
+            sanitiserAvail: _toilet.sanitiserAvail ?? false),
         onConfirm: (edits) async {
-          await PPClient.toilets.updateToilet(
-              toilet: widget.toilet,
-              name: widget.toilet.name,
-              address: widget.toilet.address,
-              location: widget.toilet.location,
+          final PPToilet updatedToilet = await PPClient.toilets.updateToilet(
+              toilet: _toilet,
+              name: _toilet.name,
+              address: _toilet.address,
+              location: _toilet.location,
               handicapAvail: edits.handicapAvail,
               bidetAvail: edits.bidetAvail,
               showerAvail: edits.showerAvail,
               sanitiserAvail: edits.sanitiserAvail);
+
+          final updatedToiletWithDistance =
+              updatedToilet.copyWith(distance: _toilet.distance);
+          setState(() {
+            _toilet = updatedToiletWithDistance;
+          });
+
+          toiletsBloc.add(ToiletEventUpdateToilet(
+            toilet: updatedToiletWithDistance,
+            shouldRemove: false,
+          ));
         },
       ),
     );
@@ -67,7 +161,7 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
         slivers: <Widget>[
           SliverAppBar(
             stretch: true,
-            expandedHeight: 280.0,
+            expandedHeight: 350.0,
             leading: IconButton(
               style: ButtonStyle(
                 iconColor: WidgetStateProperty.all(Colors.black),
@@ -80,14 +174,31 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
-                child: IconButton(
-                  style: ButtonStyle(
-                    iconColor: WidgetStateProperty.all(Colors.black),
-                    backgroundColor:
-                        WidgetStateProperty.all(const Color(0xFFDADADA)),
-                  ),
-                  icon: const Icon(CupertinoIcons.heart, size: 22.0),
-                  onPressed: () {},
+                child: BlocBuilder<FavoritesBloc, FavoritesState>(
+                  builder: (context, state) {
+                    final bool isFavorite =
+                        state.favoriteIds.contains(_toilet.id);
+
+                    return IconButton(
+                      style: ButtonStyle(
+                        iconColor: WidgetStateProperty.all(Colors.black),
+                        backgroundColor:
+                            WidgetStateProperty.all(const Color(0xFFDADADA)),
+                      ),
+                      icon: isFavorite
+                          ? const Icon(
+                              CupertinoIcons.heart_solid,
+                              size: 22.0,
+                              color: CupertinoColors.systemRed,
+                            )
+                          : const Icon(CupertinoIcons.heart, size: 22.0),
+                      onPressed: () async {
+                        context
+                            .read<FavoritesBloc>()
+                            .add(FavoritesEventToggle(_toilet));
+                      },
+                    );
+                  },
                 ),
               ),
             ],
@@ -99,7 +210,7 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                     right: 0,
                     bottom: 0,
                     child: PPImageWidget(
-                      image: widget.toilet.image,
+                      image: _toilet.image,
                       width: double.infinity,
                       height: 280.0,
                       fit: BoxFit.cover,
@@ -144,7 +255,7 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                         constraints: BoxConstraints(
                             maxWidth: MediaQuery.sizeOf(context).width - 110.0),
                         child: AutoSizeText(
-                          widget.toilet.name,
+                          _toilet.name,
                           style: const TextStyle(
                             fontSize: 23.0,
                             fontWeight: FontWeight.bold,
@@ -153,14 +264,14 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                       ),
                       Transform.translate(
                           offset: Offset(-4.0, -3.0),
-                          child: RatingWidget(rating: widget.toilet.rating))
+                          child: RatingWidget(rating: _toilet.rating))
                     ],
                   ),
                   SizedBox(height: 5.0),
                   Padding(
                     padding: EdgeInsets.only(left: 2.0),
                     child: Text(
-                      widget.toilet.address,
+                      _toilet.address,
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 13.0,
@@ -172,9 +283,31 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                       style: TextStyle(
                           fontSize: 18.0, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 4.0),
-                  _ToiletFeatures(toilet: widget.toilet),
-                  SizedBox(height: 18.0),
-                  _ToiletReviews(toilet: widget.toilet)
+                  _ToiletFeatures(toilet: _toilet),
+                  const SizedBox(height: 16.0),
+                  PPButton("Suggest Changes", onPressed: _handleSuggestChanges),
+                  const SizedBox(height: 16.0),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () => _handleReportToilet(),
+                      child: Text("Report Non-Existent Toilet",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.0)),
+                    ),
+                  ),
+                  SizedBox(height: 22.0),
+                  FutureBuilder(
+                    future: _fetchReviews(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const CircularProgressIndicator();
+                      }
+
+                      return _ToiletReviews(reviews: snapshot.data!);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -182,27 +315,10 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            ),
-            builder: (context) => AddReviewBottomSheet(
-              toiletId: widget.toilet.id.toString(),
-              onReviewAdded: (newReview) async {
-                final currentReviews =
-                    await _reviewsFuture; // Resolve the Future
-                setState(() {
-                  _reviewsFuture = Future.value(
-                      [...currentReviews, newReview]); // Append the new review
-                });
-              },
-            ),
-          );
-        },
+        onPressed: () => _handleAddReview(),
         tooltip: "Add Review",
+        backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
         child: const Icon(Icons.reviews_rounded),
       ),
     );
@@ -210,37 +326,23 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
 }
 
 class _ToiletReviews extends StatelessWidget {
-  final PPToilet toilet;
-  const _ToiletReviews({required this.toilet});
+  final List<PPReview> reviews;
+  const _ToiletReviews({required this.reviews});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FutureBuilder(
-          future: PPClient.reviews.getReviewsByToilet(toilet: toilet),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const CircularProgressIndicator();
-            }
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0, bottom: 5.0),
-                  child: Text("${snapshot.data!.length} reviews",
-                      style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold)),
-                ),
-                ...snapshot.data!.map((review) => Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: ReviewCard(review: review),
-                    ))
-              ],
-            );
-          },
+        Padding(
+          padding: EdgeInsets.only(left: 8.0, bottom: 5.0),
+          child: Text("${reviews.length} reviews",
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
         ),
+        ...reviews.map((review) => Padding(
+              padding: const EdgeInsets.only(bottom: 5.0),
+              child: ReviewCard(review: review),
+            ))
       ],
     );
   }

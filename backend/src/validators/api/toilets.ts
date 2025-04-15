@@ -4,6 +4,10 @@ export const toiletIdParamSchema = z.object({
   toiletId: z.string(),
 })
 
+export const multiToiletIdSchema = z.object({
+  toiletIds: z.array(z.string()),
+})
+
 export const createToiletSchema = z.object({
   name: z.string().min(1).max(255),
   address: z.string().min(1).max(255),

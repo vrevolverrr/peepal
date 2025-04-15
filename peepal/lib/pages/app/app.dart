@@ -14,6 +14,7 @@ import 'package:peepal/pages/toilet_map/bloc/toilet_map_bloc.dart';
 import 'package:peepal/pages/toilet_map/toilet_map_page.dart';
 import 'package:peepal/shared/location/bloc/location_bloc.dart';
 import 'package:peepal/shared/location/repository/location_repository.dart';
+import 'package:peepal/shared/widgets/splashscreen.dart';
 
 class PeePalApp extends StatefulWidget {
   const PeePalApp({super.key});
@@ -23,17 +24,19 @@ class PeePalApp extends StatefulWidget {
 }
 
 class _PeePalAppState extends State<PeePalApp> {
-  late final LocationRepository locationRepository =
-      context.read<LocationRepository>();
+  late final LocationRepository locationRepository;
+  late final LocationCubit locationCubit;
+  late final ToiletsBloc toiletsBloc;
 
   late final PageController _pageController = PageController();
 
-  late final LocationCubit locationCubit;
-
   @override
   void initState() {
+    locationRepository = context.read<LocationRepository>();
     locationCubit = LocationCubit(locationRepository);
     locationCubit.init();
+
+    toiletsBloc = ToiletsBloc();
 
     super.initState();
   }
@@ -42,17 +45,16 @@ class _PeePalAppState extends State<PeePalApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "PeePal",
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           scaffoldBackgroundColor: Color(0xffF4F6F8), fontFamily: "MazzardH"),
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthStateInitial) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const SplashScreen();
           }
 
-          if (state is AuthStateLoggedOut) {
+          if (state is! AuthStateAuthenticated) {
             return const LoginPage();
           }
 
@@ -60,12 +62,13 @@ class _PeePalAppState extends State<PeePalApp> {
               providers: [
                 BlocProvider<AppPageCubit>(create: (context) => AppPageCubit()),
                 BlocProvider<LocationCubit>.value(value: locationCubit),
-                BlocProvider<ToiletsBloc>(create: (context) => ToiletsBloc()),
+                BlocProvider<ToiletsBloc>.value(value: toiletsBloc),
                 BlocProvider<ToiletMapCubit>(
                     create: (context) =>
                         ToiletMapCubit(locationCubit: locationCubit)),
-                BlocProvider<FavoritesCubit>(
-                    create: (context) => FavoritesCubit()),
+                BlocProvider<FavoritesBloc>(
+                    create: (context) =>
+                        FavoritesBloc(toiletsBloc: toiletsBloc)),
               ],
               child: Builder(builder: (context) {
                 return Scaffold(
@@ -81,9 +84,8 @@ class _PeePalAppState extends State<PeePalApp> {
                           const ToiletMapPage(),
                           BlocProvider<AddToiletBloc>(
                             create: (context) => AddToiletBloc(
-                              locationCubit: locationCubit,
-                              toiletsBloc: context.read<ToiletsBloc>(),
-                            ),
+                                locationCubit: locationCubit,
+                                toiletsBloc: toiletsBloc),
                             lazy: false,
                             child: const AddToiletPage(),
                           ),

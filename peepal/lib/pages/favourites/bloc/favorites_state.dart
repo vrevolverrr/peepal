@@ -1,11 +1,11 @@
 part of 'favorites_bloc.dart';
 
 sealed class FavoritesState extends Equatable {
-  final List<PPFavorite> favorites;
-  const FavoritesState({this.favorites = const []});
+  final List<String> favoriteIds;
+  const FavoritesState({this.favoriteIds = const []});
 
   @override
-  List<Object?> get props => [favorites];
+  List<Object?> get props => [favoriteIds];
 }
 
 final class FavoritesStateInitial extends FavoritesState {
@@ -32,7 +32,8 @@ final class FavoritesStateLoading extends FavoritesState {
 }
 
 final class FavoritesStateLoaded extends FavoritesState {
-  const FavoritesStateLoaded({
-    required super.favorites,
-  });
+  const FavoritesStateLoaded({required super.favoriteIds});
+
+  FavoritesStateLoaded copyWith({List<String>? favoriteIds}) =>
+      FavoritesStateLoaded(favoriteIds: favoriteIds ?? this.favoriteIds);
 }

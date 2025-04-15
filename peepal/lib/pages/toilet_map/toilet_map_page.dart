@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/api/toilets/model/latlng.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
+import 'package:peepal/pages/favourites/bloc/favorites_bloc.dart';
 import 'package:peepal/shared/location/bloc/location_bloc.dart';
 import 'package:peepal/shared/toilets/toilets_bloc.dart';
 import 'package:peepal/pages/toilet_map/bloc/toilet_map_bloc.dart';
@@ -32,6 +33,7 @@ class _ToiletMapPageState extends State<ToiletMapPage>
   late final LocationCubit locationCubit;
   late final ToiletsBloc toiletsBloc;
   late final ToiletMapCubit toiletMapCubit;
+  late final FavoritesBloc favoritesBloc;
 
   late final CompositeSubscription _subscriptions;
 
@@ -40,6 +42,7 @@ class _ToiletMapPageState extends State<ToiletMapPage>
     locationCubit = context.read<LocationCubit>();
     toiletsBloc = context.read<ToiletsBloc>();
     toiletMapCubit = context.read<ToiletMapCubit>();
+    favoritesBloc = context.read<FavoritesBloc>();
     _subscriptions = CompositeSubscription();
     super.initState();
   }
@@ -103,30 +106,45 @@ class _ToiletMapPageState extends State<ToiletMapPage>
                 if (!_controller.isCompleted) {
                   _controller.complete(controller);
 
-                  // Load markers after map is created
+                  // Load markers after map is created - only set up listeners once
                   if (!_mapsInitialized) {
                     _mapsInitialized = true;
 
-                    // Add a short delay to ensure map is fully loaded
-                    await Future.delayed(const Duration(milliseconds: 300));
+                    // Longer delay to ensure map is fully loaded
+                    await Future.delayed(const Duration(milliseconds: 500));
 
                     final locationState = locationCubit.state;
 
                     if (locationState is LocationStateWithLocation) {
                       controller.animateCamera(
                         CameraUpdate.newCameraPosition(CameraPosition(
-                            zoom: 17.0,
+                            zoom: 15.0, // Slightly wider view
                             target: locationState.location.toAmLatLng())),
                       );
-                    }
 
-                    // Update markers
-                    toiletMapCubit.updateMarkers(toiletsBloc.state.toilets);
+                      // Also trigger a nearby toilets fetch
+                      toiletsBloc.add(ToiletEventFetchNearby(
+                        location: PPLatLng(
+                          latitude: locationState.location.latitude,
+                          longitude: locationState.location.longitude,
+                        ),
+                        radius: 1000, // Larger initial radius
+                        limit: 20, // More initial toilets
+                      ));
+                    }
 
                     // Listen to subsequent updates
                     _subscriptions.add(toiletsBloc.stream.listen((state) {
-                      toiletMapCubit.updateMarkers(toiletsBloc.state.toilets);
+                      // Only update markers when there are toilets available
+                      if (state.toilets.isNotEmpty) {
+                        toiletMapCubit.updateMarkers(state.toilets);
+                      }
                     }));
+                  }
+
+                  // Always update markers when map is created (in case the map is recreated)
+                  if (toiletsBloc.state.toilets.isNotEmpty) {
+                    toiletMapCubit.updateMarkers(toiletsBloc.state.toilets);
                   }
                 }
               },
@@ -147,8 +165,15 @@ class _ToiletMapPageState extends State<ToiletMapPage>
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          ToiletDetailsPage(toilet: state.selectedToilet!),
+                      builder: (context) => MultiBlocProvider(
+                        providers: [
+                          BlocProvider.value(value: toiletsBloc),
+                          BlocProvider.value(value: favoritesBloc),
+                        ],
+                        child: ToiletDetailsPage(
+                          toilet: state.selectedToilet!,
+                        ),
+                      ),
                     )),
                 child: ToiletLocationCard(
                   toilet: state.selectedToilet!,

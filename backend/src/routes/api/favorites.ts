@@ -15,7 +15,6 @@ favoritesApi.onError((err, c) => {
   return c.json({ error: err.message }, 500)
 })
 
-
 // GET /api/favorites - Health Check
 favoritesApi.get('/', async (c) => {
   return c.json({ message: 'Favourites Endpoint Health Check'}, 200)
@@ -29,11 +28,10 @@ favoritesApi.get('/me', async (c) => {
   // Fetch favorites and map the results
   const userFavorites = await db
     .select({
-      toilet: getTableColumns(toilets),
+      toiletId: favorites.toiletId,
       createdAt: favorites.createdAt
-      
     })
-    .from(favorites).innerJoin(toilets, eq(favorites.toiletId, toilets.id))
+    .from(favorites)
     .where(eq(favorites.userId, userId))
     .orderBy(desc(favorites.createdAt))
 
@@ -96,22 +94,38 @@ favoritesApi.delete('/remove/:toiletId', validator('param', toiletIdParamSchema)
 
   const { toiletId } = c.req.valid('param')
 
-  // Check if the favorite exists
-  const [ favorite ] = await db
+  const [ existingToilet ] = await db
     .select()
-    .from(favorites)
-    .where(and(eq(favorites.userId, userId), eq(favorites.toiletId, toiletId)))
+    .from(toilets)
+    .where(eq(toilets.id, toiletId))
 
-  if (!favorite) {
-    return c.json({ error: 'Favorite not found' }, 404)
+  if (!existingToilet) {
+    logger.info(`Toilet not found with ID: ${toiletId}`)
+    return c.json({ error: 'Toilet not found' }, 404)
   }
-
-  // Delete the favorite
-  await db.delete(favorites).where(eq(favorites.id, favorite.id))
-
-  logger.info(`User ${userId} removed favorite ${toiletId}`)
   
-  return c.status(200)
+  try {
+    const [ favorite ] = await db
+      .select()
+      .from(favorites)
+      .where(and(eq(favorites.userId, userId), eq(favorites.toiletId, toiletId)))
+
+    if (!favorite) {
+      logger.info(`No favorite found for user ${userId} and toilet ${toiletId}`)
+      return c.json({ error: 'Favorite not found' }, 404)
+    }
+    
+    logger.info(`Favorite found with ID: ${favorite.id}`);
+
+    await db.delete(favorites).where(eq(favorites.id, favorite.id))
+    
+    logger.info(`User ${userId} removed favorite ${toiletId}`)
+    
+    return c.status(200)
+  } catch (error) {
+    logger.error(`Error handling favorite deletion: ${error}`)
+    return c.json({ error: 'Server error during favorite deletion' }, 500)
+  }
 })
 
 export default favoritesApi

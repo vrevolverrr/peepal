@@ -135,10 +135,13 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
-  Future<PPToilet> getToiletById({required String toiletId}) async {
+  Future<List<PPToilet>> getToiletByIds(
+      {required List<String> toiletIds}) async {
     try {
       final Response<Map<String, dynamic>> response =
-          await dio.get('$endpoint/details/$toiletId');
+          await dio.post('$endpoint/details', data: {
+        'toiletIds': toiletIds,
+      });
 
       if (response.statusCode != 200) {
         if (response.statusCode == 404) {
@@ -148,25 +151,27 @@ final class PPToiletApi extends PPApiClient {
         throw PPUnexpectedServerError(message: 'Failed to get toilet');
       }
 
-      if (response.data?['toilet'] == null) {
+      if (response.data?['toilets'] == null) {
         throw PPUnexpectedServerError(message: 'Failed to get toilet');
       }
 
-      final PPToilet toilet = PPToilet.fromJson(response.data!['toilet']);
+      final List<PPToilet> toilets = (response.data!['toilets'] as List)
+          .map((e) => PPToilet.fromJson(e))
+          .toList();
 
-      logger.info('Toilet fetched ${toilet.id}');
+      logger.info('Toilets fetched ${toilets.map((x) => x.id).join(', ')}');
 
-      return toilet;
+      return toilets;
     } catch (e) {
-      logger.severe('Failed to get toilet: $e');
+      logger.severe('Failed to get toilets: $e');
       rethrow;
     }
   }
 
-  Future<bool> reportToilet({required String toiletId}) async {
+  Future<bool> reportToilet({required PPToilet toilet}) async {
     try {
       final Response<Map<String, dynamic>> response =
-          await dio.post('$endpoint/report/$toiletId');
+          await dio.post('$endpoint/report/${toilet.id}');
 
       if (response.statusCode != 200) {
         if (response.statusCode == 404) {
@@ -180,7 +185,7 @@ final class PPToiletApi extends PPApiClient {
         throw PPUnexpectedServerError(message: 'Failed to report toilet');
       }
 
-      logger.info('Toilet reported $toiletId');
+      logger.info('Toilet reported ${toilet.id}');
 
       return response.data!['deleted'];
     } catch (e) {

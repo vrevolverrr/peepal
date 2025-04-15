@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/rating_widget.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/toilet_feature_widget.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/toilet_image_widget.dart';
+import 'package:peepal/shared/toilets/toilets_bloc.dart';
 import 'package:peepal/shared/widgets/pp_button.dart';
 
 class NearbyToiletCard extends StatelessWidget {
@@ -72,11 +74,18 @@ class NearbyToiletCard extends StatelessWidget {
                           fontSize: 14.0),
                     ),
                     SizedBox(height: 12.0),
-                    ToiletFeatureWidget(
-                      hasBidet: toilet.bidetAvail,
-                      hasOku: toilet.handicapAvail,
-                      hasShower: toilet.showerAvail,
-                      hasSanitizer: toilet.sanitiserAvail,
+                    BlocBuilder<ToiletsBloc, ToiletsState>(
+                      builder: (context, state) {
+                        final PPToilet toilet = state.toilets
+                            .firstWhere((toilet) => toilet.id == toilet.id);
+
+                        return ToiletFeatureWidget(
+                          hasBidet: toilet.bidetAvail,
+                          hasOku: toilet.handicapAvail,
+                          hasShower: toilet.showerAvail,
+                          hasSanitizer: toilet.sanitiserAvail,
+                        );
+                      },
                     ),
                     const Spacer(),
                     Row(

@@ -5,6 +5,7 @@ class PPButton extends StatelessWidget {
   final double? height;
   final double? width;
   final bool isLoading;
+  final bool outline;
   final VoidCallback? onPressed;
 
   const PPButton(this.text,
@@ -12,6 +13,7 @@ class PPButton extends StatelessWidget {
       this.onPressed,
       this.height,
       this.width,
+      this.outline = false,
       this.isLoading = false});
 
   @override
@@ -22,11 +24,18 @@ class PPButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          elevation: 4.0,
-          backgroundColor: !isLoading ? Colors.blueAccent : Colors.grey,
-          foregroundColor: Colors.white,
+          elevation: outline ? 0.0 : 4.0,
+          backgroundColor: !isLoading
+              ? (outline ? Colors.transparent : Colors.blueAccent)
+              : Colors.grey,
+          foregroundColor: !isLoading
+              ? (outline ? Colors.blueAccent : Colors.white)
+              : Colors.white,
           minimumSize: const Size.fromHeight(50.0),
           shape: RoundedRectangleBorder(
+            side: !isLoading
+                ? BorderSide(color: Colors.blueAccent)
+                : BorderSide.none,
             borderRadius: BorderRadius.circular(12.0),
           ),
         ),

@@ -35,6 +35,38 @@ class PPToilet extends Equatable {
     this.sanitiserAvail,
   });
 
+  PPToilet copyWith({
+    String? id,
+    String? name,
+    String? address,
+    PPLatLng? location,
+    int? distance,
+    double? rating,
+    int? reportCount,
+    int? crowdLevel,
+    PPImage? image,
+    bool? handicapAvail,
+    bool? bidetAvail,
+    bool? showerAvail,
+    bool? sanitiserAvail,
+  }) {
+    return PPToilet(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      address: address ?? this.address,
+      location: location ?? this.location,
+      distance: distance ?? this.distance,
+      rating: rating ?? this.rating,
+      reportCount: reportCount ?? this.reportCount,
+      crowdLevel: crowdLevel ?? this.crowdLevel,
+      image: image ?? this.image,
+      handicapAvail: handicapAvail ?? this.handicapAvail,
+      bidetAvail: bidetAvail ?? this.bidetAvail,
+      showerAvail: showerAvail ?? this.showerAvail,
+      sanitiserAvail: sanitiserAvail ?? this.sanitiserAvail,
+    );
+  }
+
   factory PPToilet.fromJson(Map<String, dynamic> json) {
     return PPToilet(
       id: json['id'],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
+import 'package:peepal/pages/favourites/bloc/favorites_bloc.dart';
+import 'package:peepal/pages/profile_page/profile_page.dart';
 import 'package:peepal/shared/location/bloc/location_bloc.dart';
 import 'package:peepal/shared/toilets/toilets_bloc.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/nearby_toilet_card.dart';
@@ -25,6 +27,7 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
 
   late final locationCubit = context.read<LocationCubit>();
   late final toiletBloc = context.read<ToiletsBloc>();
+  late final favoritesBloc = context.read<FavoritesBloc>();
 
   @override
   void initState() {
@@ -61,7 +64,12 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _ProfileButtonWidget(),
+              GestureDetector(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfilePage())),
+                  child: _ProfileButtonWidget()),
               _GreetingTextWidget(),
               SizedBox(height: 4.0),
               _CurrentLocationAddressWidget(),
@@ -131,8 +139,15 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      ToiletDetailsPage(toilet: toilet),
+                                  builder: (context) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider.value(value: toiletBloc),
+                                      BlocProvider.value(value: favoritesBloc),
+                                    ],
+                                    child: ToiletDetailsPage(
+                                      toilet: toilet,
+                                    ),
+                                  ),
                                 )),
                             child: NearbyToiletCard(
                                 toilet: toilet,
@@ -165,16 +180,13 @@ class _ProfileButtonWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        GestureDetector(
-          onTap: () {},
-          child: CircleAvatar(
-            radius: 20.0,
-            backgroundColor: Colors.grey.shade200,
-            child: Icon(
-              Icons.person,
-              color: Colors.black,
-              size: 24.0,
-            ),
+        CircleAvatar(
+          radius: 20.0,
+          backgroundColor: Colors.grey.shade200,
+          child: Icon(
+            Icons.person,
+            color: Colors.black,
+            size: 24.0,
           ),
         ),
       ],
@@ -225,7 +237,7 @@ class _CurrentLocationAddressWidget extends StatelessWidget {
           size: 16.0,
         ),
         SizedBox(width: 2.0),
-        Text("Jurong West St. 42"),
+        Text("Nanyang Technological University"),
       ],
     );
   }

@@ -3,12 +3,12 @@ import { Hono } from "hono";
 import axios from "axios";
 import simplify from "simplify-js";
 import { encode, LatLng } from "@googlemaps/polyline-codec";
-import { eq, getTableColumns, sql } from "drizzle-orm"
+import { eq, getTableColumns, inArray, sql } from "drizzle-orm"
 import {  MapKitAccessToken, MKRoute, MKStep, MKDirections, MKCoordinate, RouteDirection, Route } from "../../types/mapkit";
 import { db } from "../../app"
 import { toilets } from "../../db/schema"
 import { validator } from "../../middleware/validator"
-import { createToiletSchema, getAddressSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdParamSchema, updateToiletSchema } from "../../validators/api/toilets"
+import { createToiletSchema, getAddressSchema, multiToiletIdSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdParamSchema, updateToiletSchema } from "../../validators/api/toilets"
 import pino from "pino";
 
 const NUM_REPORTS_DELETE = 3
@@ -140,6 +140,21 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
 
 // PATCH /api/toilets/details/:toiletId - Update an existing toilet
 toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema), 
+  /**
+ * Updates the details of an existing toilet specified by the toiletId.
+ * 
+ * Validates the request parameters and JSON body using defined schemas to ensure
+ * correct data types and structure. If the toilet with the specified ID does not
+ * exist, a 404 error is returned. 
+ * 
+ * The location field, if present in the request body, is converted to a spatial
+ * point and updated in the database. If not provided, the existing location is used.
+ * 
+ * Logs the update operation and returns the updated toilet information upon success.
+ * 
+ * @param c - The context containing request and response objects, and logger.
+ * @returns A JSON response with the updated toilet details or an error message.
+ */
   validator('json', updateToiletSchema), async (c) => {  
   
   const logger = c.get('logger')
@@ -157,16 +172,37 @@ toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema),
       logger.error(`Toilet not found with ID: ${toiletId}`)
       return c.json({ error: 'Toilet not found' }, 404);
     }
+    
+    const sqlPoint = body.location != undefined ? 
+      sql`ST_SetSRID(ST_MakePoint(${body.location.x}, ${body.location.y}), 4326)` 
+      : sql`ST_SetSRID(ST_MakePoint(${existingToilet.location.x}, ${existingToilet.location.y}), 4326)`
 
     const [ updatedToilet ] = await db
       .update(toilets)
-      .set(body)
+      .set({
+        ...body,
+        location: sqlPoint
+      })
       .where(eq(toilets.id, toiletId))
       .returning()
 
     logger.info(`Toilet ${toiletId} updated`)
 
-    return c.json({ toilet: updatedToilet}, 200)
+    return c.json({ toilet: updatedToilet }, 200)
+})
+
+toiletApi.post('/details', validator('json', multiToiletIdSchema), async (c) => {
+  const logger = c.get('logger')
+  const { toiletIds } = c.req.valid('json')
+
+  const toiletList = await db
+    .select()
+    .from(toilets)
+    .where(inArray(toilets.id, toiletIds))
+
+  logger.info(`Toilets fetched ${toiletList.map((x) => x.id).join(', ')}`)
+
+  return c.json({ toilets: toiletList }, 200)
 })
 
 // GET /api/toilets/:toiletId - Get a specific toilet

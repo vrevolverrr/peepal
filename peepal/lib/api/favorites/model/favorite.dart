@@ -1,24 +1,23 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:peepal/api/toilets/model/toilet.dart';
 
 @immutable
 class PPFavorite extends Equatable {
-  final PPToilet toilet;
+  final String toiletId;
   final DateTime createdAt;
 
   const PPFavorite({
-    required this.toilet,
+    required this.toiletId,
     required this.createdAt,
   });
 
   factory PPFavorite.fromJson(Map<String, dynamic> json) {
     return PPFavorite(
-      toilet: PPToilet.fromJson(json['toilet']),
+      toiletId: json['toiletId'],
       createdAt: DateTime.parse(json['createdAt']),
     );
   }
 
   @override
-  List<Object?> get props => [toilet, createdAt];
+  List<Object?> get props => [toiletId, createdAt];
 }

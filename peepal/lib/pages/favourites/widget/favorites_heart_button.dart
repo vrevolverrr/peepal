@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:peepal/api/toilets/model/toilet.dart';
-import 'package:peepal/pages/favourites/bloc/favorites_bloc.dart';
 
 class FavoritesHeartButton extends StatefulWidget {
-  final PPToilet toilet;
+  final VoidCallback onFavouriteTap;
+  final bool isFavorite;
 
-  const FavoritesHeartButton({super.key, required this.toilet});
+  const FavoritesHeartButton(
+      {super.key, required this.onFavouriteTap, required this.isFavorite});
 
   @override
   State<FavoritesHeartButton> createState() => _FavoritesHeartButtonState();
@@ -17,11 +16,9 @@ class FavoritesHeartButton extends StatefulWidget {
 class _FavoritesHeartButtonState extends State<FavoritesHeartButton>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
-  late final FavoritesCubit cubit;
 
   @override
   void initState() {
-    cubit = context.read<FavoritesCubit>();
     _controller = AnimationController(vsync: this);
     super.initState();
   }
@@ -34,23 +31,19 @@ class _FavoritesHeartButtonState extends State<FavoritesHeartButton>
 
   @override
   Widget build(BuildContext context) {
-    final bool isFavorite = cubit.getIsFavorite(widget.toilet);
-
     return GestureDetector(
         onTap: () {
           _controller.forward();
-
-          if (isFavorite) {
-            cubit.removeFavorite(widget.toilet);
-          } else {
-            cubit.addFavorite(widget.toilet);
-          }
+          widget.onFavouriteTap();
         },
         child: Icon(
-                isFavorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+                widget.isFavorite
+                    ? CupertinoIcons.heart_fill
+                    : CupertinoIcons.heart,
                 size: 28.0,
-                color:
-                    isFavorite ? CupertinoColors.destructiveRed : Colors.grey)
+                color: widget.isFavorite
+                    ? CupertinoColors.destructiveRed
+                    : Colors.grey)
             .animate(
                 controller: _controller,
                 autoPlay: false,

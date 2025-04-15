@@ -5,24 +5,25 @@ import 'package:peepal/pages/favourites/widget/favorites_heart_button.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/rating_widget.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/toilet_feature_widget.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/toilet_image_widget.dart';
-import 'package:peepal/pages/toilet_details/toilet_details_page.dart';
 
-class ToiletCard extends StatelessWidget {
+class FavoriteCard extends StatelessWidget {
   final PPToilet toilet;
+  final bool isFavorite;
+  final VoidCallback onFavouriteTap;
+  final VoidCallback onTap;
 
-  const ToiletCard({required this.toilet, super.key});
+  const FavoriteCard({
+    required this.toilet,
+    required this.onFavouriteTap,
+    required this.isFavorite,
+    required this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ToiletDetailsPage(toilet: toilet),
-          ),
-        );
-      },
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
@@ -58,7 +59,8 @@ class ToiletCard extends StatelessWidget {
                   right: 12.0,
                   top: 12.0,
                   child: FavoritesHeartButton(
-                    toilet: toilet,
+                    onFavouriteTap: onFavouriteTap,
+                    isFavorite: isFavorite,
                   ),
                 ),
               ],
@@ -72,11 +74,14 @@ class ToiletCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        toilet.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 270.0),
+                        child: Text(
+                          toilet.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
                         ),
                       ),
                       RatingWidget(rating: toilet.rating),

@@ -74,6 +74,7 @@ class _EditToiletModalState extends State<EditToiletModal> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 18.0),
       height: widget.height,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -150,8 +151,7 @@ class _EditToiletModalState extends State<EditToiletModal> {
           ),
           // Bottom button
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 18.0),
+            padding: const EdgeInsets.symmetric(vertical: 18.0),
             child: PPButton("Confirm Edits", isLoading: _isLoading,
                 onPressed: () async {
               setState(() => _isLoading = true);

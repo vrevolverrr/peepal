@@ -32,6 +32,14 @@ final class ToiletEventClearSearch extends ToiletEvent {
 
 final class ToiletEventUpdateToilet extends ToiletEvent {
   final PPToilet toilet;
+  final bool shouldRemove;
 
-  const ToiletEventUpdateToilet({required this.toilet});
+  const ToiletEventUpdateToilet(
+      {required this.toilet, this.shouldRemove = false});
+}
+
+final class ToiletEventFetchToiletById extends ToiletEvent {
+  final List<String> toiletIds;
+
+  const ToiletEventFetchToiletById({required this.toiletIds});
 }

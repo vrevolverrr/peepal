@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:peepal/api/auth/exceptions.dart';
 import 'package:peepal/api/base.dart';
 import 'package:peepal/api/toilets/exceptions.dart';
+import 'package:peepal/api/toilets/model/address.dart';
 import 'package:peepal/api/toilets/model/latlng.dart';
 import 'package:peepal/api/toilets/model/route.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
@@ -100,6 +101,33 @@ final class PPToiletApi extends PPApiClient {
       return updatedToilet;
     } catch (e) {
       logger.severe('Failed to update toilet: $e');
+      rethrow;
+    }
+  }
+
+  Future<PPAddress> getAddressFromLocation(PPLatLng location) async {
+    try {
+      final Response<Map<String, dynamic>> response =
+          await dio.post('$endpoint/getAddress', data: {
+        'latitude': location.latitude,
+        'longitude': location.longitude,
+      });
+
+      if (response.statusCode != 200) {
+        throw PPUnexpectedServerError(message: 'Failed to get address');
+      }
+
+      if (response.data?['address'] == null) {
+        throw PPUnexpectedServerError(message: 'Failed to get address');
+      }
+
+      final PPAddress address = PPAddress.fromJson(response.data!['address']);
+
+      logger.info('Address fetched ${address.placeName}');
+
+      return address;
+    } catch (e) {
+      logger.severe('Failed to get address: $e');
       rethrow;
     }
   }

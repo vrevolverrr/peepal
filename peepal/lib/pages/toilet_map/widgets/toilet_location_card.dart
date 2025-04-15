@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
-import 'package:peepal/pages/navigation/navigation_page.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/rating_widget.dart';
 import 'package:peepal/pages/toilet_map/bloc/toilet_map_bloc.dart';
 
@@ -34,19 +33,15 @@ class ToiletLocationCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 230.0,
-                  child: AutoSizeText(
-                    toilet.name,
-                    maxLines: 2,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                AutoSizeText(
+                  toilet.name,
+                  maxLines: 2,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(width: 10.0),
                 Transform.translate(
                     offset: const Offset(-2.0, -3.0),
                     child: RatingWidget(
@@ -194,33 +189,7 @@ class ToiletLocationCard extends StatelessWidget {
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
-                onPressed: () {
-                  // Create a complete ToiletLocation with all properties
-                  final navigationDestination = PPToilet(
-                    id: toilet.id,
-                    name: toilet.name,
-                    address: toilet.address,
-                    location: toilet.location,
-                    rating: toilet.rating,
-                    handicapAvail: toilet.handicapAvail,
-                    bidetAvail: toilet.bidetAvail,
-                    showerAvail: false, // Add default values
-                    sanitiserAvail: false, // Add default values
-                    distance: 0,
-                    reportCount: 0,
-                    crowdLevel: 0,
-                  );
-
-                  // Navigate to navigation page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NavigationPage(
-                        destination: navigationDestination,
-                      ),
-                    ),
-                  );
-                },
+                onPressed: onDirections,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 52, 64, 74),
                   foregroundColor: Colors.white,

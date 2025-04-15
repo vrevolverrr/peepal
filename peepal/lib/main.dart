@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:peepal/api/client.dart';
-import 'package:peepal/bloc/location/repository/location_repository.dart';
-import 'package:peepal/features/app/app.dart';
-import 'package:peepal/bloc/auth/auth_bloc.dart';
+import 'package:peepal/shared/location/repository/location_repository.dart';
+import 'package:peepal/pages/app/app.dart';
+import 'package:peepal/shared/auth/auth_bloc.dart';
 
 bool debugMode = true;
 
@@ -30,7 +30,6 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiRepositoryProvider(
         providers: [
-          // Provide repositories
           RepositoryProvider(
             create: (context) => LocationRepository()..checkPermission(),
           ),

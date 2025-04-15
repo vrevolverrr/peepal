@@ -51,3 +51,8 @@ export const navigateToiletSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
 })
+
+export const getAddressSchema = z.object({
+  latitude: z.number(),
+  longitude: z.number(),
+})

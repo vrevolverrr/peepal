@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:apple_maps_flutter/apple_maps_flutter.dart';
+import 'package:peepal/api/toilets/model/latlng.dart';
 
 class NavigationMap extends StatelessWidget {
   final Set<Annotation> markers;
   final Set<Polyline> polylines;
   final Set<Circle> circles;
-  final double initialLatitude;
-  final double initialLongitude;
   final Function(AppleMapController) onMapCreated;
-  final Position? currentPosition;
+  final PPLatLng currentPosition;
   final VoidCallback? onCenterLocation; // New callback for centering
 
   const NavigationMap({
@@ -17,10 +15,8 @@ class NavigationMap extends StatelessWidget {
     required this.markers,
     required this.polylines,
     required this.circles,
-    required this.initialLatitude,
-    required this.initialLongitude,
     required this.onMapCreated,
-    this.currentPosition,
+    required this.currentPosition,
     this.onCenterLocation,
   });
 
@@ -29,24 +25,21 @@ class NavigationMap extends StatelessWidget {
     return Stack(
       children: [
         SizedBox(
-          height: 300,
+          height: 300.0,
           width: double.infinity,
           child: AppleMap(
             initialCameraPosition: CameraPosition(
-              target: LatLng(initialLatitude, initialLongitude),
-              zoom: 17,
+              target: currentPosition.toAmLatLng(),
+              zoom: 17.0,
             ),
             annotations: markers,
             polylines: polylines,
             circles: circles,
-            // Using our custom circle instead of built-in location
-            myLocationEnabled: true,
+            myLocationEnabled: false,
             myLocationButtonEnabled: false,
             onMapCreated: onMapCreated,
           ),
         ),
-
-        // Custom location button
         Positioned(
           right: 16,
           bottom: 16,
@@ -54,12 +47,8 @@ class NavigationMap extends StatelessWidget {
             mini: true,
             backgroundColor: Colors.white,
             foregroundColor: Colors.grey[700],
+            onPressed: onCenterLocation,
             child: const Icon(Icons.my_location),
-            onPressed: () {
-              if (onCenterLocation != null) {
-                onCenterLocation!();
-              }
-            },
           ),
         ),
       ],

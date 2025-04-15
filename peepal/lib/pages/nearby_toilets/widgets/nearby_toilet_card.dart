@@ -2,8 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/rating_widget.dart';
-import 'package:peepal/pages/nearby_toilets/widgets/toilet_features_widget.dart';
+import 'package:peepal/pages/nearby_toilets/widgets/toilet_feature_widget.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/toilet_image_widget.dart';
+import 'package:peepal/shared/widgets/pp_button.dart';
 
 class NearbyToiletCard extends StatelessWidget {
   final PPToilet toilet;
@@ -48,15 +49,12 @@ class NearbyToiletCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: 245.0,
-                          child: AutoSizeText(
-                            toilet.name,
-                            style: const TextStyle(
-                                fontSize: 22.0, fontWeight: FontWeight.bold),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                        AutoSizeText(
+                          toilet.name,
+                          style: const TextStyle(
+                              fontSize: 22.0, fontWeight: FontWeight.bold),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         RatingWidget(rating: toilet.rating),
                       ],
@@ -71,7 +69,7 @@ class NearbyToiletCard extends StatelessWidget {
                           fontSize: 14.0),
                     ),
                     SizedBox(height: 12.0),
-                    _ToiletFeatureRow(
+                    ToiletFeatureWidget(
                       hasBidet: toilet.bidetAvail,
                       hasOku: toilet.handicapAvail,
                       hasShower: toilet.showerAvail,
@@ -82,29 +80,11 @@ class NearbyToiletCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        _ToiletDistanceWidget(distance: toilet.distance),
+                        _ToiletDistanceWidget(distance: toilet.distance!),
                         SizedBox(
                           width: 140.0,
                           height: 45.0,
-                          child: ElevatedButton(
-                            onPressed: onNavigate,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 52, 64, 74),
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                            child: const Text(
-                              'Navigate',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
+                          child: PPButton("Navigate", onPressed: onNavigate),
                         ),
                       ],
                     ),
@@ -115,49 +95,6 @@ class NearbyToiletCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _ToiletFeatureRow extends StatelessWidget {
-  final bool? hasBidet;
-  final bool? hasOku;
-  final bool? hasShower;
-  final bool? hasSanitizer;
-
-  const _ToiletFeatureRow({
-    this.hasBidet,
-    this.hasOku,
-    this.hasShower,
-    this.hasSanitizer,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      runAlignment: WrapAlignment.start,
-      children: [
-        ToiletFeatureIcon(
-          hasFeature: hasBidet,
-          image: "assets/images/icons-bidet.png",
-          color: Colors.black,
-        ),
-        ToiletFeatureIcon(
-          hasFeature: hasOku,
-          icon: Icons.accessible,
-          color: Colors.black,
-        ),
-        ToiletFeatureIcon(
-          hasFeature: hasSanitizer,
-          icon: Icons.shower,
-          color: Colors.black,
-        ),
-        ToiletFeatureIcon(
-          hasFeature: hasShower,
-          icon: Icons.wash,
-          color: Colors.black,
-        ),
-      ],
     );
   }
 }

@@ -55,14 +55,8 @@ export interface MKDirections {
 
 export interface Route {
     overview_polyline: string;
-    start_location: {
-        lat: number;
-        lng: number;
-    };
-    end_location: {
-        lat: number;
-        lng: number;
-    };
+    start_location: LatLng;
+    end_location: LatLng;
     distance: string;
     duration: string;
     directions: RouteDirection[];

@@ -166,9 +166,7 @@ class _ProfileButtonWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         GestureDetector(
-          onTap: () {
-            context.read<AppPageCubit>().changeToProfile();
-          },
+          onTap: () {},
           child: CircleAvatar(
             radius: 20.0,
             backgroundColor: Colors.grey.shade200,

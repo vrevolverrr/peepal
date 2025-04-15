@@ -1,11 +1,15 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peepal/pages/add_toilet/add_toilet_page.dart';
+import 'package:peepal/pages/add_toilet/bloc/add_toilet_bloc.dart';
+import 'package:peepal/pages/favourites/bloc/favorites_bloc.dart';
+import 'package:peepal/pages/favourites/favourites_page.dart';
 import 'package:peepal/shared/auth/auth_bloc.dart';
 import 'package:peepal/shared/toilets/toilets_bloc.dart';
 import 'package:peepal/pages/app/bloc/app_bloc.dart';
 import 'package:peepal/pages/login_page/login_page.dart';
 import 'package:peepal/pages/nearby_toilets/nearby_toilets_page.dart';
-import 'package:peepal/pages/profile_page/profile_page.dart';
 import 'package:peepal/pages/toilet_map/bloc/toilet_map_bloc.dart';
 import 'package:peepal/pages/toilet_map/toilet_map_page.dart';
 import 'package:peepal/shared/location/bloc/location_bloc.dart';
@@ -28,7 +32,9 @@ class _PeePalAppState extends State<PeePalApp> {
 
   @override
   void initState() {
-    locationCubit = LocationCubit(locationRepository)..init();
+    locationCubit = LocationCubit(locationRepository);
+    locationCubit.init();
+
     super.initState();
   }
 
@@ -52,25 +58,32 @@ class _PeePalAppState extends State<PeePalApp> {
 
           return MultiBlocProvider(
               providers: [
-                BlocProvider(create: (context) => AppPageCubit()),
-                BlocProvider.value(value: locationCubit),
-                BlocProvider(create: (context) => ToiletsBloc()),
-                BlocProvider(
+                BlocProvider<AppPageCubit>(create: (context) => AppPageCubit()),
+                BlocProvider<LocationCubit>.value(value: locationCubit),
+                BlocProvider<ToiletsBloc>(create: (context) => ToiletsBloc()),
+                BlocProvider<ToiletMapCubit>(
                     create: (context) =>
-                        ToiletMapCubit(locationCubit: locationCubit))
+                        ToiletMapCubit(locationCubit: locationCubit)),
+                BlocProvider<FavoritesCubit>(
+                    create: (context) => FavoritesCubit()),
               ],
               child: Scaffold(
                 body: BlocListener<AppPageCubit, AppPageState>(
-                    listener: (context, state) =>
-                        _pageController.jumpToPage(state.index),
+                    listener: (context, state) => _pageController.jumpToPage(
+                          state.index,
+                        ),
                     child: PageView(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: _pageController,
                       children: [
-                        NearbyToiletsPage(),
-                        ToiletMapPage(),
-                        // FavouritesPage(),
-                        ProfilePage(),
+                        const NearbyToiletsPage(),
+                        const ToiletMapPage(),
+                        BlocProvider<AddToiletBloc>(
+                          create: (context) => AddToiletBloc(),
+                          lazy: false,
+                          child: const AddToiletPage(),
+                        ),
+                        const FavouritesPage(),
                       ],
                     )),
                 bottomNavigationBar: BlocBuilder<AppPageCubit, AppPageState>(
@@ -82,52 +95,44 @@ class _PeePalAppState extends State<PeePalApp> {
     );
   }
 
-  BottomNavigationBar _buildBottomNavBar(
+  CurvedNavigationBar _buildBottomNavBar(
           BuildContext context, AppPageState state) =>
-      BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        backgroundColor: Color(0xffffffff),
-        currentIndex: state.index,
+      CurvedNavigationBar(
+        animationDuration: const Duration(milliseconds: 300),
+        animationCurve: Curves.decelerate,
+        index: state.index,
         onTap: (index) {
           if (index == 0) {
             context.read<AppPageCubit>().changeToHome();
           } else if (index == 1) {
             context.read<AppPageCubit>().changeToSearch();
           } else if (index == 2) {
-            context.read<AppPageCubit>().changeToFavorite();
+            context.read<AppPageCubit>().changeToAdd();
           } else if (index == 3) {
-            context.read<AppPageCubit>().changeToProfile();
+            context.read<AppPageCubit>().changeToFavorite();
           }
         },
         items: [
-          _buildNavItem(
-              activeIcon: Icons.home, icon: Icons.home_outlined, label: "Home"),
-          _buildNavItem(
-              activeIcon: Icons.search,
-              icon: Icons.search_outlined,
-              label: "Search"),
-          _buildNavItem(
-              activeIcon: Icons.favorite,
-              icon: Icons.favorite_border_outlined,
-              label: "Favorite"),
-          _buildNavItem(
-              activeIcon: Icons.person,
-              icon: Icons.person_outline,
-              label: "Profile"),
-        ],
-      );
-
-  BottomNavigationBarItem _buildNavItem(
-          {required String label,
-          required IconData icon,
-          required IconData activeIcon}) =>
-      BottomNavigationBarItem(
-          activeIcon: Icon(activeIcon, size: 25.0, color: Colors.black),
-          icon: Icon(
-            icon,
+          Icon(
+            Icons.home_outlined,
             size: 25.0,
             color: Colors.black,
           ),
-          label: label);
+          Icon(
+            Icons.search_outlined,
+            size: 25.0,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.add_outlined,
+            size: 25.0,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.favorite_outline,
+            size: 25.0,
+            color: Colors.black,
+          ),
+        ],
+      );
 }

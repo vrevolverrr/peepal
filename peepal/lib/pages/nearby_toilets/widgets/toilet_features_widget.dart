@@ -17,23 +17,26 @@ class ToiletFeatureIcon extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    Color? iconColor;
-
-    if (hasFeature == true) {
-      iconColor = const Color(0xFF4C4C4C);
-    } else {
-      iconColor = const Color(0xFFB8B8B8);
-    }
-
     Widget iconWidget;
 
     if (icon != null) {
-      iconWidget = Icon(icon!, color: iconColor, size: 24.0);
+      iconWidget = Icon(icon!,
+          color: hasFeature == true
+              ? const Color(0xFF4C4C4C)
+              : Colors.grey.shade400,
+          size: 24.0);
     } else {
       iconWidget = SizedBox(
         width: 24.0,
         height: 24.0,
-        child: Image.asset(image!),
+        child: hasFeature == false
+            ? ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  Colors.grey.shade400, // light grey
+                  BlendMode.srcIn,
+                ),
+                child: Image.asset(image!))
+            : Image.asset(image!),
       );
     }
 

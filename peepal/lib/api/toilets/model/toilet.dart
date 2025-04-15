@@ -9,7 +9,7 @@ class PPToilet extends Equatable {
   final String name;
   final String address;
   final PPLatLng location;
-  final int distance;
+  final int? distance;
   final double rating;
   final int reportCount;
   final int crowdLevel;

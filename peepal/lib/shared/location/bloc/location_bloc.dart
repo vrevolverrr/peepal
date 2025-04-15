@@ -19,8 +19,13 @@ class LocationCubit extends Cubit<LocationState> {
     final hasPermission = await repository.checkPermission();
 
     if (!hasPermission) {
-      log.warning("Location permission is not granted");
-      emit(LocationStateNoPermission());
+      if (await repository.requestPermission()) {
+        log.info("Location permission is granted");
+      } else {
+        log.warning("Location permission is not granted");
+        emit(LocationStateNoPermission());
+        return;
+      }
     }
 
     log.info("Location permission is granted");
@@ -60,5 +65,14 @@ class LocationCubit extends Cubit<LocationState> {
 
     log.info("Location permission is granted");
     emit(LocationStatePermissionGranted());
+  }
+
+  Stream<PPLatLng> getLocationUpdates() {
+    if (state is! LocationStatePermissionGranted) {
+      log.warning("Permission is not granted, call init() first.");
+      return Stream<PPLatLng>.empty();
+    }
+
+    return repository.getLocationStream();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peepal/pages/app/app.dart';
 import 'package:peepal/pages/app/bloc/app_bloc.dart';
-import 'package:peepal/pages/home/home_page.dart';
 import 'package:peepal/pages/login_page/login_page.dart';
 import 'package:peepal/shared/location/bloc/location_bloc.dart';
 import 'package:peepal/shared/location/repository/location_repository.dart';
@@ -64,7 +64,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   ),
                 ),
               ],
-              child: const HomePage(),
+              child: PeePalApp(),
             ),
           ),
         );

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:peepal/api/auth/auth_api.dart';
+import 'package:peepal/api/favorites/favorites_api.dart';
 import 'package:peepal/api/images/images_api.dart';
 import 'package:peepal/api/reviews/reviews_api.dart';
 import 'package:peepal/api/toilets/toilet_api.dart';
@@ -23,6 +24,7 @@ final class PPClient {
   static late final PPUserApi user;
   static late final PPImagesApi images;
   static late final PPReviewsApi reviews;
+  static late final PPFavoritesApi favorites;
 
   static Future<void> init() async {
     if (_isInitialized) return;
@@ -34,7 +36,7 @@ final class PPClient {
     await prefs.reloadCache();
 
     if (debugMode) {
-      dio.options.baseUrl = 'http://127.0.0.1:3000';
+      dio.options.baseUrl = 'http://192.168.0.137:3000';
     } else {
       // TODO: Replace with production URL
       dio.options.baseUrl = 'https://api.peepal.com';
@@ -75,6 +77,7 @@ final class PPClient {
     user = PPUserApi(dio: dio);
     images = PPImagesApi(dio: dio);
     reviews = PPReviewsApi(dio: dio, imageApi: images);
+    favorites = PPFavoritesApi(dio: dio);
     _isInitialized = true;
   }
 }

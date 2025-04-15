@@ -18,10 +18,10 @@ class AppPageStateSearch extends AppPageState {
   const AppPageStateSearch() : super(1);
 }
 
-class AppPageStateFavorite extends AppPageState {
-  const AppPageStateFavorite() : super(2);
+class AppPageStateAdd extends AppPageState {
+  const AppPageStateAdd() : super(2);
 }
 
-class AppPageStateProfile extends AppPageState {
-  const AppPageStateProfile() : super(3);
+class AppPageStateFavorite extends AppPageState {
+  const AppPageStateFavorite() : super(3);
 }

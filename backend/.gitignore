@@ -2,5 +2,6 @@ node_modules/
 dist/
 
 .env
+.docker.env
 
 scripts/downloaded_images/

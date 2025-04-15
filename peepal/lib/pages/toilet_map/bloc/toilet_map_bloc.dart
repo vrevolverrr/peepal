@@ -20,7 +20,8 @@ class ToiletMapCubit extends Cubit<ToiletMapState> {
   ToiletMapCubit({required this.locationCubit}) : super(ToiletMapState()) {
     markerIcon.complete(Image.asset(
       "assets/images/marker.png",
-      scale: 1.25,
+      width: 60.0,
+      height: 60.0,
     ).toBitmapDescriptor());
   }
 
@@ -45,6 +46,7 @@ class ToiletMapCubit extends Cubit<ToiletMapState> {
     if (locationCubit.state is LocationStateWithLocation) {
       final location =
           (locationCubit.state as LocationStateWithLocation).location;
+
       final PPRoute route = await PPClient.toilets
           .navigateToToilet(toilet: toilet, location: location);
 

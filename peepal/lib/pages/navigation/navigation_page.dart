@@ -1,23 +1,27 @@
 import 'dart:async';
 import 'package:apple_maps_flutter/apple_maps_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' hide LatLng;
 import 'package:maps_toolkit/maps_toolkit.dart' as mtk;
+import 'package:peepal/api/toilets/model/latlng.dart';
+import 'package:peepal/api/toilets/model/route.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
-import 'package:peepal/pages/navigation/controller/mock_navigation_service.dart';
-import 'package:peepal/pages/navigation/controller/location_service.dart';
-import 'package:peepal/pages/navigation/controller/navigation_simulator.dart';
-import 'package:peepal/pages/navigation/controller/navigation_map.dart';
+import 'package:peepal/pages/navigation/widgets/navigation_map.dart';
 import 'package:peepal/pages/navigation/widgets/navigation_header.dart';
 import 'package:peepal/pages/navigation/widgets/direction_list.dart';
+import 'package:peepal/pages/toilet_map/widgets/toilet_marker.dart';
+import 'package:peepal/shared/location/bloc/location_bloc.dart';
 
 class NavigationPage extends StatefulWidget {
   final PPToilet destination;
+  final PPRoute route;
+  final LocationCubit locationCubit;
 
   const NavigationPage({
     super.key,
     required this.destination,
+    required this.route,
+    required this.locationCubit,
   });
 
   @override
@@ -26,21 +30,12 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   final Completer<AppleMapController> _controller = Completer();
-  final MockNavigationService _navigationService = MockNavigationService();
-
-  // Services
-  LocationService? _locationService;
-  NavigationSimulator? _simulator;
 
   // State
-  Map<String, dynamic>? _navigationData;
   bool _isLoading = true;
   String? _errorMessage;
-  bool _simulationActive = false;
-  bool _debugMode = true; // For development
 
   // Navigation state
-  Position? _currentPosition;
   bool _destinationReached = false;
   int _currentDirectionIndex = 0;
 
@@ -49,34 +44,21 @@ class _NavigationPageState extends State<NavigationPage> {
   Set<Annotation> _markers = {};
   Set<Circle> _circles = {};
 
-  // Default current location
-  final double _currentLatitude = 1.3349539;
-  final double _currentLongitude = 103.7286225;
+  late final LocationCubit locationCubit;
+  StreamSubscription<PPLatLng>? _positionSubscription;
+
+  late PPLatLng _currentLocation;
 
   @override
   void initState() {
-    super.initState();
+    locationCubit = widget.locationCubit;
+    _currentLocation = locationCubit.state.location;
 
-    // Set initial position to match mock navigation route starting point
-    _currentPosition = Position(
-      latitude: _currentLatitude,
-      longitude: _currentLongitude,
-      timestamp: DateTime.now(),
-      accuracy: 0,
-      altitude: 0,
-      heading: 0,
-      speed: 0,
-      speedAccuracy: 0,
-      altitudeAccuracy: 0,
-      headingAccuracy: 0,
-    );
-
-    // Initialize circle for current location
     _circles = {
       Circle(
         circleId: CircleId('current_location'),
-        center: LatLng(_currentLatitude, _currentLongitude),
-        radius: 8,
+        center: _currentLocation.toAmLatLng(),
+        radius: 12.0,
         fillColor: Colors.blue.withAlpha(178),
         strokeColor: Colors.white,
         strokeWidth: 2,
@@ -85,120 +67,87 @@ class _NavigationPageState extends State<NavigationPage> {
     };
 
     _fetchDirections();
+
+    super.initState();
   }
 
   @override
   void dispose() {
-    _locationService?.dispose();
-    _simulator?.dispose();
+    _positionSubscription?.cancel();
     super.dispose();
   }
 
   Future<void> _fetchDirections() async {
-    try {
-      final data = await _navigationService.getNavigationDirections(
-        destination: widget.destination,
-        currentLatitude: _currentLatitude,
-        currentLongitude: _currentLongitude,
-      );
+    final PPRoute route = widget.route;
 
-      // Create polyline from overview_polyline
-      final List<LatLng> polylinePoints =
-          PolygonUtil.decode(data['overview_polyline'])
-              .map((point) => LatLng(point.latitude, point.longitude))
-              .toList();
+    final List<LatLng> polylinePoints = [];
 
-      final polyline = Polyline(
-        polylineId: PolylineId('overview_route'),
-        color: Colors.blue,
-        width: 5,
-        points: polylinePoints,
-      );
+    for (final direction in route.directions) {
+      final List<mtk.LatLng> directionPoints =
+          PolygonUtil.decode(direction.polyline);
 
-      // Create markers for start and end points
-      final startMarker = Annotation(
-        annotationId: AnnotationId('start'),
-        position: LatLng(
-            data['start_location']['lat'], data['start_location']['lng']),
-        infoWindow: InfoWindow(title: 'Start', snippet: data['start_address']),
-      );
-
-      final endMarker = Annotation(
-        annotationId: AnnotationId('destination'),
-        position:
-            LatLng(data['end_location']['lat'], data['end_location']['lng']),
-        icon: await BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(size: Size(12, 12)), "assets/images/marker.png"),
-        infoWindow: InfoWindow(
-            title: widget.destination.name, snippet: data['end_address']),
-      );
-
-      // Initialize services
-      _locationService = LocationService(
-        onPositionUpdate: _handlePositionUpdate,
-        onError: (message) {
-          setState(() {
-            _errorMessage = message;
-          });
-        },
-      );
-
-      _simulator = NavigationSimulator(
-        navigationData: data,
-        onPositionUpdate: _handlePositionUpdate,
-        onSimulationComplete: () {
-          setState(() {
-            _simulationActive = false;
-          });
-        },
-      );
-
-      setState(() {
-        _navigationData = data;
-        _polylines = {polyline};
-        _markers = {startMarker, endMarker};
-        _isLoading = false;
-      });
-
-      // IMPORTANT: Add a slight delay to make sure map is ready
-      await Future.delayed(const Duration(milliseconds: 300));
-
-      // Move camera to show the full route
-      final AppleMapController controller = await _controller.future;
-
-      // Calculate bounds that include both start and destination
-      final LatLngBounds bounds = LatLngBounds(
-        southwest: LatLng(
-          min(data['start_location']['lat'], data['end_location']['lat']),
-          min(data['start_location']['lng'], data['end_location']['lng']),
-        ),
-        northeast: LatLng(
-          max(data['start_location']['lat'], data['end_location']['lat']),
-          max(data['start_location']['lng'], data['end_location']['lng']),
-        ),
-      );
-
-      // Animate camera with padding
-      controller.animateCamera(
-        CameraUpdate.newLatLngBounds(
-            bounds, 100), // Increased padding for better view
-      );
-
-      // Start location updates AFTER showing the full route
-      _locationService?.startLocationUpdates();
-    } catch (e) {
-      setState(() {
-        _errorMessage = 'Error getting directions: $e';
-        _isLoading = false;
-      });
+      // Map MTK points to Apple Map points
+      polylinePoints.addAll(directionPoints
+          .map((point) => LatLng(point.latitude, point.longitude)));
     }
+
+    final polyline = Polyline(
+      polylineId: PolylineId('overview_route'),
+      color: Colors.blue,
+      width: 5,
+      points: polylinePoints,
+    );
+
+    final endMarkerIcon = await Image.asset(
+      "assets/images/marker.png",
+      width: 60.0,
+      height: 60.0,
+    ).toBitmapDescriptor();
+
+    final endMarker = Annotation(
+      annotationId: AnnotationId('destination'),
+      position: widget.destination.location.toAmLatLng(),
+      icon: endMarkerIcon,
+      infoWindow: InfoWindow(
+          title: widget.destination.name, snippet: widget.destination.address),
+    );
+
+    setState(() {
+      _polylines = {polyline};
+      _markers = {endMarker};
+      _isLoading = false;
+    });
+
+    // Slight delay to make sure map is ready
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    // Move camera to show the full route
+    final AppleMapController controller = await _controller.future;
+
+    // Calculate bounds that include both start and destination
+    final LatLngBounds bounds = LatLngBounds(
+      southwest: LatLng(
+        min(widget.destination.location.latitude, _currentLocation.latitude),
+        min(widget.destination.location.longitude, _currentLocation.longitude),
+      ),
+      northeast: LatLng(
+        max(widget.destination.location.latitude, _currentLocation.latitude),
+        max(widget.destination.location.longitude, _currentLocation.longitude),
+      ),
+    );
+
+    // Animate camera to bounds
+    controller.animateCamera(
+      CameraUpdate.newLatLngBounds(bounds, 50),
+    );
+
+    _positionSubscription =
+        locationCubit.getLocationUpdates().listen(_handlePositionUpdate);
   }
 
-  void _handlePositionUpdate(Position position) {
+  void _handlePositionUpdate(PPLatLng position) {
     setState(() {
-      _currentPosition = position;
-
-      // Update circle for current location
+      _currentLocation = position;
       _circles = {
         Circle(
           circleId: CircleId('current_location'),
@@ -225,16 +174,16 @@ class _NavigationPageState extends State<NavigationPage> {
     });
   }
 
-  void _updateCurrentDirectionStep(Position position) {
-    if (_navigationData == null || _destinationReached) return;
+  void _updateCurrentDirectionStep(PPLatLng position) {
+    if (_destinationReached) return;
 
-    final directions = _navigationData!['directions'] as List<dynamic>;
+    final directions = widget.route.directions;
     int closestStepIndex = 0;
     double closestDistance = double.infinity;
 
     for (int i = 0; i < directions.length; i++) {
       final step = directions[i];
-      final stepPoints = PolygonUtil.decode(step['polyline']);
+      final stepPoints = PolygonUtil.decode(step.polyline);
 
       for (final point in stepPoints) {
         final distance = SphericalUtil.computeDistanceBetween(
@@ -255,30 +204,21 @@ class _NavigationPageState extends State<NavigationPage> {
     }
   }
 
-  void _checkIfDestinationReached(Position position) {
-    if (_navigationData == null || _destinationReached) return;
+  void _checkIfDestinationReached(PPLatLng position) {
+    if (_destinationReached) return;
 
-    final endLocation = _navigationData!['end_location'];
+    final endLocation = widget.route.endLocation;
     final distanceToEnd = SphericalUtil.computeDistanceBetween(
         mtk.LatLng(position.latitude, position.longitude),
-        mtk.LatLng(endLocation['lat'], endLocation['lng']));
+        mtk.LatLng(endLocation.latitude, endLocation.longitude));
 
     if (distanceToEnd < 0.02) {
-      // Within 20 meters
       setState(() {
         _destinationReached = true;
-        _currentDirectionIndex =
-            (_navigationData!['directions'] as List).length - 1;
+        _currentDirectionIndex = widget.route.directions.length - 1;
       });
 
       _showDestinationReachedMessage();
-
-      if (_simulationActive) {
-        _simulator?.stopSimulation();
-        setState(() {
-          _simulationActive = false;
-        });
-      }
     }
   }
 
@@ -305,23 +245,6 @@ class _NavigationPageState extends State<NavigationPage> {
     );
   }
 
-  void _toggleSimulation() {
-    if (_simulator == null) return;
-
-    if (_simulator!.isActive) {
-      _simulator!.stopSimulation();
-      setState(() {
-        _simulationActive = false;
-      });
-    } else {
-      setState(() {
-        _simulationActive = true;
-        _destinationReached = false;
-      });
-      _simulator!.startSimulation();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -340,17 +263,6 @@ class _NavigationPageState extends State<NavigationPage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: _debugMode
-            ? [
-                IconButton(
-                  icon: Icon(_simulationActive ? Icons.stop : Icons.play_arrow),
-                  tooltip: _simulationActive
-                      ? 'Stop Simulation'
-                      : 'Start Simulation',
-                  onPressed: _toggleSimulation,
-                ),
-              ]
-            : null,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -363,46 +275,35 @@ class _NavigationPageState extends State<NavigationPage> {
   Widget _buildContent() {
     return Column(
       children: [
-        // Map
         NavigationMap(
           markers: _markers,
           polylines: _polylines,
           circles: _circles,
-          initialLatitude: _currentLatitude,
-          initialLongitude: _currentLongitude,
           onMapCreated: (AppleMapController controller) {
             _controller.complete(controller);
           },
-          currentPosition: _currentPosition,
+          currentPosition: _currentLocation,
           onCenterLocation: () {
-            if (_currentPosition != null) {
-              _controller.future.then((controller) {
-                controller.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      target: LatLng(_currentPosition!.latitude,
-                          _currentPosition!.longitude),
-                      zoom:
-                          17.0, // Higher zoom level when centering on location
-                    ),
+            _controller.future.then((controller) {
+              controller.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                    target: _currentLocation.toAmLatLng(),
+                    zoom: 17.0,
                   ),
-                );
-              });
-            }
+                ),
+              );
+            });
           },
         ),
-
-        // Header with destination info
         NavigationHeader(
           destinationName: widget.destination.name,
-          destinationAddress: _navigationData!['end_address'],
-          duration: _navigationData!['duration'],
-          distance: _navigationData!['distance'],
+          destinationAddress: widget.destination.address,
+          duration: widget.route.duration,
+          distance: widget.route.distance,
         ),
-
-        // Directions list
         DirectionsList(
-          directions: _navigationData!['directions'],
+          directions: widget.route.directions,
           currentDirectionIndex: _currentDirectionIndex,
           destinationReached: _destinationReached,
         ),

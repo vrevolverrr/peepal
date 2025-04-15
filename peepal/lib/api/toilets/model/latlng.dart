@@ -28,6 +28,13 @@ final class PPLatLng extends Equatable {
     );
   }
 
+  factory PPLatLng.fromAmLatLng(am.LatLng amLatLng) {
+    return PPLatLng(
+      latitude: amLatLng.latitude,
+      longitude: amLatLng.longitude,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'x': longitude,

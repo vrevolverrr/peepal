@@ -144,28 +144,35 @@ class _ToiletMapPageState extends State<ToiletMapPage>
             return const SizedBox.shrink();
           }
 
-          return Align(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ToiletDetailsPage(toilet: state.selectedToilet!),
-                  )),
-              child: ToiletLocationCard(
-                toilet: state.selectedToilet!,
-                onClose: () => toiletMapCubit.deselectToilet(),
-                onDirections: () {
-                  // Navigate to the NavigationPage with the selected location
-                  Navigator.of(context).push(
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
                     MaterialPageRoute(
-                      builder: (context) => NavigationPage(
-                        destination: state.selectedToilet!,
+                      builder: (context) =>
+                          ToiletDetailsPage(toilet: state.selectedToilet!),
+                    )),
+                child: ToiletLocationCard(
+                  toilet: state.selectedToilet!,
+                  onClose: () => toiletMapCubit.deselectToilet(),
+                  onDirections: () {
+                    // Get the [locationCubit] from current context and pass into new route
+                    final locationCubit = context.read<LocationCubit>();
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => NavigationPage(
+                          locationCubit: locationCubit,
+                          destination: state.selectedToilet!,
+                          route: state.activeRoute!,
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           );

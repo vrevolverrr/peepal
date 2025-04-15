@@ -1,57 +1,56 @@
-// import 'package:flutter/material.dart';
-// import 'package:peepal/features/favourites/repository/favourites_repository.dart';
-// import 'package:peepal/bloc/toilet/model/toilet.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peepal/api/favorites/model/favorite.dart';
+import 'package:peepal/pages/favourites/bloc/favorites_bloc.dart';
+import 'package:peepal/pages/favourites/widget/favorites_card.dart';
 
-// class FavouritesPage extends StatefulWidget {
-//   const FavouritesPage({super.key});
+class FavouritesPage extends StatefulWidget {
+  const FavouritesPage({super.key});
 
-//   @override
-//   State<FavouritesPage> createState() => _FavouritesState();
-// }
+  @override
+  State<FavouritesPage> createState() => _FavouritesState();
+}
 
-// class _FavouritesState extends State<FavouritesPage> {
-//   final FavouritesRespository _repository =
-//       MockFavouritesRepository(); // Use the concrete implementation
-//   late Future<List<PPToilet>> _favouriteToilets;
+class _FavouritesState extends State<FavouritesPage> {
+  @override
+  void initState() {
+    context.read<FavoritesCubit>().loadFavorites();
+    super.initState();
+  }
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     _favouriteToilets = _fetchFavourites();
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Favourite Toilets'),
+      ),
+      body: SafeArea(child: BlocBuilder<FavoritesCubit, FavoritesState>(
+        builder: (context, state) {
+          if (state is FavoritesStateLoading ||
+              state is FavoritesStateInitial) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is FavoritesStateError) {
+            return const Center(
+              child: Text(
+                "Error fetching saved toilets",
+              ),
+            );
+          }
 
-//   Future<List<PPToilet>> _fetchFavourites() async {
-//     final collection = await _repository.getFavourites();
-//     return collection
-//         .toilets; // Assuming `PPToiletCollection` has a `toilets` property
-//   }
+          final List<PPFavorite> favorites =
+              (state as FavoritesStateLoaded).favorites;
+          favorites.sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Saved Favorites"),
-//       ),
-//       body: FutureBuilder<List<PPToilet>>(
-//         future: _favouriteToilets,
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return Center(child: CircularProgressIndicator());
-//           } else if (snapshot.hasError) {
-//             return Center(child: Text("Error fetching saved toilets"));
-//           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-//             return Center(child: Text("No saved toilets found"));
-//           }
-
-//           final toilets = snapshot.data!;
-//           return ListView.builder(
-//             itemCount: toilets.length,
-//             itemBuilder: (context, index) {
-//               return ToiletCard(toilet: toilets[index]);
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+          return ListView.builder(
+            itemCount: favorites.length,
+            itemBuilder: (context, index) {
+              return ToiletCard(toilet: favorites[index].toilet);
+            },
+          );
+        },
+      )),
+    );
+  }
+}

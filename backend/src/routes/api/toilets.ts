@@ -8,7 +8,7 @@ import {  MapKitAccessToken, MKRoute, MKStep, MKDirections, MKCoordinate, RouteD
 import { db } from "../../app"
 import { toilets } from "../../db/schema"
 import { validator } from "../../middleware/validator"
-import { createToiletSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdParamSchema, updateToiletSchema } from "../../validators/api/toilets"
+import { createToiletSchema, getAddressSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdParamSchema, updateToiletSchema } from "../../validators/api/toilets"
 import pino from "pino";
 
 const NUM_REPORTS_DELETE = 3
@@ -35,12 +35,42 @@ const getMapKitAccessToken = async (logger: pino.Logger) => {
   const response: any = await mapKitAxios.get('/token')
 
   const accessToken = response.data.accessToken
-  const expiresAt = new Date(Date.now() + response.data.expiresInSeconds * 1000)
+  // Offset by 60 seconds to prevent expiration
+  const expiresAt = new Date(Date.now() + response.data.expiresInSeconds * 1000 - 60)
   
   mapsAccessToken = { accessToken, expiresAt }
   
   logger.info("Obtained new MapKit access token");
   return accessToken
+}
+
+const getAddressFromCoordinates = async (logger: pino.Logger, latitude: number, longitude: number) => {
+  const accessToken = await getMapKitAccessToken(logger)
+
+  type MKReverseGeocodeData = {
+    results: {
+      name: string
+      formattedAddressLines: string[]
+    }[]
+  }
+
+  logger.info(`Getting address from coordinates: ${latitude},${longitude}`)
+
+  const response = await mapKitAxios.get('/reverseGeocode', {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    },
+    params: {
+      loc: `${latitude},${longitude}`,
+    }
+  })
+
+  const data = response.data as MKReverseGeocodeData
+  
+  return {
+    placeName: data.results[0].name,
+    address: data.results[0].formattedAddressLines.join(', ')
+  }
 }
 
 const formatDuration = (seconds: number) => {
@@ -197,7 +227,7 @@ toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
   const nearbyToilets = await db
     .select({
       ...getTableColumns(toilets),
-      distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography))`,
+      distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography) * 1.4)`,
     })
     .from(toilets)
     // Default radius is 5km and clamp at 5km
@@ -271,9 +301,6 @@ validator('json', navigateToiletSchema), async (c) => {
       }
     }
   )
-  // return c.json(directionsResponse.data);
-
-  // logger.info(directionsResponse.data);
   
   const mkRoute: MKRoute = directionsResponse.data.routes[0]
   const mkSteps: MKStep[] = directionsResponse.data.steps
@@ -321,54 +348,15 @@ validator('json', navigateToiletSchema), async (c) => {
   }
   
   return c.json({ route: route }, 200);
-  // const response = await client.directions({
-  //   params: {
-  //     origin: `${latitude},${longitude}`,
-  //     destination: `${toilet.location.y},${toilet.location.x}`,
-  //     mode: TravelMode.walking,
-  //     key: process.env.GOOGLE_API_KEY || ''
-  //   }
-  // })
+})
 
-  // const route: DirectionsRoute = response.data.routes[0]
-  // const leg: RouteLeg = route.legs[0]
+toiletApi.post('/getAddress', validator('json', getAddressSchema), async (c) => {
+  const logger = c.get('logger')
+  const { latitude, longitude } = c.req.valid('json')
 
-  // if (!route) {
-  //   logger.error(`No route found from ${latitude}, ${longitude} to ${toiletId}`)
-  //   return c.json({ error: 'No route found' }, 400)
-  // }
-
-  // const steps = leg.steps
-  // const directions: any = []
-
-  // for (const step of steps) {
-  //   directions.push({
-  //     distance: step.distance.text,
-  //     duration: step.duration.text,
-  //     polyline: step.polyline.points,
-  //     start_location: step.start_location,
-  //     end_location: step.end_location,
-  //     // Remove HTML tags from instructions
-  //     instructions: step.html_instructions
-  //       .replaceAll("<b>", "").replaceAll("</b>", "")
-  //       .replace(/<div[^>]*>/, '. ').replace(/<\/div>/, '')
-  //   })
-  // }
-
-  // logger.info(`Navigation requested from ${latitude}, ${longitude} to ${toiletId}`)
-
-  // return c.json({
-  //   route: { 
-  //     overview_polyline: route.overview_polyline.points, 
-  //     start_address: leg.start_address,
-  //     end_address: leg.end_address,
-  //     start_location: leg.start_location,
-  //     end_location: leg.end_location,
-  //     distance: leg.distance.text, 
-  //     duration: leg.duration.text,
-  //     directions: directions
-  //   }
-  // }, 200)
+  const address = await getAddressFromCoordinates(logger, latitude, longitude)
+  
+  return c.json({ address }, 200)
 })
 
 export default toiletApi

@@ -9,6 +9,6 @@ class AppPageCubit extends Cubit<AppPageState> {
 
   void changeToHome() => emit(AppPageStateHome());
   void changeToSearch() => emit(AppPageStateSearch());
+  void changeToAdd() => emit(AppPageStateAdd());
   void changeToFavorite() => emit(AppPageStateFavorite());
-  void changeToProfile() => emit(AppPageStateProfile());
 }

@@ -51,6 +51,7 @@ dependencies:
   bloc_concurrency: ^0.3.0
   auto_size_text: ^3.0.0
   apple_maps_flutter: ^1.4.0
+  curved_navigation_bar: ^1.0.6
 
 dev_dependencies:
   flutter_test:

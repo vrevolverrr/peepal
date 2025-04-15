@@ -1,0 +1,14 @@
+            - name: Push to repository
+  # You may pin to the exact commit or the version.
+  # uses: tech-thinker/push-to-repo@a599ed57544bc8348c09cba83a5ffc790b2ead67
+  uses: tech-thinker/push-to-repo@v1.0.0
+  with:
+    source-directory: backend
+    destination-github-username: vrevolverrr
+    # Destination repository
+    destination-repository-name: peepal-backend-deployment
+    user-name: vreolverrr
+    destination-repository-username: vrevolverrr
+    target-branch: main
+    commit-message: deployment
+          

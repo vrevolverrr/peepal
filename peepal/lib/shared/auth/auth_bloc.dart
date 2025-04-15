@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/api/auth/exceptions.dart';
 import 'package:peepal/api/client.dart';
@@ -22,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final PPUser user = await PPClient.user.getCurrentUser();
         emit(AuthStateAuthenticated(user));
       } catch (e) {
+        debugPrint(e.toString());
         emit(AuthStateLoggedOut());
       }
     } else {

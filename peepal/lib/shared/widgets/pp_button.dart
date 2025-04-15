@@ -25,14 +25,19 @@ class PPButton extends StatelessWidget {
           elevation: 4.0,
           backgroundColor: !isLoading ? Colors.blueAccent : Colors.grey,
           foregroundColor: Colors.white,
-          minimumSize: const Size.fromHeight(50),
+          minimumSize: const Size.fromHeight(50.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
         ),
         child: isLoading
-            ? const CircularProgressIndicator(
-                color: Colors.white,
+            ? SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: const CircularProgressIndicator(
+                  strokeWidth: 3.0,
+                  color: Colors.white,
+                ),
               )
             : Text(
                 text,

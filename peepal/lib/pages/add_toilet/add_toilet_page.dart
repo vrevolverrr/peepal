@@ -89,7 +89,6 @@ class _AddToiletPageState extends State<AddToiletPage> {
   @override
   void dispose() {
     _nameController.dispose();
-    bloc.close();
     super.dispose();
   }
 
@@ -229,7 +228,21 @@ class _AddToiletPageState extends State<AddToiletPage> {
                 const SizedBox(height: 8),
                 ..._buildAmenityToggles(),
                 const SizedBox(height: 24),
-                PPButton("Add Toilet", onPressed: _onSubmit),
+                BlocConsumer<AddToiletBloc, AddToiletState>(
+                  listener: (context, state) {
+                    if (state is AddToiletStateCreated) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Toilet added successfully')),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return PPButton("Add Toilet",
+                        isLoading: state is AddToiletStateCreating,
+                        onPressed: _onSubmit);
+                  },
+                ),
                 const SizedBox(height: 40.0),
               ],
             ),

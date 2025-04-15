@@ -107,7 +107,7 @@ toiletApi.get('/', async (c) => {
 // POST /api/toilets/create - Create a new toilet
 toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
   const logger = c.get('logger')
-  const { name, address, location, handicapAvail, bidetAvail, showerAvail, sanitiserAvail } 
+  const { name, address, latitude, longitude, location, handicapAvail, bidetAvail, showerAvail, sanitiserAvail } 
     = c.req.valid('json')
 
   const toiletId: string = nanoid();
@@ -116,19 +116,26 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
         id: toiletId,
         name,
         address,
-        location: {
-          x: location.x,
-          y: location.y
-        },
+        location: sql`ST_SetSRID(ST_MakePoint(${location.x}, ${location.y}), 4326)`,
         handicapAvail,
         bidetAvail,
         showerAvail,
         sanitiserAvail,
   }).returning()
 
+  const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`
+
+  const [ toilet ] = await db
+  .select({
+    ...getTableColumns(toilets),
+    distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography) * 1.4)`,
+  })
+  .from(toilets)
+  .where(eq(toilets.id, newToilet.id))
+
   logger.info(`Toilet ${newToilet.id} created`)
 
-  return c.json({ toilet: newToilet }, 201)
+  return c.json({ toilet: toilet }, 201)
 })
 
 // PATCH /api/toilets/details/:toiletId - Update an existing toilet

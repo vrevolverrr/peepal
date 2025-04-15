@@ -75,10 +75,6 @@ class _ToiletMapPageState extends State<ToiletMapPage>
             }
           },
           builder: (context, state) {
-            if (state.activePolylines.isNotEmpty) {
-              debugPrint(state.activePolylines.first.hashCode.toString());
-            }
-
             return AppleMap(
               myLocationEnabled: true,
               mapType: MapType.standard,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/rating_widget.dart';
 import 'package:peepal/pages/toilet_map/bloc/toilet_map_bloc.dart';
+import 'package:peepal/shared/widgets/pp_button.dart';
 
 class ToiletLocationCard extends StatelessWidget {
   final PPToilet toilet;
@@ -178,30 +179,18 @@ class ToiletLocationCard extends StatelessWidget {
                 ],
               ),
             const SizedBox(height: 16.0),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                icon: const Icon(
-                  Icons.directions_walk,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  'Navigate (${context.read<ToiletMapCubit>().state.activeRoute?.duration ?? 0})',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                ),
-                onPressed: onDirections,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 52, 64, 74),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
+            BlocBuilder<ToiletMapCubit, ToiletMapState>(
+              builder: (context, state) {
+                if (state.activeRoute == null || state.isCalculating) {
+                  return PPButton(
+                    'Navigate',
+                    onPressed: onDirections,
+                    isLoading: true,
+                  );
+                }
+                return PPButton('Navigate (${state.activeRoute!.duration})',
+                    onPressed: onDirections);
+              },
             ),
           ],
         ),

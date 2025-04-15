@@ -29,3 +29,9 @@ final class ToiletEventSearch extends ToiletEvent {
 final class ToiletEventClearSearch extends ToiletEvent {
   const ToiletEventClearSearch();
 }
+
+final class ToiletEventUpdateToilet extends ToiletEvent {
+  final PPToilet toilet;
+
+  const ToiletEventUpdateToilet({required this.toilet});
+}

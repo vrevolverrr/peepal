@@ -3,12 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/api/client.dart';
 import 'package:peepal/api/toilets/model/address.dart';
 import 'package:peepal/api/toilets/model/latlng.dart';
+import 'package:peepal/api/toilets/model/toilet.dart';
+import 'package:peepal/shared/location/bloc/location_bloc.dart';
+import 'package:peepal/shared/toilets/toilets_bloc.dart';
 
 part 'add_toilet_state.dart';
 part 'add_toilet_event.dart';
 
 class AddToiletBloc extends Bloc<AddToiletEvent, AddToiletState> {
-  AddToiletBloc() : super(AddToiletStateInitial()) {
+  final ToiletsBloc toiletsBloc;
+  final LocationCubit locationCubit;
+
+  AddToiletBloc({required this.toiletsBloc, required this.locationCubit})
+      : super(AddToiletStateInitial()) {
     on<AddToiletEventSelectLocation>(_onSelectLocation);
     on<AddToiletEventNameUpdated>(_onNameUpdated);
     on<AddToiletEventRate>(_onRatingUpdated);
@@ -72,7 +79,31 @@ class AddToiletBloc extends Bloc<AddToiletEvent, AddToiletState> {
   }
 
   void _onToiletCreate(
-      AddToiletEventCreate event, Emitter<AddToiletState> emit) {
+      AddToiletEventCreate event, Emitter<AddToiletState> emit) async {
     emit(AddToiletStateCreating(details: state.details));
+
+    try {
+      final PPToilet createdToilet = await PPClient.toilets.createToilet(
+        name: state.details.placeName!,
+        address: state.details.selectedAddress!.placeName,
+        location: state.details.selectedLocation!,
+        currentLocation: locationCubit.state.location,
+        handicapAvail: state.details.handicapAvail,
+        bidetAvail: state.details.bidetAvail,
+        showerAvail: state.details.showerAvail,
+        sanitiserAvail: state.details.sanitiserAvail,
+      );
+
+      toiletsBloc.add(ToiletEventUpdateToilet(toilet: createdToilet));
+
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      emit(AddToiletStateCreated(details: AddToiletDetails()));
+    } catch (e) {
+      emit(AddToiletStateError(
+        details: state.details,
+        error: e.toString(),
+      ));
+    }
   }
 }

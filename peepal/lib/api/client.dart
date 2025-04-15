@@ -36,7 +36,8 @@ final class PPClient {
     await prefs.reloadCache();
 
     if (debugMode) {
-      dio.options.baseUrl = 'http://192.168.0.137:3000';
+      // dio.options.baseUrl = 'http://192.168.0.137:3000';
+      dio.options.baseUrl = 'http://127.0.0.1:3000';
     } else {
       // TODO: Replace with production URL
       dio.options.baseUrl = 'https://api.peepal.com';

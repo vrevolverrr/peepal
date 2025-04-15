@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peepal/api/client.dart';
@@ -139,11 +140,15 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.toilet.name,
-                        style: const TextStyle(
-                          fontSize: 23.0,
-                          fontWeight: FontWeight.bold,
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.sizeOf(context).width - 110.0),
+                        child: AutoSizeText(
+                          widget.toilet.name,
+                          style: const TextStyle(
+                            fontSize: 23.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Transform.translate(

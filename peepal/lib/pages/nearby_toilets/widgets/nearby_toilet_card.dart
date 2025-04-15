@@ -49,12 +49,15 @@ class NearbyToiletCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        AutoSizeText(
-                          toilet.name,
-                          style: const TextStyle(
-                              fontSize: 22.0, fontWeight: FontWeight.bold),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: 240.0),
+                          child: AutoSizeText(
+                            toilet.name,
+                            style: const TextStyle(
+                                fontSize: 22.0, fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         RatingWidget(rating: toilet.rating),
                       ],

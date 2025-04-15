@@ -7,6 +7,8 @@ export const toiletIdParamSchema = z.object({
 export const createToiletSchema = z.object({
   name: z.string().min(1).max(255),
   address: z.string().min(1).max(255),
+  latitude: z.number(),
+  longitude: z.number(),
   location: z.object({
     x: z.number(),
     y: z.number()

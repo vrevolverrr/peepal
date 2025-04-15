@@ -41,7 +41,7 @@ class ToiletMapCubit extends Cubit<ToiletMapState> {
   }
 
   void selectToilet(PPToilet toilet) {
-    emit(state.copyWith(selectedToilet: toilet));
+    emit(state.copyWith(selectedToilet: toilet, isCalculating: true));
 
     if (locationCubit.state is LocationStateWithLocation) {
       final location =
@@ -54,6 +54,7 @@ class ToiletMapCubit extends Cubit<ToiletMapState> {
           emit(state.copyWith(
               selectedToilet: toilet,
               activeRoute: route,
+              isCalculating: false,
               activePolylines: {
                 Polyline(
                     polylineId: PolylineId('route'),

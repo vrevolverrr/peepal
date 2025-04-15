@@ -14,11 +14,11 @@ final class AddToiletDetails extends Equatable {
     this.selectedLocation,
     this.selectedAddress,
     this.placeName,
-    this.rating,
-    this.handicapAvail,
-    this.bidetAvail,
-    this.showerAvail,
-    this.sanitiserAvail,
+    this.rating = 3,
+    this.handicapAvail = false,
+    this.bidetAvail = false,
+    this.showerAvail = false,
+    this.sanitiserAvail = false,
   });
 
   AddToiletDetails copyWith({
@@ -157,19 +157,24 @@ final class AddToiletStateCreated extends AddToiletState {
 }
 
 final class AddToiletStateError extends AddToiletState {
+  final String error;
+
   const AddToiletStateError({
     required super.details,
+    required this.error,
   });
 
   @override
   AddToiletStateError copyWith({
     AddToiletDetails? details,
+    String? error,
   }) {
     return AddToiletStateError(
       details: details ?? this.details,
+      error: error ?? this.error,
     );
   }
 
   @override
-  List<Object?> get props => [details];
+  List<Object?> get props => [details, error];
 }

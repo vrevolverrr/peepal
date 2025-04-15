@@ -67,29 +67,34 @@ class _PeePalAppState extends State<PeePalApp> {
                 BlocProvider<FavoritesCubit>(
                     create: (context) => FavoritesCubit()),
               ],
-              child: Scaffold(
-                body: BlocListener<AppPageCubit, AppPageState>(
-                    listener: (context, state) => _pageController.jumpToPage(
-                          state.index,
-                        ),
-                    child: PageView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      controller: _pageController,
-                      children: [
-                        const NearbyToiletsPage(),
-                        const ToiletMapPage(),
-                        BlocProvider<AddToiletBloc>(
-                          create: (context) => AddToiletBloc(),
-                          lazy: false,
-                          child: const AddToiletPage(),
-                        ),
-                        const FavouritesPage(),
-                      ],
-                    )),
-                bottomNavigationBar: BlocBuilder<AppPageCubit, AppPageState>(
-                  builder: _buildBottomNavBar,
-                ),
-              ));
+              child: Builder(builder: (context) {
+                return Scaffold(
+                  body: BlocListener<AppPageCubit, AppPageState>(
+                      listener: (context, state) => _pageController.jumpToPage(
+                            state.index,
+                          ),
+                      child: PageView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: _pageController,
+                        children: [
+                          const NearbyToiletsPage(),
+                          const ToiletMapPage(),
+                          BlocProvider<AddToiletBloc>(
+                            create: (context) => AddToiletBloc(
+                              locationCubit: locationCubit,
+                              toiletsBloc: context.read<ToiletsBloc>(),
+                            ),
+                            lazy: false,
+                            child: const AddToiletPage(),
+                          ),
+                          const FavouritesPage(),
+                        ],
+                      )),
+                  bottomNavigationBar: BlocBuilder<AppPageCubit, AppPageState>(
+                    builder: _buildBottomNavBar,
+                  ),
+                );
+              }));
         },
       ),
     );

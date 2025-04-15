@@ -22,6 +22,8 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
             const Duration(milliseconds: 500)));
 
     on<ToiletEventClearSearch>(_onClearSearch);
+
+    on<ToiletEventUpdateToilet>(_onUpdateToilet);
   }
 
   void _onFetchNearby(
@@ -66,5 +68,16 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
   EventTransformer<T> _debounceSequential<T>(Duration duration) {
     return (events, mapper) =>
         sequential<T>().call(events.throttleTime(duration), mapper);
+  }
+
+  void _onUpdateToilet(
+      ToiletEventUpdateToilet event, Emitter<ToiletsState> emit) {
+    final List<PPToilet> newList = List.from(state.toilets);
+    newList.removeWhere((toilet) => toilet.id == event.toilet.id);
+
+    newList.add(event.toilet);
+
+    emit(ToiletStateLoaded(
+        toilets: newList, searchResults: state.searchResults));
   }
 }

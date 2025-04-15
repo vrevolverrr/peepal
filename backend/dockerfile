@@ -58,9 +58,8 @@ COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/dist/src ./dist/src
 COPY --from=build /usr/src/app/dist/drizzle.config.js ./dist/drizzle.config.js
 
-
 # Expose the port that the application listens on.
 EXPOSE 3000
 
 # Run the application.
-CMD npm start
+ENTRYPOINT ["npm", "start"]

@@ -76,14 +76,14 @@ class NearbyToiletCard extends StatelessWidget {
                     SizedBox(height: 12.0),
                     BlocBuilder<ToiletsBloc, ToiletsState>(
                       builder: (context, state) {
-                        final PPToilet toilet = state.toilets
-                            .firstWhere((toilet) => toilet.id == toilet.id);
+                        final PPToilet updatedToilet =
+                            state.toilets.firstWhere((t) => t.id == toilet.id);
 
                         return ToiletFeatureWidget(
-                          hasBidet: toilet.bidetAvail,
-                          hasOku: toilet.handicapAvail,
-                          hasShower: toilet.showerAvail,
-                          hasSanitizer: toilet.sanitiserAvail,
+                          hasBidet: updatedToilet.bidetAvail,
+                          hasOku: updatedToilet.handicapAvail,
+                          hasShower: updatedToilet.showerAvail,
+                          hasSanitizer: updatedToilet.sanitiserAvail,
                         );
                       },
                     ),

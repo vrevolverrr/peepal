@@ -109,7 +109,7 @@ toiletApi.get('/', async (c) => {
 // POST /api/toilets/create - Create a new toilet
 toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
   const logger = c.get('logger')
-  const { name, address, latitude, longitude, location, handicapAvail, bidetAvail, showerAvail, sanitiserAvail } 
+  const { name, address, latitude, longitude, location, handicapAvail, bidetAvail, showerAvail, sanitiserAvail, rating } 
     = c.req.valid('json')
 
   const toiletId: string = nanoid();
@@ -123,6 +123,7 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
         bidetAvail,
         showerAvail,
         sanitiserAvail,
+        rating: sql`${rating}::decimal`
   }).returning()
 
   const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`

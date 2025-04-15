@@ -88,6 +88,7 @@ class AddToiletBloc extends Bloc<AddToiletEvent, AddToiletState> {
         address: state.details.selectedAddress!.placeName,
         location: state.details.selectedLocation!,
         currentLocation: locationCubit.state.location,
+        rating: state.details.rating!,
         handicapAvail: state.details.handicapAvail,
         bidetAvail: state.details.bidetAvail,
         showerAvail: state.details.showerAvail,

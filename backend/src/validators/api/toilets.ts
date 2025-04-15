@@ -17,6 +17,7 @@ export const createToiletSchema = z.object({
     x: z.number(),
     y: z.number()
   }),
+  rating: z.number().int().min(1).max(5),
   handicapAvail: z.boolean().optional(),
   bidetAvail: z.boolean().optional(),
   showerAvail: z.boolean().optional(),

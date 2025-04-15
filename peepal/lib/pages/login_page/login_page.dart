@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:peepal/main.dart';
 import 'package:peepal/pages/app/app.dart';
 import 'package:peepal/shared/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

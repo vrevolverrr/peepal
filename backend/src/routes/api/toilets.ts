@@ -5,10 +5,12 @@ import simplify from "simplify-js";
 import { encode, LatLng } from "@googlemaps/polyline-codec";
 import { eq, getTableColumns, inArray, sql } from "drizzle-orm"
 import {  MapKitAccessToken, MKRoute, MKStep, MKDirections, MKCoordinate, RouteDirection, Route } from "../../types/mapkit";
-import { db } from "../../app"
+import { db, minio } from "../../app"
 import { toilets } from "../../db/schema"
+import { images } from "../../db/schema/images"
 import { validator } from "../../middleware/validator"
 import { createToiletSchema, getAddressSchema, multiToiletIdSchema, navigateToiletSchema, nearbyToiletSchema, searchToiletSchema, toiletIdParamSchema, updateToiletSchema } from "../../validators/api/toilets"
+import { imageUploadSchema } from "../../validators/api/images"
 import pino from "pino";
 
 const NUM_REPORTS_DELETE = 3
@@ -289,18 +291,23 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
 
   const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`
 
-  const searchedToilets = await db.select({
+  const searchedToilets = await db
+  .select({
     ...getTableColumns(toilets),
     distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography))`,
+    rank: sql`ts_rank_cd(to_tsvector('english', ${toilets.address}), plainto_tsquery('english', ${query}))`
   })
-    .from(toilets)
-    .where(
-      sql`${toilets.address} ILIKE ${'%' + query + '%'}`
-    )
-    .orderBy(sql`ts_rank(to_tsvector('english', address), plainto_tsquery('english', ${query})) ASC`,
-      sql`ST_Distance(${toilets.location}, ${sqlPoint})`)
-    .limit(6)
-
+  .from(toilets)
+  .where(
+    sql`to_tsvector('english', ${toilets.address}) @@ plainto_tsquery('english', ${query}) 
+         OR ${toilets.address} ILIKE ${'%' + query + '%'}`
+  )
+  .orderBy(
+    sql`ts_rank_cd(to_tsvector('english', ${toilets.address}), plainto_tsquery('english', ${query})) DESC`,
+    sql`ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography) ASC`
+  )
+  .limit(6)
+  
   const searchToiletResults: typeof searchedToilets = []
 
   // Filter toilets additionally
@@ -401,5 +408,79 @@ toiletApi.post('/getAddress', validator('json', getAddressSchema), async (c) => 
   
   return c.json({ address }, 200)
 })
+
+// PATCH /api/toilets/image/:toiletId - Update toilet image
+toiletApi.patch('/image/:toiletId', 
+  validator('param', toiletIdParamSchema),
+  validator('form', imageUploadSchema),
+  async (c) => {
+    const logger = c.get('logger')
+    const { toiletId } = c.req.valid('param')
+
+    // Check if toilet exists
+    const [existingToilet] = await db
+      .select()
+      .from(toilets)
+      .where(eq(toilets.id, toiletId))
+
+    if (!existingToilet) {
+      logger.error(`Toilet not found with ID: ${toiletId}`)
+      return c.json({ error: 'Toilet not found' }, 404)
+    }
+
+    // Delete old image if it exists
+    if (existingToilet.imageToken) {
+      const [oldImage] = await db
+        .select()
+        .from(images)
+        .where(eq(images.token, existingToilet.imageToken))
+
+      if (oldImage) {
+        try {
+          await minio.removeObject(process.env.S3_BUCKET || '', oldImage.filename)
+          await db.delete(images).where(eq(images.token, oldImage.token))
+          logger.info(`Deleted old image: ${oldImage.filename}`)
+        } catch (e) {
+          logger.error(`Failed to delete old image: ${e}`)
+        }
+      }
+    }
+
+    // Upload new image
+    const form = await c.req.parseBody()
+    const image = form.image as File
+    const token = nanoid()
+    const extension = image.name.split('.').pop()
+    const objectName = `${token}.${extension}`
+
+    const buffer = await image.arrayBuffer()
+
+    await minio.putObject(
+      process.env.S3_BUCKET || '',
+      objectName,
+      Buffer.from(buffer),
+      image.size,
+      { 'Content-Type': image.type }
+    )
+
+    await db.insert(images).values({
+      token,
+      type: form.type as string,
+      userId: c.get('user').id,
+      filename: objectName,
+      uploadedAt: new Date()
+    })
+
+    // Update toilet with new image token
+    const [updatedToilet] = await db
+      .update(toilets)
+      .set({ imageToken: token })
+      .where(eq(toilets.id, toiletId))
+      .returning()
+
+    logger.info(`Updated toilet image: ${toiletId}`)
+    return c.json({ toilet: updatedToilet }, 200)
+  }
+)
 
 export default toiletApi

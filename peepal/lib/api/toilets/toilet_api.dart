@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/rendering.dart';
 import 'package:logging/logging.dart';
 import 'package:peepal/api/auth/exceptions.dart';
 import 'package:peepal/api/base.dart';
@@ -266,6 +269,43 @@ final class PPToiletApi extends PPApiClient {
       return toilets;
     } catch (e) {
       logger.severe('Failed to search toilets: $e');
+      rethrow;
+    }
+  }
+
+  Future<PPToilet> updateToiletImage({
+    required PPToilet toilet,
+    required File image,
+  }) async {
+    debugPrint("Updating toilet image ${toilet.id}");
+    try {
+      final formData = FormData.fromMap({
+        'image': await MultipartFile.fromFile(image.path),
+        'type': 'toilet',
+      });
+
+      final Response<Map<String, dynamic>> response = await dio.patch(
+        '$endpoint/image/${toilet.id}',
+        data: formData,
+      );
+
+      if (response.statusCode != 200) {
+        if (response.statusCode == 404) {
+          throw PPToiletNotFoundError();
+        }
+        throw PPUnexpectedServerError(message: 'Failed to update toilet image');
+      }
+
+      if (response.data?['toilet'] == null) {
+        throw PPUnexpectedServerError(message: 'Failed to update toilet image');
+      }
+
+      final PPToilet updatedToilet =
+          PPToilet.fromJson(response.data!['toilet']);
+      logger.info('Toilet image updated ${updatedToilet.id}');
+      return updatedToilet;
+    } catch (e) {
+      logger.severe('Failed to update toilet image: $e');
       rethrow;
     }
   }

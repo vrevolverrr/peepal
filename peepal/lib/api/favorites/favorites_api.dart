@@ -44,15 +44,15 @@ final class PPFavoritesApi extends PPApiClient {
           await dio.post('$endpoint/add/${toilet.id}');
 
       if (response.statusCode == 200) {
-        logger.info('Successfully removed favorite for toilet: ${toilet.id}');
+        logger.info('Successfully added favorite for toilet: ${toilet.id}');
         return;
       }
 
-      logger.warning('Error removing favorite: Status ${response.statusCode}');
+      logger.warning('Error adding favorite: Status ${response.statusCode}');
 
       if (response.statusCode == 404) {
-        logger.info('Favorite not found, treating as already removed');
-        return;
+        logger.severe('Toilet not found: ${toilet.id}');
+        throw PPUnexpectedServerError(message: 'Toilet not found');
       }
 
       throw PPUnexpectedServerError(message: 'Failed to add favorite');

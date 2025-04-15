@@ -137,8 +137,8 @@ class _AddReviewModalState extends State<AddReviewModal> {
                         setState(() => _isLoading = false);
                       } catch (e) {
                         setState(() => _isLoading = false);
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
+                        if (current.mounted) {
+                          ScaffoldMessenger.of(current).showSnackBar(
                             const SnackBar(
                               content: Text('Failed to submit review'),
                               backgroundColor: Colors.red,
@@ -264,6 +264,7 @@ class _AddReviewModalState extends State<AddReviewModal> {
         TextField(
           maxLines: 3,
           controller: _commentController,
+          textInputAction: TextInputAction.done,
           onTapOutside: (_) => FocusScope.of(context).unfocus(),
           decoration: const InputDecoration(
             border: OutlineInputBorder(),

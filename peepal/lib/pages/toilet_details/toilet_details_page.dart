@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:peepal/api/client.dart';
 import 'package:peepal/api/reviews/model/review.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
@@ -28,6 +29,7 @@ class ToiletDetailsPage extends StatefulWidget {
 
 class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
   late List<PPReview> _reviews;
+  final _picker = ImagePicker();
 
   late final ToiletsBloc toiletsBloc;
 
@@ -68,8 +70,15 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
           );
 
           setState(() {
+            _toilet =
+                _toilet.copyWith(rating: (review.rating + _toilet.rating) / 2);
             _reviews.add(review);
           });
+
+          toiletsBloc.add(ToiletEventUpdateToilet(
+            toilet: _toilet,
+            shouldRemove: false,
+          ));
         },
       ),
     );
@@ -213,12 +222,72 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    child: PPImageWidget(
-                      image: _toilet.image,
-                      width: double.infinity,
-                      height: 280.0,
-                      fit: BoxFit.cover,
-                    )),
+                    child: _toilet.image == null
+                        ? GestureDetector(
+                            onTap: () async {
+                              try {
+                                final XFile? image = await _picker.pickImage(
+                                  source: ImageSource.gallery,
+                                  maxWidth: 1200,
+                                  maxHeight: 1200,
+                                  imageQuality: 85,
+                                );
+
+                                if (image != null && mounted) {
+                                  final updatedToilet = await PPClient.toilets
+                                      .updateToiletImage(
+                                          toilet: _toilet,
+                                          image: File(image.path));
+
+                                  setState(() {
+                                    _toilet = updatedToilet;
+                                  });
+
+                                  toiletsBloc.add(ToiletEventUpdateToilet(
+                                    toilet: updatedToilet,
+                                    shouldRemove: false,
+                                  ));
+                                }
+                              } catch (e) {
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Failed to update image'),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              height: 280.0,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                              ),
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add_photo_alternate,
+                                    size: 48,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'Add Photo',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        : PPImageWidget(
+                            image: _toilet.image,
+                            width: double.infinity,
+                            height: 280.0,
+                            fit: BoxFit.cover,
+                          )),
                 Positioned(
                   bottom: -1,
                   left: 0,

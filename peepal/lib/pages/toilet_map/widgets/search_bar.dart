@@ -60,6 +60,9 @@ class _ToiletSearchBarState extends State<ToiletSearchBar> {
           searchController: searchController,
           builder: (context, controller) => SearchBar(
             onTap: () => controller.openView(),
+            onTapOutside: (_) {
+              FocusScope.of(context).unfocus();
+            },
             backgroundColor: WidgetStateProperty.all(Colors.white),
             elevation: WidgetStateProperty.all(1),
             padding: WidgetStateProperty.all(

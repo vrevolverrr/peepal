@@ -41,12 +41,16 @@ final class PPClient {
       // dio.options.baseUrl = 'http://172.20.10.3:80';
       dio.options.baseUrl = 'http://192.168.0.104:3000';
     } else {
-      // TODO: Replace with production URL
-      dio.options.baseUrl = 'https://api.peepal.com';
+      dio.options.baseUrl =
+          'https://peepal-backend-deployment-z0st0.kinsta.app/';
     }
 
     dio.options.connectTimeout = const Duration(seconds: 60);
     dio.options.receiveTimeout = const Duration(seconds: 60);
+
+    dio.options.validateStatus = (status) {
+      return true;
+    };
 
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {

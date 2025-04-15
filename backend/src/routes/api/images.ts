@@ -14,7 +14,6 @@ imageApi.onError((err, c) => {
   return c.json({ error: err.message }, 500)
 })
 
-
 // GET /api/images/get/:token - Get an image
 imageApi.get('/:token', validator('query', imageTokenSchema), async (c) => {
   const logger = c.get('logger')

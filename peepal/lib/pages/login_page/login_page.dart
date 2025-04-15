@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:peepal/shared/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/pages/create_account/create_account.dart';
+import 'package:peepal/shared/widgets/pp_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: Center(
         child: Padding(
@@ -57,8 +58,17 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                    width: 220.0,
+                    height: 220.0,
+                    child: Image.asset("assets/images/pp_logo.png")),
+                SizedBox(height: 10.0),
                 TextFormField(
                   controller: _emailController,
+                  onTapOutside: (event) {
+                    FocusScope.of(context).unfocus();
+                    _formKey.currentState?.validate();
+                  },
                   decoration: InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(
@@ -84,6 +94,10 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 16.0),
                 TextFormField(
                   controller: _passwordController,
+                  onTapOutside: (event) {
+                    FocusScope.of(context).unfocus();
+                    _formKey.currentState?.validate();
+                  },
                   obscureText: !_isPasswordVisible, // Toggle based on state
                   decoration: InputDecoration(
                     labelText: '  Password',
@@ -119,35 +133,29 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 const SizedBox(height: 32),
-                ElevatedButton(
-                  onPressed: _handleLogin,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 80.0, vertical: 15.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'Log In',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {
-                    // Handle forgot password logic here
+                BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthStateError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("An unexpected error occurred")),
+                      );
+                    }
+
+                    if (state is AuthStateInvalidCredentials) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Incorrect email or password")),
+                      );
+                    }
                   },
-                  child: const Text(
-                    'Forgot password?',
-                    style: TextStyle(color: Colors.black54),
-                  ),
+                  builder: (context, state) {
+                    return PPButton(
+                      "Log In",
+                      isLoading: state is AuthStateLoading,
+                      onPressed: _handleLogin,
+                    );
+                  },
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 8.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

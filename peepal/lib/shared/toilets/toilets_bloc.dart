@@ -1,6 +1,5 @@
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maps_toolkit/maps_toolkit.dart';
 import 'package:peepal/api/client.dart';
@@ -77,8 +76,6 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
       emit(ToiletStateLoaded(
           toilets: {...state.toilets, ...toilets}.toList(),
           searchResults: toilets));
-
-      debugPrint('Search results ${toilets.map((x) => x.name).join(', ')}');
     } catch (e) {
       emit(ToiletStateError(toilets: state.toilets, error: e.toString()));
     }

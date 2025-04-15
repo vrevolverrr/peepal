@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/pages/login_page/login_page.dart';
+import 'package:peepal/shared/auth/auth_bloc.dart';
 import 'package:peepal/shared/widgets/pp_button.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -76,7 +78,6 @@ class ProfilePageState extends State<ProfilePage> {
                   child: PPButton(
                     'Log Out',
                     onPressed: () {
-                      // Show logout confirmation with bottom sheet
                       showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
@@ -143,18 +144,17 @@ class ProfilePageState extends State<ProfilePage> {
                                       width: MediaQuery.of(context).size.width *
                                           0.44,
                                       onPressed: () {
-                                        Navigator.pop(
-                                            context); // Close bottom sheet
-
-                                        // Navigate to login page and clear navigation stack
+                                        context
+                                            .read<AuthBloc>()
+                                            .add(AuthEventSignOut());
+                                        Navigator.pop(context);
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 const LoginPage(),
                                           ),
-                                          (route) =>
-                                              false, // This clears the navigation stack
+                                          (route) => false,
                                         );
                                       },
                                     ),

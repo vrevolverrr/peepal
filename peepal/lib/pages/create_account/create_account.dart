@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:peepal/pages/app/app.dart';
-import 'package:peepal/pages/app/bloc/app_bloc.dart';
 import 'package:peepal/pages/login_page/login_page.dart';
-import 'package:peepal/shared/location/bloc/location_bloc.dart';
-import 'package:peepal/shared/location/repository/location_repository.dart';
+import 'package:peepal/shared/widgets/pp_button.dart';
+import 'package:peepal/shared/auth/auth_bloc.dart';
+import 'package:peepal/api/user/model/user.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
@@ -21,12 +21,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
-  String? _selectedGender;
+  PPGender? _selectedGender;
 
-  final List<String> _genders = [
-    'Male',
-    'Female',
-    'Other',
+  final List<PPGender> _genders = [
+    PPGender.male,
+    PPGender.female,
+    PPGender.other,
   ];
 
   @override
@@ -45,30 +45,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       final password = _passwordController.text;
       final gender = _selectedGender;
 
-      // Mock account creation success
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Creating account...')),
-      );
-
-      // Navigate to the HomePage with AppPageCubit provided
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (context) => AppPageCubit()),
-                BlocProvider(
-                  create: (context) => LocationCubit(
-                    context.read<LocationRepository>(),
-                  ),
-                ),
-              ],
-              child: PeePalApp(),
-            ),
-          ),
-        );
-      });
+      context.read<AuthBloc>().add(AuthEventSignUp(
+            username: name,
+            email: email,
+            password: password,
+            gender: gender!,
+          ));
     }
   }
 
@@ -92,10 +74,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.black,
-                  child: Icon(Icons.person_add, size: 50, color: Colors.white),
+                const Text(
+                  'Create Account',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 32),
 
@@ -104,6 +89,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   controller: _nameController,
                   decoration: InputDecoration(
                     labelText: 'Full Name',
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 14.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -111,7 +98,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: const BorderSide(color: Colors.blue),
                     ),
-                    prefixIcon: const Icon(Icons.person),
                   ),
                   keyboardType: TextInputType.name,
                   textCapitalization: TextCapitalization.words,
@@ -129,6 +115,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 14.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -136,7 +124,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: const BorderSide(color: Colors.blue),
                     ),
-                    prefixIcon: const Icon(Icons.email),
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
@@ -158,6 +145,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     labelText: 'Password',
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 14.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -165,7 +154,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: const BorderSide(color: Colors.blue),
                     ),
-                    prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isPasswordVisible
@@ -192,11 +180,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 ),
                 const SizedBox(height: 24),
 
-                // Gender Selection
-                DropdownButtonFormField<String>(
+                DropdownButtonFormField<PPGender>(
                   value: _selectedGender,
                   decoration: InputDecoration(
                     labelText: 'Gender',
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 14.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -204,12 +193,29 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide: const BorderSide(color: Colors.blue),
                     ),
-                    prefixIcon: const Icon(Icons.people),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: Colors.grey.shade400),
+                    ),
                   ),
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  iconSize: 24,
+                  elevation: 2,
+                  style: const TextStyle(fontSize: 16),
+                  dropdownColor: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  menuMaxHeight: 300,
                   items: _genders.map((gender) {
-                    return DropdownMenuItem(
+                    return DropdownMenuItem<PPGender>(
                       value: gender,
-                      child: Text(gender),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          gender.name[0].toUpperCase() +
+                              gender.name.substring(1),
+                          style: const TextStyle(color: Colors.black87),
+                        ),
+                      ),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -227,20 +233,29 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 const SizedBox(height: 32),
 
                 // Create Account Button
-                ElevatedButton(
-                  onPressed: _createAccount,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'Create Account',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
+                BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthStateError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("An unexpected error occurred")),
+                      );
+                    }
+
+                    if (state is AuthStateAuthenticated) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return PPButton(
+                      "Create Account",
+                      isLoading: state is AuthStateLoading,
+                      onPressed: _createAccount,
+                    );
+                  },
                 ),
                 const SizedBox(height: 20),
 

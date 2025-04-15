@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { db, minio } from '../../app'
 import { reviews, toilets, users } from '../../db/schema'
-import { eq, desc, asc, getTableColumns } from 'drizzle-orm'
+import { eq, desc, asc, getTableColumns, sql } from 'drizzle-orm'
 import { validator } from '../../middleware/validator'
 import { editReviewSchema, fetchReviewsSchema, postReviewSchema, reviewIdSchema } from '../../validators/api/reviews'
 import { toiletIdParamSchema } from '../../validators/api/toilets'
@@ -81,6 +81,12 @@ reviewsApi.post('/create', validator('json', postReviewSchema), async (c) => {
       .from(reviews)
       .innerJoin(users, eq(reviews.userId, users.id))
       .where(eq(reviews.id, review.id))
+
+    await db.update(toilets)
+      .set({
+        rating: sql`(${toilets.rating} + ${rating}) / 2`,
+      })
+      .where(eq(toilets.id, toiletId))
 
   logger.info('Review created', review.id)
   return c.json({ review: updatedReview }, 201)

@@ -8,7 +8,7 @@ import 'package:peepal/shared/location/repository/location_repository.dart';
 import 'package:peepal/pages/app/app.dart';
 import 'package:peepal/shared/auth/auth_bloc.dart';
 
-bool debugMode = true;
+bool debugMode = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

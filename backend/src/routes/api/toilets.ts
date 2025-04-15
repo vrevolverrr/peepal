@@ -106,18 +106,31 @@ toiletApi.get('/', async (c) => {
   return c.json({ message: 'Toilets Endpoint Health Check'}, 200)
 })
 
-// POST /api/toilets/create - Create a new toilet
+  /**
+   * Creates a new toilet based on the provided information.
+   * 
+   * The request body is validated using the defined schema to ensure correct data types and structure.
+   * 
+   * The location field is converted to a spatial point and inserted into the database.
+   * 
+   * Logs the creation operation and returns the created toilet information upon success.
+   * 
+   * @param c - The context containing request and response objects, and logger.
+   * @returns A JSON response with the created toilet details or an error message.
+   */
 toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
   const logger = c.get('logger')
   const { name, address, latitude, longitude, location, handicapAvail, bidetAvail, showerAvail, sanitiserAvail, rating } 
     = c.req.valid('json')
 
+  // Generate a unique ID for the new toilet
   const toiletId: string = nanoid();
 
   const [ newToilet ] = await db.insert(toilets).values({
         id: toiletId,
         name,
         address,
+        // Convert location to a spatial point IMPORTANT! Use SRID 4326
         location: sql`ST_SetSRID(ST_MakePoint(${location.x}, ${location.y}), 4326)`,
         handicapAvail,
         bidetAvail,
@@ -141,8 +154,6 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
   return c.json({ toilet: toilet }, 201)
 })
 
-// PATCH /api/toilets/details/:toiletId - Update an existing toilet
-toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema), 
   /**
  * Updates the details of an existing toilet specified by the toiletId.
  * 
@@ -158,6 +169,7 @@ toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema),
  * @param c - The context containing request and response objects, and logger.
  * @returns A JSON response with the updated toilet details or an error message.
  */
+toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema), 
   validator('json', updateToiletSchema), async (c) => {  
   
   const logger = c.get('logger')

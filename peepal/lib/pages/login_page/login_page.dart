@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:peepal/main.dart';
+import 'package:peepal/pages/app/app.dart';
 import 'package:peepal/shared/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peepal/pages/create_account/create_account.dart';
@@ -135,6 +137,14 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 32),
                 BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
+                    if (state is AuthStateAuthenticated) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => PeePalApp(),
+                        ),
+                      );
+                    }
+
                     if (state is AuthStateError) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("An unexpected error occurred")),

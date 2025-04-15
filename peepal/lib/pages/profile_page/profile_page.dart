@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peepal/api/user/model/user.dart';
 import 'package:peepal/pages/login_page/login_page.dart';
 import 'package:peepal/shared/auth/auth_bloc.dart';
 import 'package:peepal/shared/widgets/pp_button.dart';
@@ -12,6 +13,22 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  late final PPUser user;
+
+  @override
+  void initState() {
+    if (context.read<AuthBloc>().state is AuthStateAuthenticated) {
+      user = (context.read<AuthBloc>().state as AuthStateAuthenticated).user;
+    } else {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+        (route) => false,
+      );
+    }
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,11 +46,11 @@ class ProfilePageState extends State<ProfilePage> {
               children: [
                 Image.asset("assets/images/pp_logo.png", width: 250.0),
                 Row(
-                  children: const [
+                  children: [
                     Icon(Icons.person, color: Colors.black54),
                     SizedBox(width: 10.0),
                     Text(
-                      'Name:',
+                      'Username:',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -42,7 +59,7 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Bryan Soong',
+                      user.username,
                       style: TextStyle(
                         fontSize: 16.0,
                         color: Colors.black54,
@@ -52,11 +69,11 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
                 const SizedBox(height: 20.0),
                 Row(
-                  children: const [
+                  children: [
                     Icon(Icons.email, color: Colors.black54),
                     SizedBox(width: 10.0),
                     Text(
-                      'Email:',
+                      'Email',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -65,7 +82,7 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'bryan.soong@example.com', // Replace with dynamic email if needed
+                      user.email,
                       style: TextStyle(
                         fontSize: 16.0,
                         color: Colors.black54,

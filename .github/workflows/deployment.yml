@@ -1,0 +1,24 @@
+name: Push to repository
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Push to repository
+        uses: tech-thinker/push-to-repo@v1.0.0
+        with:
+          source-directory: backend
+          destination-github-username: vrevolverrr
+          destination-repository-name: peepal-backend-deployment
+          user-name: vrevolverrr
+          destination-repository-username: vrevolverrr
+          target-branch: main
+          commit-message: deployment

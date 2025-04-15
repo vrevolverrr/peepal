@@ -29,7 +29,7 @@ favoritesApi.get('/me', async (c) => {
   // Fetch favorites and map the results
   const userFavorites = await db
     .select({
-      toilet: getTableColumns(toilets),
+      toiletId: toilets.id,
       createdAt: favorites.createdAt
       
     })
@@ -73,20 +73,21 @@ favoritesApi.post('/add/:toiletId', validator('param', toiletIdParamSchema), asy
 
   if (existing) {
     logger.info(`Toilet ${toiletId} already in favorites of ${userId}`)
-    return c.status(200)
+    return c.json({ error: 'Toilet is already in favorites' }, 400)
   }
 
   // Add to favorites
-  await db
+  const [newFavorite] = await db
     .insert(favorites)
     .values({
       userId,
       toiletId,
     })
+    .returning()
 
   logger.info(`User ${userId} added toilet ${toiletId} to favorites`)
 
-  return c.status(200)
+  return c.json({ favorite: newFavorite }, 201)
 })
 
 // DELETE /api/favorites/remove - Remove a favorite
@@ -103,7 +104,7 @@ favoritesApi.delete('/remove/:toiletId', validator('param', toiletIdParamSchema)
     .where(and(eq(favorites.userId, userId), eq(favorites.toiletId, toiletId)))
 
   if (!favorite) {
-    return c.json({ error: 'Favorite not found' }, 404)
+    return c.json({ error: 'Favorite not found' }, 400)
   }
 
   // Delete the favorite
@@ -111,7 +112,7 @@ favoritesApi.delete('/remove/:toiletId', validator('param', toiletIdParamSchema)
 
   logger.info(`User ${userId} removed favorite ${toiletId}`)
   
-  return c.status(200)
+  return c.json({ message: 'Favorite removed successfully' }, 200)
 })
 
 export default favoritesApi

@@ -74,8 +74,9 @@ class PPReviewsApi extends PPApiClient {
     File? image,
   }) async {
     try {
-      final imageToken =
-          image != null ? await imageApi.uploadImage(image: image) : null;
+      final imageToken = image != null
+          ? await imageApi.uploadImage(image: image, type: 'review')
+          : null;
 
       final Response<Map<String, dynamic>> response =
           await dio.post('$endpoint/create', data: {
@@ -107,17 +108,12 @@ class PPReviewsApi extends PPApiClient {
     required PPReview oldReview,
     int? rating,
     String? reviewText,
-    File? image,
   }) async {
     try {
-      final imageToken =
-          image != null ? await imageApi.uploadImage(image: image) : null;
-
       final Response<Map<String, dynamic>> response =
           await dio.patch('$endpoint/edit/${oldReview.id}', data: {
         'rating': rating,
         if (reviewText != null) 'reviewText': reviewText,
-        if (imageToken != null) 'imageToken': imageToken,
       });
 
       if (response.statusCode != 200) {

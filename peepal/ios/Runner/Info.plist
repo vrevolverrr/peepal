@@ -44,8 +44,14 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>NSLocationUsageDescription</key>
-	<string></string>
+	<string>Location is required to fetch nearby toilets and give navigation directions.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Location is required to fetch nearby toilets and give navigation directions.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo library is required to upload images for reviews or toilets.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera is required to upload images for reviews or toilets.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone is required to upload images for reviews or toilets.</string>
 </dict>
 </plist>

@@ -48,11 +48,13 @@ final class PPImagesApi extends PPApiClient {
     }
   }
 
-  Future<String> uploadImage({required File image}) async {
+  Future<String> uploadImage(
+      {required File image, required String type}) async {
     try {
       String fileName = image.path.split('/').last;
       FormData formData = FormData.fromMap({
-        "file": await MultipartFile.fromFile(image.path, filename: fileName),
+        "image": await MultipartFile.fromFile(image.path, filename: fileName),
+        "type": type,
       });
 
       final Response<Map<String, dynamic>> response =

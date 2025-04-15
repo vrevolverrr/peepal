@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,11 +58,13 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
       builder: (context) => AddReviewModal(
         toilet: _toilet,
         height: 650.0,
-        onConfirm: ({required int rating, required String comment}) async {
+        onConfirm: (
+            {required int rating, required String comment, File? image}) async {
           final PPReview review = await PPClient.reviews.postReview(
             toilet: _toilet,
             rating: rating,
             reviewText: comment,
+            image: image,
           );
 
           setState(() {

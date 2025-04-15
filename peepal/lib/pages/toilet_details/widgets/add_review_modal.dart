@@ -1,14 +1,19 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/shared/widgets/pp_button.dart';
 
 class AddReviewModal extends StatefulWidget {
   final PPToilet toilet;
   final double height;
-  final FutureOr<void> Function({required int rating, required String comment})
-      onConfirm;
+  final FutureOr<void> Function({
+    required int rating,
+    required String comment,
+    File? image,
+  }) onConfirm;
 
   const AddReviewModal({
     super.key,
@@ -23,9 +28,37 @@ class AddReviewModal extends StatefulWidget {
 
 class _AddReviewModalState extends State<AddReviewModal> {
   final _commentController = TextEditingController();
+  final _picker = ImagePicker();
 
   int _selectedRating = 3;
   bool _isLoading = false;
+  File? _selectedImage;
+
+  Future<void> _pickImage() async {
+    try {
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1200,
+        maxHeight: 1200,
+        imageQuality: 85,
+      );
+
+      if (image != null) {
+        setState(() {
+          _selectedImage = File(image.path);
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to pick image'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -76,7 +109,9 @@ class _AddReviewModalState extends State<AddReviewModal> {
           _buildRating(),
           const SizedBox(height: 10.0),
           _buildComment(),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 20.0),
+          _buildImagePicker(),
+          const SizedBox(height: 10.0),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 18.0),
             child: LayoutBuilder(
@@ -97,10 +132,19 @@ class _AddReviewModalState extends State<AddReviewModal> {
                         await widget.onConfirm(
                           rating: _selectedRating,
                           comment: _commentController.text,
+                          image: _selectedImage,
                         );
                         setState(() => _isLoading = false);
                       } catch (e) {
                         setState(() => _isLoading = false);
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Failed to submit review'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
                       }
 
                       if (current.mounted) {
@@ -133,6 +177,78 @@ class _AddReviewModalState extends State<AddReviewModal> {
           onPressed: () => setState(() => _selectedRating = index + 1),
         );
       }),
+    );
+  }
+
+  Widget _buildImagePicker() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (_selectedImage != null)
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.file(
+                  _selectedImage!,
+                  height: 120.0,
+                  width: 120.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: 4,
+                right: 4,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedImage = null;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withAlpha(128),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        else
+          GestureDetector(
+            onTap: _pickImage,
+            child: Container(
+              height: 120,
+              width: 120,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.add_photo_alternate,
+                    size: 32,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Add Photo',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
     );
   }
 

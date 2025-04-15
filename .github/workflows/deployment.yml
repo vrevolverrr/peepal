@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      API_TOKEN_GITHUB: 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
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3

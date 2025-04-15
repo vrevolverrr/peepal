@@ -47,7 +47,6 @@ class _ToiletMapPageState extends State<ToiletMapPage>
   @override
   void dispose() {
     _subscriptions.cancel();
-
     super.dispose();
   }
 

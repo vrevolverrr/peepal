@@ -33,7 +33,6 @@ class _NavigationPageState extends State<NavigationPage> {
 
   // State
   bool _isLoading = true;
-  String? _errorMessage;
 
   // Navigation state
   bool _destinationReached = false;
@@ -266,48 +265,42 @@ class _NavigationPageState extends State<NavigationPage> {
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : _errorMessage != null
-              ? Center(child: Text('Error: $_errorMessage'))
-              : _buildContent(),
-    );
-  }
-
-  Widget _buildContent() {
-    return Column(
-      children: [
-        NavigationMap(
-          markers: _markers,
-          polylines: _polylines,
-          circles: _circles,
-          onMapCreated: (AppleMapController controller) {
-            _controller.complete(controller);
-          },
-          currentPosition: _currentLocation,
-          onCenterLocation: () {
-            _controller.future.then((controller) {
-              controller.animateCamera(
-                CameraUpdate.newCameraPosition(
-                  CameraPosition(
-                    target: _currentLocation.toAmLatLng(),
-                    zoom: 17.0,
-                  ),
+          : Column(
+              children: [
+                NavigationMap(
+                  markers: _markers,
+                  polylines: _polylines,
+                  circles: _circles,
+                  onMapCreated: (AppleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                  currentPosition: _currentLocation,
+                  onCenterLocation: () {
+                    _controller.future.then((controller) {
+                      controller.animateCamera(
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: _currentLocation.toAmLatLng(),
+                            zoom: 17.0,
+                          ),
+                        ),
+                      );
+                    });
+                  },
                 ),
-              );
-            });
-          },
-        ),
-        NavigationHeader(
-          destinationName: widget.destination.name,
-          destinationAddress: widget.destination.address,
-          duration: widget.route.duration,
-          distance: widget.route.distance,
-        ),
-        DirectionsList(
-          directions: widget.route.directions,
-          currentDirectionIndex: _currentDirectionIndex,
-          destinationReached: _destinationReached,
-        ),
-      ],
+                NavigationHeader(
+                  destinationName: widget.destination.name,
+                  destinationAddress: widget.destination.address,
+                  duration: widget.route.duration,
+                  distance: widget.route.distance,
+                ),
+                DirectionsList(
+                  directions: widget.route.directions,
+                  currentDirectionIndex: _currentDirectionIndex,
+                  destinationReached: _destinationReached,
+                ),
+              ],
+            ),
     );
   }
 }

@@ -5,15 +5,15 @@ class NavigationHeader extends StatelessWidget {
   final String destinationAddress;
   final String duration;
   final String distance;
-  
+
   const NavigationHeader({
-    Key? key,
+    super.key,
     required this.destinationName,
     required this.destinationAddress,
     required this.duration,
     required this.distance,
-  }) : super(key: key);
-  
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,7 +53,7 @@ class NavigationHeader extends StatelessWidget {
               Row(
                 children: [
                   const Icon(Icons.access_time, size: 16, color: Colors.blue),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 4.0),
                   Text(
                     duration,
                     style: const TextStyle(
@@ -63,13 +63,13 @@ class NavigationHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 4.0),
               Text(
                 distance,
                 style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
+                    color: Colors.black,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold),
               ),
             ],
           ),

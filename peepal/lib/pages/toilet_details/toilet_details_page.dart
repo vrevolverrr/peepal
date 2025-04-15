@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peepal/api/client.dart';
 import 'package:peepal/api/reviews/model/review.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/rating_widget.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/toilet_image_widget.dart';
+import 'package:peepal/pages/toilet_details/widgets/edit_toilet_modal.dart';
 import 'package:peepal/pages/toilet_details/widgets/review_card.dart';
 import 'package:peepal/pages/toilet_details/widgets/add_review_bottom_sheet.dart';
 
@@ -22,6 +24,37 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> _handleSuggestChanges() async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.0),
+        ),
+      ),
+      builder: (context) => EditToiletModal(
+        height: MediaQuery.of(context).size.height * 0.8,
+        initialEdits: ToiletFeatureEdits(
+            handicapAvail: widget.toilet.handicapAvail ?? false,
+            bidetAvail: widget.toilet.bidetAvail ?? false,
+            showerAvail: widget.toilet.showerAvail ?? false,
+            sanitiserAvail: widget.toilet.sanitiserAvail ?? false),
+        onConfirm: (edits) async {
+          await PPClient.toilets.updateToilet(
+              toilet: widget.toilet,
+              name: widget.toilet.name,
+              address: widget.toilet.address,
+              location: widget.toilet.location,
+              handicapAvail: edits.handicapAvail,
+              bidetAvail: edits.bidetAvail,
+              showerAvail: edits.showerAvail,
+              sanitiserAvail: edits.sanitiserAvail);
+        },
+      ),
+    );
   }
 
   @override
@@ -52,7 +85,7 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                     backgroundColor:
                         WidgetStateProperty.all(const Color(0xFFDADADA)),
                   ),
-                  icon: const Icon(Icons.favorite_outline, size: 22.0),
+                  icon: const Icon(CupertinoIcons.heart, size: 22.0),
                   onPressed: () {},
                 ),
               ),
@@ -165,7 +198,7 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
           );
         },
         tooltip: "Add Review",
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.reviews_rounded),
       ),
     );
   }

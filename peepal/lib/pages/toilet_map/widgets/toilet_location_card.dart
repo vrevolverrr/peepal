@@ -30,18 +30,22 @@ class ToiletLocationCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AutoSizeText(
-                  toilet.name,
-                  maxLines: 2,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 230.0),
+                  child: AutoSizeText(
+                    toilet.name,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
+                const Spacer(),
                 Transform.translate(
                     offset: const Offset(-2.0, -3.0),
                     child: RatingWidget(
@@ -50,11 +54,11 @@ class ToiletLocationCard extends StatelessWidget {
                         fontSize: 16.0,
                         spacing: 3.0,
                         offset: const Offset(0.0, 1.5))),
-                const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: onClose,
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsets.only(left: 8.0, bottom: 8.0),
+                  iconSize: 26.0,
                   constraints: const BoxConstraints(),
                 ),
               ],

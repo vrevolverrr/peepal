@@ -19,16 +19,22 @@ class DirectionsList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Directions',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0),
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0.0, 3.0),
+                    blurRadius: 2.0)
+              ]),
+              child: Text(
+                'Directions',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
           Expanded(
             child: ListView.builder(
               itemCount: directions.length + (destinationReached ? 1 : 0),

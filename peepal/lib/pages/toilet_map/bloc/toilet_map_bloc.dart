@@ -40,28 +40,31 @@ class ToiletMapCubit extends Cubit<ToiletMapState> {
         selectedToilet: state.selectedToilet, toiletMarkers: markers));
   }
 
-  void selectToilet(PPToilet toilet) async {
+  void selectToilet(PPToilet toilet) {
     emit(state.copyWith(selectedToilet: toilet));
 
     if (locationCubit.state is LocationStateWithLocation) {
       final location =
           (locationCubit.state as LocationStateWithLocation).location;
 
-      final PPRoute route = await PPClient.toilets
-          .navigateToToilet(toilet: toilet, location: location);
-
-      emit(state.copyWith(
-          selectedToilet: toilet,
-          activeRoute: route,
-          activePolylines: {
-            Polyline(
-                polylineId: PolylineId('route'),
-                color: Colors.blue,
-                width: 5,
-                points: PolygonUtil.decode(route.overviewPolyline)
-                    .map((e) => LatLng(e.latitude, e.longitude))
-                    .toList())
-          }));
+      PPClient.toilets
+          .navigateToToilet(toilet: toilet, location: location)
+          .then((route) {
+        if (state.selectedToilet?.id == toilet.id) {
+          emit(state.copyWith(
+              selectedToilet: toilet,
+              activeRoute: route,
+              activePolylines: {
+                Polyline(
+                    polylineId: PolylineId('route'),
+                    color: Colors.blue,
+                    width: 5,
+                    points: PolygonUtil.decode(route.overviewPolyline)
+                        .map((e) => LatLng(e.latitude, e.longitude))
+                        .toList())
+              }));
+        }
+      });
     }
   }
 

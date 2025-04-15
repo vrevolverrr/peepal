@@ -89,7 +89,25 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
               BlocBuilder<ToiletsBloc, ToiletsState>(
                 builder: (context, state) {
                   if (state.toilets.isEmpty) {
-                    return Center(child: Text("No toilets found"));
+                    return Expanded(
+                        child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.wc,
+                            size: 80.0,
+                            color: Colors.grey.shade300,
+                          ),
+                          SizedBox(height: 8.0),
+                          Text("No toilets found",
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey.shade700)),
+                        ],
+                      ),
+                    ));
                   }
 
                   List<PPToilet> toilets;

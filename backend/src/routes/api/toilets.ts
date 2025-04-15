@@ -275,16 +275,30 @@ toiletApi.post('/report/:toiletId', validator('param', toiletIdParamSchema), asy
   return c.json({ message: 'Toilet reported', deleted: false }, 200)
 })
 
-// GET /api/toilets/nearby - Get nearest toilets
+  /**
+   * Handles GET requests to /api/toilets/nearby.
+   * 
+   * This endpoint takes the user's current location (latitude and longitude) and 
+   * an optional radius and limit, and returns the nearest toilets within the 
+   * specified radius, up to a maximum of the specified limit.
+   * 
+   * The response is a JSON object with a single key, 'toilets', which is an array 
+   * of toilet objects. Each toilet object contains the toilet's ID, name, address, 
+   * location (as a GeoJSON point), and distance from the user's current location.
+   * 
+   * The default radius is 5km and the default limit is 5.
+   */
 toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
   const logger = c.get('logger')
   const { latitude, longitude, radius, limit } = c.req.valid('query')
 
+  // IMPORTANT! Use SRID as 4326
   const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`
 
   const nearbyToilets = await db
     .select({
       ...getTableColumns(toilets),
+      // Estimated Harversine distance in meters, multiplied by 1.4 as an approximation adjuster
       distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography) * 1.4)`,
     })
     .from(toilets)

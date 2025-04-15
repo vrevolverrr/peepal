@@ -66,9 +66,11 @@ class _PeePalAppState extends State<PeePalApp> {
                 BlocProvider<ToiletMapCubit>(
                     create: (context) =>
                         ToiletMapCubit(locationCubit: locationCubit)),
-                BlocProvider<FavoritesBloc>(
-                    create: (context) =>
-                        FavoritesBloc(toiletsBloc: toiletsBloc)),
+                BlocProvider<FavoritesBloc>(create: (context) {
+                  final bloc = FavoritesBloc(toiletsBloc: toiletsBloc);
+                  bloc.add(const FavoritesEventLoad());
+                  return bloc;
+                }),
               ],
               child: Builder(builder: (context) {
                 return Scaffold(

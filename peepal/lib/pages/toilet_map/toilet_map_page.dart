@@ -77,6 +77,8 @@ class _ToiletMapPageState extends State<ToiletMapPage>
               _handleAnimateCameraToToilet(state.selectedToilet!);
             }
           },
+          listenWhen: (previous, current) =>
+              previous.selectedToilet != current.selectedToilet,
           builder: (context, state) {
             return AppleMap(
               myLocationEnabled: true,

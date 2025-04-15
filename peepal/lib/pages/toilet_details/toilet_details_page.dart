@@ -39,6 +39,11 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
   void initState() {
     toiletsBloc = context.read<ToiletsBloc>();
     _toilet = widget.toilet;
+    // Ensure favorites are loaded
+    final favoritesBloc = context.read<FavoritesBloc>();
+    if (favoritesBloc.state is! FavoritesStateLoaded) {
+      favoritesBloc.add(const FavoritesEventLoad());
+    }
     super.initState();
   }
 

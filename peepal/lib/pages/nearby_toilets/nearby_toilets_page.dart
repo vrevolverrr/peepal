@@ -88,6 +88,28 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
               SizedBox(height: 8.0),
               BlocBuilder<ToiletsBloc, ToiletsState>(
                 builder: (context, state) {
+                  if (locationCubit.state is! LocationStateWithLocation) {
+                    return Expanded(
+                        child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.location_off,
+                            size: 80.0,
+                            color: Colors.grey.shade300,
+                          ),
+                          SizedBox(height: 8.0),
+                          Text("Location not found",
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey.shade700)),
+                        ],
+                      ),
+                    ));
+                  }
+
                   if (state.toilets.isEmpty) {
                     return Expanded(
                         child: Center(

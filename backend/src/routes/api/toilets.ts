@@ -318,22 +318,29 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
 
   const sqlPoint = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`
 
+  // Remove special characters from query
+  const sanitizedQuery = query.replace(/[^\w\s]/gi, '');
+
   const searchedToilets = await db
-  .select({
-    ...getTableColumns(toilets),
-    distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography))`,
-    rank: sql`ts_rank_cd(to_tsvector('english', ${toilets.address}), plainto_tsquery('english', ${query}))`
-  })
-  .from(toilets)
-  .where(
-    sql`to_tsvector('english', ${toilets.address}) @@ plainto_tsquery('english', ${query}) 
-         OR ${toilets.address} ILIKE ${'%' + query + '%'}`
-  )
-  .orderBy(
-    sql`ts_rank_cd(to_tsvector('english', ${toilets.address}), plainto_tsquery('english', ${query})) DESC`,
-    sql`ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography) ASC`
-  )
-  .limit(6)
+    .select({
+      ...getTableColumns(toilets),
+      distance: sql`ROUND(ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography))`,
+      rank: sql`ts_rank_cd(to_tsvector('english', ${toilets.address}), phraseto_tsquery('english', ${sanitizedQuery}))`,
+      exact_match: sql`${toilets.address} ILIKE ${query}`
+    })
+    .from(toilets)
+    .where(
+      sql`
+        to_tsvector('english', ${toilets.address}) @@ phraseto_tsquery('english', ${sanitizedQuery})
+        OR ${toilets.address} ILIKE ${'%' + sanitizedQuery + '%'}
+      `
+    )
+    .orderBy(
+      sql`${toilets.address} ILIKE ${query} DESC`,
+      sql`ts_rank_cd(to_tsvector('english', ${toilets.address}), phraseto_tsquery('english', ${sanitizedQuery})) DESC`,
+      sql`ST_Distance(${toilets.location}::geography, ${sqlPoint}::geography) ASC`
+    )
+    .limit(6);
   
   const searchToiletResults: typeof searchedToilets = []
 

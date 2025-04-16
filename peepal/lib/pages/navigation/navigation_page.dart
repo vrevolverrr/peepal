@@ -31,14 +31,11 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   final Completer<AppleMapController> _controller = Completer();
 
-  // State
   bool _isLoading = true;
 
-  // Navigation state
   bool _destinationReached = false;
   int _currentDirectionIndex = 0;
 
-  // Map elements
   Set<Polyline> _polylines = {};
   Set<Annotation> _markers = {};
   Set<Circle> _circles = {};

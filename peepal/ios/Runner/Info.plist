@@ -26,6 +26,16 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera is required to upload images for reviews or toilets.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Location is required to fetch nearby toilets and give navigation directions.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is required to fetch nearby toilets and give navigation directions.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone is required to upload images for reviews or toilets.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo library is required to upload images for reviews or toilets.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -36,22 +46,5 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-	</array>
-	<key>NSLocationUsageDescription</key>
-	<string>Location is required to fetch nearby toilets and give navigation directions.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location is required to fetch nearby toilets and give navigation directions.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo library is required to upload images for reviews or toilets.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Camera is required to upload images for reviews or toilets.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone is required to upload images for reviews or toilets.</string>
 </dict>
 </plist>

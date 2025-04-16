@@ -86,6 +86,7 @@ class LocationRepositoryImpl implements LocationRepository {
       throw Exception("Location permission is not granted");
     }
 
+    // Transform the `Geolocator` latlng into `PPLatLng`
     _positionStream ??= Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.high,

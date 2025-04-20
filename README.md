@@ -21,29 +21,55 @@ Peepal is a modern toilet finder application that helps users locate nearby toil
 
 ### Frontend
 - **Framework**: Flutter
-- **State Management**: BLoC Pattern
-- **Navigation**: Flutter Navigation
+- **State Management**: Business Logic Component (BLoC) Pattern
 - **UI Components**: Custom widgets with Material Design
-- **Maps**: MapKit API, Google Maps API
-- **Location Services**: Core Location Framework
+- **Maps**: Apple Maps (MapKit API)
 
 ## Architecture & Design Patterns
 
 ### Backend Architecture
-1. **RESTful API Design**
-   - Clean and consistent API endpoints
-   - HTTP status codes for error handling
-   - JSON responses with proper validation
+1. **Resource-Oriented Architecture**
+   - APIs organized around resources (toilets, reviews, users)
+   - Each resource accessible via unique URI endpoints
+   - Resources represented in standard formats (JSON)
 
-2. **Database Design**
+2. **Middleware Pattern**
+   - Data validation for all incoming requests
+   - Error handling and logging
+   - Authentication and authorization, JWT tokens are verified and decoded on requests to protected routes so that routes have access to the `User` object.
+
+3. **HTTP Methods Semantics**
+   - GET: Retrieve resources (e.g., /api/toilets/nearby to find toilets)
+   - POST: Create new resources (e.g., /api/toilets/create to add new toilet)
+   - PATCH/PUT: Update existing resources (e.g., /api/toilets/details/:toiletId)
+   - DELETE: Remove resources (e.g., /api/favorites/remove/:toiletId)
+
+4. **Stateless Communication**
+   - Each request contains all information needed for processing
+   - Authentication via JWT tokens in Authorization headers
+   - No server-side session storage between requests
+
+5. **Standardized HTTP Status Codes**
+   - 200 OK: Successful operations
+   - 201 Created: Resource successfully created
+   - 400 Bad Request: Invalid input (validated using Zod)
+   - 401/403: Authentication/authorization errors
+   - 404: Resource not found
+   - 500: Server errors with appropriate logging
+
+6. **Consistent Response Format**
+   - JSON responses with consistent structure
+   - Error responses include message and details
+   - Successful responses include requested data
+
+7. **Authentication Flow**
+   - JWT-based authentication
+   - Secure password hashing with bcrypt
+
+8. **Database Design**
    - Relational database with proper indexing
    - Foreign key constraints for data integrity
    - Separate tables for users, toilets, reviews, and favorites
-
-3. **Authentication Flow**
-   - JWT-based authentication
-   - Secure password hashing with bcrypt
-   - Role-based access control
 
 ### Frontend Architecture
 1. **BLoC Pattern**

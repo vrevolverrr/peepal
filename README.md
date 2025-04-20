@@ -78,24 +78,10 @@ Peepal is a modern toilet finder application that helps users locate nearby toil
 ## Setup Instructions
 
 ### Backend Setup
-1. Prerequisites
-   - Node.js (v18 or higher)
-   - PostgreSQL
-   - MinIO Server
-   - pnpm (recommended)
-
-2. Installation
-```bash
-cd backend
-pnpm install
-cp .env.example .env
-# Edit .env with your configuration
-pnpm run migrate
-pnpm run dev
-```
+Refer to [README.md](https://github.com/softwarelab3/2006-FDAB-P1/blob/main/backend/README.md) in backend directory.
 
 3. API Endpoints
-   - `/api/auth/login` - User authentication
+   - `/api/auth/*` - User authentication
    - `/api/toilets/*` - Toilet management
    - `/api/reviews/*` - Review management
    - `/api/favorites/*` - Favorites management

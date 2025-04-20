@@ -24,7 +24,7 @@ favoritesApi.onError((err, c) => {
 })
 
 /**
- * Retrieves the health check message for the favorites API.
+ * GET /api/favorites/ - Retrieves the health check message for the favorites API.
  *
  * @param {Context} c - The Hono Context object.
  * 
@@ -62,7 +62,7 @@ favoritesApi.get('/me', async (c) => {
 })
 
 /**
- * Adds a toilet to the current user's favorites.
+ * POST /api/favorites/add/:toiletId - Adds a toilet to the current user's favorites.
  *
  * @param {Context} c - The Hono Context object.
  * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to add.
@@ -116,7 +116,7 @@ favoritesApi.post('/add/:toiletId', validator('param', toiletIdParamSchema), asy
 })
 
 /**
- * Removes a favorite from the current user's favorites.
+ * DELETE /api/favorites/remove/:toiletId - Removes a favorite from the current user's favorites.
  *
  * @param {Context} c - The Hono Context object.
  * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to remove.

@@ -34,7 +34,7 @@ userApi.get('/', async (c) => {
 })
 
 /**
- * Retrieves the current user's details.
+ * GET /api/user/me - Retrieves the current user's details.
  * 
  * @param {Context} c - The Hono Context object.
  * 
@@ -55,7 +55,7 @@ userApi.get('/me', async (c) => {
 })
 
 /**
- * Updates the current user's details.
+ * PUT /api/user/update - Updates the current user's details.
  * 
  * @param {Context} c - The Hono Context object.
  * @param {UpdateUserSchema} username - The new username.
@@ -130,7 +130,7 @@ userApi.put('/update', validator('json', updateUserSchema), async (c) => {
 })
 
 /**
- * Deletes the current user.
+ * DELETE /api/user/delete - Deletes the current user.
  *
  * @param {Context} c - The Hono Context object.
  * 

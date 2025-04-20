@@ -160,7 +160,7 @@ toiletApi.get('/', async (c) => {
 })
 
 /**
- * Creates a new toilet based on the provided information.
+ * POST /api/toilets/create - Creates a new toilet based on the provided information.
  * 
  * The request body is validated using the defined schema to ensure correct data types and structure.
  * 
@@ -219,7 +219,7 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
 })
 
 /**
- * Updates the details of an existing toilet specified by the toiletId.
+ * PUT /api/toilets/update/:toiletId - Updates the details of an existing toilet specified by the toiletId.
  * 
  * Validates the request parameters and JSON body using defined schemas to ensure
  * correct data types and structure. If the toilet with the specified ID does not
@@ -280,7 +280,7 @@ toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema),
 })
 
 /**
- * Retrieves a list of toilets based on the provided IDs.
+ * POST /api/toilets/details - Retrieves a list of toilets based on the provided IDs.
  * 
  * The request body is validated using the defined schema to ensure correct data types and structure.
  * 
@@ -306,7 +306,7 @@ toiletApi.post('/details', validator('json', multiToiletIdSchema), async (c) => 
 })
 
 /**
- * Retrieves a specific toilet based on the provided ID.
+ * GET /api/toilets/details/:toiletId - Retrieves a specific toilet based on the provided ID.
  * 
  * The request parameters are validated using the defined schema to ensure correct data types and structure.
  * 
@@ -337,7 +337,7 @@ return c.json({ toilet }, 200)
 })
 
 /**
- * Reports a specific toilet based on the provided ID.
+ * POST /api/toilets/report/:toiletId - Reports a specific toilet based on the provided ID.
  * 
  * The request parameters are validated using the defined schema to ensure correct data types and structure.
  * 
@@ -383,9 +383,7 @@ toiletApi.post('/report/:toiletId', validator('param', toiletIdParamSchema), asy
 })
 
 /**
- * This endpoint takes the user's current location (latitude and longitude) and 
- * an optional radius and limit, and returns the nearest toilets within the 
- * specified radius, up to a maximum of the specified limit.
+ * GET /api/toilets/nearby - Retrieves a list of toilets within a specified radius.
  * 
  * The default radius is 5km and the default limit is 5.
  * 
@@ -422,7 +420,7 @@ toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
 })
 
 /**
- * Searches for toilets based on the provided query.
+ * POST /api/toilets/search - Searches for toilets based on the provided query.
  * 
  * The request body is validated using the defined schema to ensure correct data types and structure.
  * 
@@ -487,7 +485,7 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
 })
 
 /**
- * Retrieves navigation instructions to a specific toilet using the Apple MapKit API.
+ * POST /api/toilets/navigate/:toiletId - Retrieves navigation instructions to a specific toilet using the Apple MapKit API.
  * 
  * The request parameters are validated using the defined schema to ensure correct data types and structure.
  * 
@@ -581,7 +579,7 @@ validator('json', navigateToiletSchema), async (c) => {
 })
 
 /**
- * Retrieves the address from the given coordinates (reverse geocoding) using the Apple MapKit API.
+ * POST /api/toilets/address - Retrieves the address from the given coordinates (reverse geocoding) using the Apple MapKit API.
  * 
  * The request body is validated using the defined schema to ensure correct data types and structure.
  * 
@@ -603,7 +601,7 @@ toiletApi.post('/getAddress', validator('json', getAddressSchema), async (c) => 
 })
 
 /**
- * Updates the image of an existing toilet specified by the toiletId.
+ * POST /api/toilets/updateImage/:toiletId - Updates the image of an existing toilet specified by the toiletId.
  * 
  * Validates the request parameters and form data using defined schemas to ensure
  * correct data types and structure. The image is uploaded to an S3 bucket and

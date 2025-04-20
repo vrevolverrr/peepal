@@ -179,7 +179,7 @@ reviewsApi.patch('/edit/:reviewId',
 })
 
 /**
- * POST /api/reviews/report/:reviewId - Report a review
+ * POST /api/reviews/report/:reviewId - Report a review.
  * 
  * @param {Context} c - The Hono Context object.
  * @param {ReviewIdSchema} reviewId - The ID of the review to report.
@@ -217,7 +217,7 @@ reviewsApi.post('/report/:reviewId', validator('param', reviewIdSchema), async (
 })
 
 /**
- * DELETE /api/reviews/delete/:reviewId - Delete review
+ * DELETE /api/reviews/delete/:reviewId - Delete a review.
  * 
  * @param {Context} c - The Hono Context object.
  * @param {ReviewIdSchema} reviewId - The ID of the review to delete.

@@ -183,7 +183,7 @@ The server will typically be available at `http://localhost:3000` (or the port s
 
   
 
-## Docker Build (Production)
+## Docker Build (Optional)
 
   
 
@@ -206,11 +206,7 @@ docker build -t peepal-backend .
 Remember to provide the necessary environment variables (e.g., through a mounted `.env` file or Docker's `-e` flags).
 
 ```bash
-
-# Example (ensure  your  production  .env  is  ready)
-
 docker run -p 3000:3000 --env-file ./.env --name peepal-backend-app -d peepal-backend
-
 ```
 
 * This assumes your database is accessible from the container (e.g., another container on the same Docker network, or a cloud database).

@@ -3,7 +3,6 @@ import { Pool } from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
 import config from "../drizzle.config";
 
-
 async function main() {
     const pool = new Pool(config.dbCredentials);
     const db = drizzle(pool);

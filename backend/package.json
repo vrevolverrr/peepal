@@ -13,7 +13,8 @@
     "migrate": "drizzle-kit migrate",
     "studio": "drizzle-kit studio",
     "test": "export $(grep -v '^#' .env | xargs) && vitest",
-    "test:watch": "export $(grep -v '^#' .env | xargs) && vitest watch"
+    "test:watch": "export $(grep -v '^#' .env | xargs) && vitest watch",
+    "seed": "export $(grep -v '^#' .env | xargs) && ts-node scripts/seed-db.js"
   },
   "keywords": [],
   "author": "Bryan Soong",

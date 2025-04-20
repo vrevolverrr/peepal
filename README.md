@@ -17,7 +17,7 @@ Peepal is a modern toilet finder application that helps users locate nearby toil
 - **Testing**: Vitest (Unit Testing)
 - **Validation**: Zod (Schema Validation)
 - **Containerization**: Docker (Dockerfile)
-- **Deployment**: GitHub Actions + Sevalla (CI/CD)
+- **Deployment**: GitHub Actions + Sevalla (CI/CD) @ https://peepal-backend-deployment-z0st0.kinsta.app/
 
 ### Frontend
 - **Framework**: Flutter

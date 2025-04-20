@@ -41,7 +41,9 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
     if (state is LocationStateWithLocation) {
       toiletBloc.add(ToiletEventFetchNearby(location: state.location));
     } else {
-      // TODO snackbar
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+              Text("Unable to fetch nearby toilets without location access")));
     }
   }
 
@@ -86,7 +88,14 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
                 style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8.0),
-              BlocBuilder<ToiletsBloc, ToiletsState>(
+              BlocConsumer<ToiletsBloc, ToiletsState>(
+                listener: (context, state) {
+                  if (state is ToiletStateError) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content:
+                            Text("An error occurred while fetching toilets")));
+                  }
+                },
                 builder: (context, state) {
                   if (locationCubit.state is! LocationStateWithLocation) {
                     return Expanded(

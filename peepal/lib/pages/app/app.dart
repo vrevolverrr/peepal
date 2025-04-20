@@ -47,8 +47,44 @@ class _PeePalAppState extends State<PeePalApp> {
       title: "PeePal",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          scaffoldBackgroundColor: Color(0xffF4F6F8), fontFamily: "MazzardH"),
-      home: BlocBuilder<AuthBloc, AuthState>(
+          scaffoldBackgroundColor: Color(0xffF4F6F8),
+          fontFamily: "MazzardH",
+          snackBarTheme: SnackBarThemeData(
+              backgroundColor: const Color(0xFFF7F7F7),
+              elevation: 2.0,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: Colors.black,
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+              ),
+              contentTextStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.0,
+                  fontFamily: "MazzardH",
+                  fontWeight: FontWeight.bold))),
+      home: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthStateError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("An error occurred while authenticating")),
+            );
+          }
+
+          if (state is AuthStateAuthenticated) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Successfully logged in")));
+          }
+
+          if (state is AuthStateInvalidCredentials) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Invalid email or password")));
+          }
+        },
         builder: (context, state) {
           if (state is AuthStateInitial) {
             return const SplashScreen();

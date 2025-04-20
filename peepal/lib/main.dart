@@ -8,8 +8,13 @@ import 'package:peepal/shared/location/repository/location_repository.dart';
 import 'package:peepal/pages/app/app.dart';
 import 'package:peepal/shared/auth/auth_bloc.dart';
 
-bool debugMode = false;
+/// Global flag to enable/disable debug-specific behaviors.
+bool kDebugMode = false;
 
+/// The main entry point of the PeePal application.
+///
+/// Initializes necessary bindings, configures logging, initializes the API client,
+/// and runs the root [App] widget.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -24,6 +29,11 @@ void main() async {
   runApp(const App());
 }
 
+/// The root widget of the PeePal application.
+///
+/// Sets up the necessary top-level providers, including [RepositoryProvider] for
+/// [LocationRepository] and [BlocProvider] for [AuthBloc], before rendering
+/// the main [PeePalApp].
 class App extends StatelessWidget {
   const App({super.key});
 

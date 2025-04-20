@@ -5,21 +5,41 @@ import { eq } from "drizzle-orm"
 import { validator } from "../../middleware/validator"
 import { updateUserSchema } from "../../validators/api/user"
 
+/**
+ * The Hono instance for the user API.
+ */
 const userApi = new Hono()
 
-// Route-wide error handler
+/**
+ * Route-wide error handler.
+ *
+ * @param {Error} err - The error object.
+ * @param {Context} c - The Hono Context object.
+ */
 userApi.onError((err, c) => {
   const logger = c.get('logger')
   logger.error(`Error in user API ${err}`)
   return c.json({ error: err.message }, 500)
 })
 
-// GET /api/user/ - Health check
+/**
+ * GET /api/user/ - Health check
+ *
+ * @param {Context} c - The Hono Context object.
+ * 
+ * @returns {Promise<{ message: string }>} - The health check message.
+ */
 userApi.get('/', async (c) => {
   return c.json({ message: 'User API Health Check' }, 200)
 })
 
-// GET /api/user/me - Get current user
+/**
+ * Retrieves the current user's details.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * 
+ * @returns {Promise<{ user: User }>} - The current user details or an error message.
+ */
 userApi.get('/me', async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id
@@ -34,7 +54,16 @@ userApi.get('/me', async (c) => {
   return c.json({ user: user }, 200)
 })
 
-// PUT /api/user/update - Update current user
+/**
+ * Updates the current user's details.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {UpdateUserSchema} username - The new username.
+ * @param {UpdateUserSchema} email - The new email.
+ * @param {UpdateUserSchema} gender - The new gender.
+ * 
+ * @returns {Promise<{ user: User }>} - The updated user details or an error message.
+ */
 userApi.put('/update', validator('json', updateUserSchema), async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id
@@ -100,7 +129,13 @@ userApi.put('/update', validator('json', updateUserSchema), async (c) => {
   return c.json({ user: updatedUser }, 200)
 })
 
-// DELETE /api/user/delete - Delete current user
+/**
+ * Deletes the current user.
+ *
+ * @param {Context} c - The Hono Context object.
+ * 
+ * @returns {Promise<{ message: string }>} - The deletion message or an error message.
+ */
 userApi.delete('/delete', async (c) => {
   const logger = c.get('logger')
   const user = c.get('user')

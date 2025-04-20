@@ -6,20 +6,46 @@ import { validator } from '../../middleware/validator'
 import { editReviewSchema, fetchReviewsSchema, postReviewSchema, reviewIdSchema } from '../../validators/api/reviews'
 import { toiletIdParamSchema } from '../../validators/api/toilets'
 
+/**
+ * The Hono instance for the reviews API.
+ */
 const reviewsApi = new Hono()
 
+/**
+ * Error handler for the reviews API.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {Error} err - The error object.
+ * 
+ * @returns {Promise<{ error: string }>} - The error message.
+ */
 reviewsApi.onError((err, c) => {
   const logger = c.get('logger')
   logger.error(`Error in reviews API ${err}`)
   return c.json({ error: err.message }, 500)
 })
 
-// GET /api/reviews - Health Check
+/**
+ * GET /api/reviews - Health Check
+ * 
+ * @param {Context} c - The Hono Context object.
+ * 
+ * @returns {Promise<{ message: string }>} - The health check message.
+ */
 reviewsApi.get('/', async (c) => {
   return c.json({ message: 'Reviews Endpoint Health Check'}, 200)
 })
 
-// GET /api/reviews/toilet/:toiletId?sort=date|rating&order=asc|desc&offset=0
+/**
+ * GET /api/reviews/toilet/:toiletId?sort=date|rating&order=asc|desc&offset=0
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ToiletIdParamSchema} toiletId - The ID of the toilet.
+ * @param {FetchReviewsSchema} offset - The offset for pagination.
+ * @param {FetchReviewsSchema} sort - The field to sort the reviews by.
+ * 
+ * @returns {Promise<{ reviews: Review[] }>} - The reviews for the specified toilet.
+ */
 reviewsApi.get('/toilet/:toiletId', 
   validator('param', toiletIdParamSchema), validator('json', fetchReviewsSchema), async (c) => {
   const logger = c.get('logger')
@@ -55,7 +81,17 @@ reviewsApi.get('/toilet/:toiletId',
   return c.json({ reviews: result }, 200)
 })
 
-// POST /api/reviews/create - Post a review
+/**
+ * POST /api/reviews/create - Post a review
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {PostReviewSchema} toiletId - The ID of the toilet to post the review for.
+ * @param {PostReviewSchema} rating - The rating of the review.
+ * @param {PostReviewSchema} reviewText - The text of the review.
+ * @param {PostReviewSchema} imageToken - The image token of the review, if any.
+ * 
+ * @returns {Promise<{ review: Review }>} - The created review.
+ */
 reviewsApi.post('/create', validator('json', postReviewSchema), async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id
@@ -92,7 +128,17 @@ reviewsApi.post('/create', validator('json', postReviewSchema), async (c) => {
   return c.json({ review: updatedReview }, 201)
 })
 
-// PATCH /api/reviews/edit - Edit review
+/**
+ * PATCH /api/reviews/edit - Edit review
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ReviewIdSchema} reviewId - The ID of the review to edit.
+ * @param {EditReviewSchema} rating - The new rating of the review.
+ * @param {EditReviewSchema} reviewText - The new text of the review.
+ * @param {EditReviewSchema} imageToken - The new image token of the review, if any.
+ * 
+ * @returns {Promise<{ review: Review }>} - The updated review. 
+ */
 reviewsApi.patch('/edit/:reviewId', 
   validator('param', reviewIdSchema), validator('json', editReviewSchema), async (c) => {
   const logger = c.get('logger')
@@ -132,7 +178,14 @@ reviewsApi.patch('/edit/:reviewId',
   return c.json({ review: updated }, 200)
 })
 
-// POST /api/reviews/report/:reviewId - Report a review
+/**
+ * POST /api/reviews/report/:reviewId - Report a review
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ReviewIdSchema} reviewId - The ID of the review to report.
+ * 
+ * @returns {Promise<{ message: string, deleted: boolean }>} - The result of the report.
+ */
 reviewsApi.post('/report/:reviewId', validator('param', reviewIdSchema), async (c) => {
   const logger = c.get('logger')
   const { reviewId } = c.req.valid('param')
@@ -163,7 +216,14 @@ reviewsApi.post('/report/:reviewId', validator('param', reviewIdSchema), async (
   return c.json({ message: 'Review reported', deleted: false }, 200)
 })
 
-// DELETE /api/reviews/delete/:reviewId - Delete review
+/**
+ * DELETE /api/reviews/delete/:reviewId - Delete review
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ReviewIdSchema} reviewId - The ID of the review to delete.
+ * 
+ * @returns {Promise<{ message: string }>} - The result of the deletion.
+ */
 reviewsApi.delete('/delete/:reviewId', validator('param', reviewIdSchema), async (c) => {
   const logger = c.get('logger')
   const { reviewId } = c.req.valid('param')

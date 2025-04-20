@@ -5,6 +5,11 @@ import 'package:peepal/api/base.dart';
 import 'package:peepal/api/favorites/model/favorite.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 
+/// API client for managing user's favorite toilets.
+///
+/// Provides functionality to add, remove, and list favorite toilets.
+/// All methods require authentication and will throw appropriate errors
+/// if the user is not authenticated or the token is invalid.
 final class PPFavoritesApi extends PPApiClient {
   @override
   final Logger logger = Logger('PPFavoritesApi');
@@ -12,8 +17,19 @@ final class PPFavoritesApi extends PPApiClient {
   @override
   final String endpoint = "/api/favorites";
 
+  /// Creates a new favorites API client.
+  ///
+  /// [dio] HTTP client for making API requests.
+  /// The client must be configured with appropriate authentication headers.
   PPFavoritesApi({required super.dio});
 
+  /// Retrieves the authenticated user's favorite toilets.
+  ///
+  /// Returns a list of [PPFavorite] objects, each containing
+  /// information about a favorited toilet and when it was favorited.
+  ///
+  /// Throws [PPUnexpectedServerError] if the server returns an unexpected error.
+  /// Throws [PPNotAuthenticatedError] if the user is not authenticated.
   Future<List<PPFavorite>> getFavourites() async {
     try {
       final Response<Map<String, dynamic>> response =
@@ -38,6 +54,17 @@ final class PPFavoritesApi extends PPApiClient {
     }
   }
 
+  /// Adds a toilet to the user's favorites.
+  ///
+  /// [toilet] The toilet to add to favorites.
+  ///
+  /// Silently succeeds if the toilet is already in favorites.
+  /// This behavior is intentional to prevent race conditions
+  /// and provide a smoother user experience.
+  ///
+  /// Throws [PPUnexpectedServerError] if the server returns an unexpected error
+  /// or if the toilet doesn't exist.
+  /// Throws [PPNotAuthenticatedError] if the user is not authenticated.
   Future<void> addFavorite({required PPToilet toilet}) async {
     try {
       final Response<Map<String, dynamic>> response =
@@ -70,6 +97,16 @@ final class PPFavoritesApi extends PPApiClient {
     }
   }
 
+  /// Removes a toilet from the user's favorites.
+  ///
+  /// [toilet] The toilet to remove from favorites.
+  ///
+  /// Silently succeeds if the toilet is not in favorites.
+  /// This behavior is intentional to prevent race conditions
+  /// and provide a smoother user experience.
+  ///
+  /// Throws [PPUnexpectedServerError] if the server returns an unexpected error.
+  /// Throws [PPNotAuthenticatedError] if the user is not authenticated.
   Future<void> removeFavorite({required PPToilet toilet}) async {
     try {
       // Log the request for debugging

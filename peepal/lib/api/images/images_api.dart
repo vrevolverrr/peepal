@@ -6,6 +6,11 @@ import 'package:peepal/api/auth/exceptions.dart';
 import 'package:peepal/api/base.dart';
 import 'package:peepal/api/images/exceptions.dart';
 
+/// API client for managing image uploads and retrievals.
+///
+/// Provides functionality to upload images and retrieve their URLs.
+/// Images are stored on the server and accessed via tokens.
+/// Supports different image types (toilet, review, etc.).
 final class PPImagesApi extends PPApiClient {
   @override
   final Logger logger = Logger('PPImagesApi');
@@ -13,10 +18,27 @@ final class PPImagesApi extends PPApiClient {
   @override
   final String endpoint = "/api/images";
 
+  /// Cache of image URLs by token to reduce API calls.
+  ///
+  /// Maps image tokens to their corresponding URLs.
   final Map<String, String> _cache = {};
 
+  /// Creates a new images API client.
+  ///
+  /// [dio] HTTP client for making API requests.
+  /// The client must be configured with appropriate authentication headers.
   PPImagesApi({required super.dio});
 
+  /// Retrieves the URL for an image using its token.
+  ///
+  /// [token] The unique token identifying the image.
+  ///
+  /// Returns the URL where the image can be accessed.
+  /// Uses a cache to avoid redundant API calls for the same token.
+  ///
+  /// Throws [PPImageNotFoundError] if the image token is invalid.
+  /// Throws [PPUnexpectedServerError] if the server returns an unexpected error.
+  /// Throws [PPNotAuthenticatedError] if the user is not authenticated.
   Future<String> getImageUrl({required String token}) async {
     if (_cache.containsKey(token)) {
       return _cache[token]!;
@@ -48,6 +70,16 @@ final class PPImagesApi extends PPApiClient {
     }
   }
 
+  /// Uploads an image file to the server.
+  ///
+  /// [image] The image file to upload.
+  /// [type] The type of image ('toilet' or 'review').
+  ///
+  /// Returns a token that can be used to retrieve the image URL
+  /// using [getImageUrl].
+  ///
+  /// Throws [PPUnexpectedServerError] if the upload fails.
+  /// Throws [PPNotAuthenticatedError] if the user is not authenticated.
   Future<String> uploadImage(
       {required File image, required String type}) async {
     try {

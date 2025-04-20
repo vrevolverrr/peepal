@@ -6,15 +6,33 @@ import { nanoid } from 'nanoid'
 import { images } from '../../db/schema/images'
 import { eq } from 'drizzle-orm'
 
+/**
+ * The Hono instance for the images API.
+ */
 const imageApi = new Hono()
 
+/**
+ * Error handler for the images API.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {Error} err - The error object.
+ * 
+ * @returns {Promise<{ error: string }>} - The error message.
+ */
 imageApi.onError((err, c) => {
   const logger = c.get('logger')
   logger.error(`Error in image API: ${err}`)
   return c.json({ error: err.message }, 500)
 })
 
-// GET /api/images/get/:token - Get an image
+/**
+ * GET /api/images/get/:token - Get an image
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {string} token - The image token.
+ * 
+ * @returns {Promise<{ url: string }>} - The image URL.
+ */
 imageApi.get('/:token', validator('query', imageTokenSchema), async (c) => {
   const logger = c.get('logger')
   const { token } = c.req.valid('query')
@@ -48,7 +66,15 @@ imageApi.get('/:token', validator('query', imageTokenSchema), async (c) => {
   return c.json({ url }, 200)
 })
 
-// POST /api/images/upload - Upload an image
+/**
+ * POST /api/images/upload - Upload an image
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ImageUplaodSchema} type - The type of the image (toilet or review).
+ * @param {ImageUploadSchema} image - The image to upload.
+ * 
+ * @returns {Promise<{ token: string }>} - The image token.
+ */
 imageApi.post('/upload', validator('form', imageUploadSchema), async (c) => {
   const logger = c.get('logger')
   const form = await c.req.parseBody()
@@ -61,6 +87,7 @@ imageApi.post('/upload', validator('form', imageUploadSchema), async (c) => {
 
   const buffer = await image.arrayBuffer()
 
+  // Upload image to S3 bucket
   await minio.putObject(
     process.env.S3_BUCKET || '',
     objectName,
@@ -69,6 +96,7 @@ imageApi.post('/upload', validator('form', imageUploadSchema), async (c) => {
     { 'Content-Type': image.type }
   )
 
+  // Store image metadata in database
   await db.insert(images).values({
     token,
     type: form.type as string,

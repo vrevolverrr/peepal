@@ -1,13 +1,21 @@
 import { Hono } from 'hono'
 import { db } from '../../app'
 import { favorites, toilets } from '../../db/schema'
-import { eq, and, desc, getTableColumns } from 'drizzle-orm'
+import { eq, and, desc } from 'drizzle-orm'
 import { validator } from '../../middleware/validator'
 import { toiletIdParamSchema } from '../../validators/api/toilets'
 
+/**
+ * The Hono instance for the favorites API.
+ */
 const favoritesApi = new Hono()
 
-// Route-wide error handler
+/**
+ * Route-wide error handler.
+ *
+ * @param {Error} err - The error object.
+ * @param {Context} c - The Hono Context object.
+ */
 favoritesApi.onError((err, c) => {
   const logger = c.get('logger')  
   logger.error(`Error in favorites API: ${err}`)
@@ -15,12 +23,25 @@ favoritesApi.onError((err, c) => {
   return c.json({ error: err.message }, 500)
 })
 
-// GET /api/favorites - Health Check
+/**
+ * Retrieves the health check message for the favorites API.
+ *
+ * @param {Context} c - The Hono Context object.
+ * 
+ * @returns {Promise<{ message: string }>} - The health check message.
+ */
 favoritesApi.get('/', async (c) => {
   return c.json({ message: 'Favourites Endpoint Health Check'}, 200)
 })
 
-// GET /api/favorites/me - Fetch all toilets saved by a user
+/**
+ * Retrieves all toilets favorited by the current user.
+ *
+ * @param {Context} c - The Hono Context object.
+ * 
+ * @returns {Promise<{ favorites: { toiletId: number, createdAt: Date }[] }>} - The user's favorited toilets.
+ */
+
 favoritesApi.get('/me', async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id
@@ -40,7 +61,14 @@ favoritesApi.get('/me', async (c) => {
   return c.json({ favorites: userFavorites }, 200)
 })
 
-// POST /api/favorites/add - Add a toilet to favorites
+/**
+ * Adds a toilet to the current user's favorites.
+ *
+ * @param {Context} c - The Hono Context object.
+ * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to add.
+ * 
+ * @returns {Promise<void>} - The response is empty.
+ */
 favoritesApi.post('/add/:toiletId', validator('param', toiletIdParamSchema), async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id
@@ -87,7 +115,14 @@ favoritesApi.post('/add/:toiletId', validator('param', toiletIdParamSchema), asy
   return c.status(200)
 })
 
-// DELETE /api/favorites/remove - Remove a favorite
+/**
+ * Removes a favorite from the current user's favorites.
+ *
+ * @param {Context} c - The Hono Context object.
+ * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to remove.
+ * 
+ * @returns {Promise<void>} - The response is empty.
+ */
 favoritesApi.delete('/remove/:toiletId', validator('param', toiletIdParamSchema), async (c) => {
   const logger = c.get('logger')
   const userId = c.get('user').id

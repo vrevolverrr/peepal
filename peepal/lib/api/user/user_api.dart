@@ -5,6 +5,11 @@ import 'package:peepal/api/base.dart';
 import 'package:peepal/api/user/exceptions.dart';
 import 'package:peepal/api/user/model/user.dart';
 
+/// API client for managing user profiles.
+///
+/// Provides functionality to retrieve and update user information.
+/// All methods require authentication and will throw appropriate errors
+/// if the user is not authenticated or the token is invalid.
 class PPUserApi extends PPApiClient {
   @override
   final Logger logger = Logger('PPUserApi');
@@ -12,8 +17,19 @@ class PPUserApi extends PPApiClient {
   @override
   final String endpoint = "/api/user";
 
+  /// Creates a new user API client.
+  ///
+  /// [dio] HTTP client for making API requests.
+  /// The client must be configured with appropriate authentication headers.
   PPUserApi({required super.dio});
 
+  /// Retrieves the currently authenticated user's profile.
+  ///
+  /// Returns a [PPUser] object containing the user's profile information.
+  ///
+  /// Throws a [PPUserNotFoundError] if the user doesn't exist.
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
+  /// Throws a [PPNotAuthenticatedError] if the user is not authenticated.
   Future<PPUser> getCurrentUser() async {
     try {
       final Response<Map<String, dynamic>> response =
@@ -42,6 +58,20 @@ class PPUserApi extends PPApiClient {
     }
   }
 
+  /// Updates the currently authenticated user's profile.
+  ///
+  /// At least one of the following parameters must be provided:
+  /// * [username] New username
+  /// * [email] New email address
+  /// * [gender] New gender
+  ///
+  /// Returns a [PPUser] object containing the updated profile information.
+  ///
+  /// Throws [ArgumentError] if no update parameters are provided.
+  /// Throws [PPUserCredentialsNotAvailableError] if the new credentials are taken.
+  /// Throws [PPUserNotFoundError] if the user doesn't exist.
+  /// Throws [PPUnexpectedServerError] if the server returns an unexpected error.
+  /// Throws [PPNotAuthenticatedError] if the user is not authenticated.
   Future<PPUser> updateUser({
     String? username,
     String? email,

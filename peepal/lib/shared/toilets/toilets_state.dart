@@ -1,7 +1,16 @@
 part of 'toilets_bloc.dart';
 
+/// The state of the toilets page, containing a list of all toilets and the search results.
+///
+/// [toilets] is the list of all toilets.
+/// [searchResults] is the list of toilets that match the current search query.
+///
+/// [getNearest] returns a list of toilets that are nearest to [location] in descending order of distance.
 sealed class ToiletsState extends Equatable {
+  /// The master list of all fetched toilets.
   final List<PPToilet> toilets;
+
+  /// The list of toilets matching the current search criteria.
   final List<PPToilet> searchResults;
 
   const ToiletsState({
@@ -9,6 +18,14 @@ sealed class ToiletsState extends Equatable {
     this.searchResults = const [],
   });
 
+  /// Returns a list of the nearest toilets to the given [location].
+  ///
+  /// Sorts the [toilets] list based on distance from the provided [location]
+  /// using the Haversine formula (via `SphericalUtil.computeDistanceBetween`)
+  /// and returns the top [limit] results.
+  ///
+  /// - [location]: The central point from which to measure distance.
+  /// - [limit]: The maximum number of nearest toilets to return (defaults to 5).
   List<PPToilet> getNearest({required PPLatLng location, int limit = 5}) {
     final List<PPToilet> sortedToilets = List.from(toilets);
 
@@ -26,10 +43,12 @@ sealed class ToiletsState extends Equatable {
   List<Object> get props => [toilets, searchResults];
 }
 
+/// The initial state of the toilets page.
 final class ToiletsStateInitial extends ToiletsState {
   const ToiletsStateInitial();
 }
 
+/// The state of the toilets page when the toilets are loaded.
 final class ToiletStateLoaded extends ToiletsState {
   const ToiletStateLoaded({
     required super.toilets,
@@ -40,7 +59,9 @@ final class ToiletStateLoaded extends ToiletsState {
   List<Object> get props => [toilets, searchResults];
 }
 
+/// The state of the toilets page when an error occurs.
 final class ToiletStateError extends ToiletsState {
+  /// Description of the error that occurred.
   final String error;
 
   const ToiletStateError({required this.error, super.toilets = const []});

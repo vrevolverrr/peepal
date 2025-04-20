@@ -11,6 +11,9 @@ import 'package:peepal/api/toilets/model/latlng.dart';
 import 'package:peepal/api/toilets/model/route.dart';
 import 'package:peepal/api/toilets/model/toilet.dart';
 
+/// This class provides an interface to interact with the `api/toilets` endpoint.
+///
+/// All methods in this class are asynchronous and return a [Future].
 final class PPToiletApi extends PPApiClient {
   @override
   final Logger logger = Logger('PPToiletApi');
@@ -18,10 +21,18 @@ final class PPToiletApi extends PPApiClient {
   @override
   final String endpoint = "/api/toilets";
 
+  /// Cache of navigation routes keyed by toilet ID.
+  ///
+  /// Used to avoid redundant API calls for frequently accessed routes.
   final Map<String, PPRoute> _routeCache = {};
 
   PPToiletApi({required super.dio});
 
+  /// Creates a new toilet.
+  ///
+  /// Returns a [PPToilet] object representing the newly created toilet.
+  ///
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
   Future<PPToilet> createToilet({
     required String name,
     required String address,
@@ -67,6 +78,13 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
+  /// Updates an existing toilet.
+  ///
+  /// Returns a [PPToilet] object representing the updated toilet.
+  ///
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
+  ///
+  /// Throws a [PPToiletNotFoundError] if the toilet is not found.
   Future<PPToilet> updateToilet({
     required PPToilet toilet,
     required String name,
@@ -113,6 +131,11 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
+  /// Retrieves the address from a given location.
+  ///
+  /// Returns a [PPAddress] object representing the address.
+  ///
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
   Future<PPAddress> getAddressFromLocation(PPLatLng location) async {
     try {
       final Response<Map<String, dynamic>> response =
@@ -140,6 +163,13 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
+  /// Retrieves a list of toilets by their IDs.
+  ///
+  /// Returns a list of [PPToilet] objects representing the toilets.
+  ///
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
+  ///
+  /// Throws a [PPToiletNotFoundError] if the toilets are not found.
   Future<List<PPToilet>> getToiletByIds(
       {required List<String> toiletIds}) async {
     try {
@@ -173,6 +203,13 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
+  /// Reports a toilet.
+  ///
+  /// Returns a boolean indicating whether the report was deleted due to too many reports.
+  ///
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
+  ///
+  /// Throws a [PPToiletNotFoundError] if the toilet is not found.
   Future<bool> reportToilet({required PPToilet toilet}) async {
     try {
       final Response<Map<String, dynamic>> response =
@@ -199,6 +236,15 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
+  /// Retrieves a list of toilets near a given location.
+  ///
+  /// [location] The center point to search from.
+  /// [radius] Optional radius in kilometers to search within. Defaults to server-side value.
+  /// [limit] Optional maximum number of results to return. Defaults to server-side value.
+  ///
+  /// Returns a list of [PPToilet] objects sorted by distance from [location].
+  ///
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
   Future<List<PPToilet>> getNearbyToilets({
     required PPLatLng location,
     double? radius,
@@ -234,6 +280,18 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
+  /// Searches for toilets based on query text and filters.
+  ///
+  /// [query] Text to search for in toilet names and addresses.
+  /// [location] User's current location for distance calculation.
+  /// [handicapAvail] Filter for handicap accessibility.
+  /// [bidetAvail] Filter for bidet availability.
+  /// [showerAvail] Filter for shower availability.
+  /// [sanitiserAvail] Filter for sanitiser availability.
+  ///
+  /// Returns a list of [PPToilet] objects matching the search criteria.
+  ///
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
   Future<List<PPToilet>> searchToilets({
     required String query,
     required PPLatLng location,
@@ -275,6 +333,15 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
+  /// Updates the image associated with a toilet.
+  ///
+  /// [toilet] The toilet to update the image for.
+  /// [image] The new image file to upload.
+  ///
+  /// Returns the updated [PPToilet] object with the new image URL.
+  ///
+  /// Throws a [PPToiletNotFoundError] if the toilet is not found.
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
   Future<PPToilet> updateToiletImage({
     required PPToilet toilet,
     required File image,
@@ -312,6 +379,17 @@ final class PPToiletApi extends PPApiClient {
     }
   }
 
+  /// Gets navigation route to a toilet from the user's current location.
+  ///
+  /// [toilet] The destination toilet.
+  /// [location] User's current location.
+  ///
+  /// Returns a [PPRoute] object containing navigation instructions.
+  /// Uses a cache to avoid redundant API calls for the same toilet.
+  ///
+  /// Throws a [PPToiletNotFoundError] if the toilet is not found.
+  /// Throws a [PPToiletRouteNotFoundError] if no route can be calculated.
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
   Future<PPRoute> navigateToToilet(
       {required PPToilet toilet, required PPLatLng location}) async {
     if (_routeCache.containsKey(toilet.id)) {

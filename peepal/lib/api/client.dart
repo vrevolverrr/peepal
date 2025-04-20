@@ -13,19 +13,50 @@ import 'package:shared_preferences/shared_preferences.dart';
 export 'auth/auth_api.dart';
 export 'constants.dart';
 
+/// Main client class for the PeePal application.
+///
+/// Provides centralized access to all API services and manages the HTTP client
+/// configuration. This class follows the singleton pattern and must be initialized
+/// before use with [init].
 final class PPClient {
+  /// Whether the client has been initialized.
   static bool _isInitialized = false;
 
+  /// Global HTTP client instance used by all API services.
   static final Dio dio = Dio();
+
+  /// Shared preferences instance with caching capabilities.
   static late final SharedPreferencesWithCache prefs;
 
+  /// Authentication API service.
   static late final PPAuthApi auth;
+
+  /// Toilets API service for managing toilet locations and details.
   static late final PPToiletApi toilets;
+
+  /// User API service for managing user profiles and settings.
   static late final PPUserApi user;
+
+  /// Images API service for handling image uploads and retrieval.
   static late final PPImagesApi images;
+
+  /// Reviews API service for managing toilet reviews and ratings.
   static late final PPReviewsApi reviews;
+
+  /// Favorites API service for managing user's favorite toilets.
   static late final PPFavoritesApi favorites;
 
+  /// Initializes the PeePal client and all its API services.
+  ///
+  /// This method must be called before using any API services. It:
+  /// * Sets up the shared preferences with caching
+  /// * Configures the HTTP client with appropriate timeouts and base URL
+  /// * Adds authentication interceptors
+  /// * Initializes all API service instances
+  ///
+  /// Throws [PPUnexpectedServerError] if server returns 500 error.
+  /// Throws [PPBadRequestError] if request is malformed (400).
+  /// Throws [PPNotAuthenticatedError] if authentication token is invalid or missing.
   static Future<void> init() async {
     if (_isInitialized) return;
 
@@ -35,11 +66,9 @@ final class PPClient {
 
     await prefs.reloadCache();
 
-    if (debugMode) {
-      // dio.options.baseUrl = 'http://192.168.0.137:3000';
-      // dio.options.baseUrl = 'http://127.0.0.1:3000';
-      // dio.options.baseUrl = 'http://172.20.10.3:80';
-      dio.options.baseUrl = 'http://192.168.0.104:3000';
+    if (kDebugMode) {
+      /// Use local development server
+      dio.options.baseUrl = 'http://localhost:3000';
     } else {
       dio.options.baseUrl =
           'https://peepal-backend-deployment-z0st0.kinsta.app/';
@@ -53,12 +82,15 @@ final class PPClient {
     };
 
     dio.interceptors.add(InterceptorsWrapper(
+      /// Intercepts all requests and adds authentication headers.
       onRequest: (options, handler) {
         /// Add auth token to request headers
         final String authToken = prefs.getString(PP_AUTH_KEY) ?? '';
         options.headers['Authorization'] = 'Bearer $authToken';
         handler.next(options);
       },
+
+      /// Intercepts all responses and handles errors globally.
       onResponse: (response, handler) {
         if (response.statusCode == 401 &&
             response.data['error'] == 'No token provided') {
@@ -79,12 +111,14 @@ final class PPClient {
       },
     ));
 
+    /// Initialize API services
     auth = PPAuthApi(dio: dio, prefs: prefs);
     toilets = PPToiletApi(dio: dio);
     user = PPUserApi(dio: dio);
     images = PPImagesApi(dio: dio);
     reviews = PPReviewsApi(dio: dio, imageApi: images);
     favorites = PPFavoritesApi(dio: dio);
+
     _isInitialized = true;
   }
 }

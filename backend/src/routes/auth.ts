@@ -11,7 +11,12 @@ import { validator } from '../middleware/validator'
 const auth = new Hono()
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
 
-// Route-wide error handler
+/**
+ * Route-wide error handler.
+ *
+ * @param {Error} error - The error object.
+ * @param {Context} c - The Hono Context object.
+ */
 auth.onError((error, c) => {
   const logger = c.get('logger')
   logger.error('Error in auth API', error)
@@ -19,12 +24,28 @@ auth.onError((error, c) => {
   return c.json({ error: 'Internal server error' }, 500)
 })
 
-// GET /auth - Health Check
+/**
+ * Retrieves the health check message for the auth API.
+ *
+ * @param {Context} c - The Hono Context object.
+ * 
+ * @returns {Promise<{ message: string }>} - The health check message.
+ */
 auth.get('/', async (c) => {
   return c.json({ message: 'Auth API Health Check'}, 200)
 })
 
-// POST /auth/signup - Register a new user
+/**
+ * Registers a new user.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {RegisterSchema} username - The username of the new user.
+ * @param {RegisterSchema} email - The email of the new user.
+ * @param {RegisterSchema} password - The password of the new user.
+ * @param {RegisterSchema} gender - The gender of the new user.
+ * 
+ * @returns {Promise<{ user: User, token: string }> - The registered user and their token.
+ */
 auth.post('/signup', validator('json', registerSchema), async (c) => {
   const log = c.get('logger')
 
@@ -62,7 +83,15 @@ auth.post('/signup', validator('json', registerSchema), async (c) => {
   return c.json({ user: newUser, token }, 200)
 })
 
-// POST /auth/login - Login an existing user
+/**
+ * Logs in an existing user.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {LoginSchema} email - The email of the user.
+ * @param {LoginSchema} password - The password of the user.
+ * 
+ * @returns {Promise<{ user: User, token: string }>} - The logged in user and their token.
+ */
 auth.post('/login', validator('json', loginSchema), async (c) => {
   const { email, password } = c.req.valid('json')
 

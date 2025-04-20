@@ -6,6 +6,10 @@ import 'package:peepal/api/constants.dart';
 import 'package:peepal/api/user/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// API client for user authentication and authorization.
+///
+/// Handles user registration, login, and logout operations.
+/// Manages authentication tokens using shared preferences for persistence.
 final class PPAuthApi extends PPApiClient {
   @override
   final Logger logger = Logger('PPAuthApi');
@@ -13,12 +17,32 @@ final class PPAuthApi extends PPApiClient {
   @override
   final String endpoint = "/auth";
 
+  /// Shared preferences instance for storing authentication tokens.
   final SharedPreferencesWithCache prefs;
 
+  /// Whether the user is currently authenticated.
+  ///
+  /// Returns true if an authentication token exists in shared preferences.
   bool get isAuthenticated => prefs.containsKey(PP_AUTH_KEY);
 
+  /// Creates a new authentication API client.
+  ///
+  /// [dio] HTTP client for making API requests.
+  /// [prefs] Shared preferences instance for token persistence.
   PPAuthApi({required super.dio, required this.prefs});
 
+  /// Registers a new user account.
+  ///
+  /// [username] Desired username for the new account.
+  /// [password] User's password (will be hashed server-side).
+  /// [email] User's email address for account verification.
+  /// [gender] User's gender for profile customization.
+  ///
+  /// Returns a [PPUser] object representing the newly created account.
+  /// Also stores the authentication token in shared preferences.
+  ///
+  /// Throws a [PPUserAlreadyExistsError] if the email is already registered.
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
   Future<PPUser> signUp(
       {required String username,
       required String password,
@@ -59,6 +83,16 @@ final class PPAuthApi extends PPApiClient {
     }
   }
 
+  /// Authenticates a user with their credentials.
+  ///
+  /// [email] User's registered email address.
+  /// [password] User's password.
+  ///
+  /// Returns a [PPUser] object representing the authenticated user.
+  /// Also stores the authentication token in shared preferences.
+  ///
+  /// Throws a [PPInvalidCredentialsError] if credentials are incorrect.
+  /// Throws a [PPUnexpectedServerError] if the server returns an unexpected error.
   Future<PPUser> login(
       {required String email, required String password}) async {
     try {
@@ -95,6 +129,10 @@ final class PPAuthApi extends PPApiClient {
     }
   }
 
+  /// Logs out the current user.
+  ///
+  /// Removes the authentication token from shared preferences.
+  /// This will cause [isAuthenticated] to return false.
   Future<void> logout() async {
     await prefs.remove(PP_AUTH_KEY);
   }

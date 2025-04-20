@@ -2,6 +2,13 @@ import { ZodSchema } from 'zod'
 import type { ValidationTargets } from 'hono'
 import { zValidator} from '@hono/zod-validator'
 
+/**
+ * Validator middleware that validates the request data. This validator is a 
+ * custom implementation of the `zValidator` from `@hono/zod-validator`.
+ *
+ * @param {Target} target - The target to validate.
+ * @param {ZodSchema} schema - The schema to validate against.
+ */
 export const validator = <T extends ZodSchema, Target extends keyof ValidationTargets>(
   target: Target,
   schema: T

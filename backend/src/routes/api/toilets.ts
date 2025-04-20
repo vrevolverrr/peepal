@@ -13,6 +13,8 @@ import { createToiletSchema, getAddressSchema, multiToiletIdSchema, navigateToil
 import { imageUploadSchema } from "../../validators/api/images"
 import pino from "pino";
 
+// The constant for the server-side configuration of the number of times
+// a toilet has to be reported for non existence for it to be deleted.
 const NUM_REPORTS_DELETE = 3
 
 // MapKit API Client
@@ -23,10 +25,26 @@ const mapKitAxios = axios.create({
   }
 })
 
+/**
+ * The Hono instance for the toilets API.
+ */
 const toiletApi = new Hono()
 
+/**
+ * The cached MapKit access token.
+ */
 var mapsAccessToken: MapKitAccessToken | undefined = undefined
 
+/**
+ * Retrieves a MapKit access token.
+ * 
+ * If the cached token is valid, it returns the cached token.
+ * Otherwise, it refreshes the token and returns the new token.
+ * 
+ * @param {pino.Logger} logger - The logger instance.
+ * 
+ * @returns {Promise<string>} - The MapKit access token.
+ */
 const getMapKitAccessToken = async (logger: pino.Logger) => {
   if (mapsAccessToken && mapsAccessToken.expiresAt > new Date()) {
     logger.info("Using cached MapKit access token");
@@ -46,7 +64,16 @@ const getMapKitAccessToken = async (logger: pino.Logger) => {
   return accessToken
 }
 
-const getAddressFromCoordinates = async (logger: pino.Logger, latitude: number, longitude: number) => {
+/**
+ * Retrieves the address from the given coordinates.
+ * 
+ * @param {pino.Logger} logger - The logger instance.
+ * @param {number} latitude - The latitude of the coordinates.
+ * @param {number} longitude - The longitude of the coordinates.
+ * 
+ * @returns {Promise<{ placeName: string, address: string }>} - The place name and address.
+ */
+const getAddressFromCoordinates = async (logger: pino.Logger, latitude: number, longitude: number): Promise<{ placeName: string; address: string; }> => {
   const accessToken = await getMapKitAccessToken(logger)
 
   type MKReverseGeocodeData = {
@@ -75,7 +102,14 @@ const getAddressFromCoordinates = async (logger: pino.Logger, latitude: number, 
   }
 }
 
-const formatDuration = (seconds: number) => {
+/**
+ * Formats the duration in seconds into a human-readable format.
+ * 
+ * @param {number} seconds - The duration in seconds.
+ * 
+ * @returns {string} - The formatted duration.
+ */
+const formatDuration = (seconds: number): string => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
 
@@ -86,7 +120,14 @@ const formatDuration = (seconds: number) => {
   return `${minutes} min`;
 }
 
-const formatDistance = (meters: number) => {
+/**
+ * Formats the distance in meters into a human-readable format.
+ * 
+ * @param {number} meters - The distance in meters.
+ * 
+ * @returns {string} - The formatted distance.
+ */
+const formatDistance = (meters: number): string => {
   if (meters < 1000) {
     return `${meters} meters`;
   }
@@ -94,6 +135,12 @@ const formatDistance = (meters: number) => {
   return `${(meters / 1000).toFixed(1)} km`;  
 }
 
+/**
+ * Error handler for the toilets API.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {Error} err - The error object.
+ */
 toiletApi.onError((err, c) => {
   const logger = c.get('logger')
   logger.error(`Error in toilets API ${err}`)
@@ -101,23 +148,40 @@ toiletApi.onError((err, c) => {
   return c.json({ error: err.message }, 500)
 })
 
-// GET /api/toilets - Health Check
+/**
+ * GET /api/toilets - Health Check
+ *
+ * @param {Context} c - The Hono Context object.
+ * 
+ * @returns {Promise<{ message: string }>} - The health check message.
+ */
 toiletApi.get('/', async (c) => {
   return c.json({ message: 'Toilets Endpoint Health Check'}, 200)
 })
 
-  /**
-   * Creates a new toilet based on the provided information.
-   * 
-   * The request body is validated using the defined schema to ensure correct data types and structure.
-   * 
-   * The location field is converted to a spatial point and inserted into the database.
-   * 
-   * Logs the creation operation and returns the created toilet information upon success.
-   * 
-   * @param c - The context containing request and response objects, and logger.
-   * @returns A JSON response with the created toilet details or an error message.
-   */
+/**
+ * Creates a new toilet based on the provided information.
+ * 
+ * The request body is validated using the defined schema to ensure correct data types and structure.
+ * 
+ * The location field is converted to a spatial point and inserted into the database.
+ * 
+ * Logs the creation operation and returns the created toilet information upon success.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {CreateToiletSchema} name - The name of the toilet.
+ * @param {CreateToiletSchema} address - The address of the toilet.
+ * @param {CreateToiletSchema} latitude - The latitude of the toilet's location.
+ * @param {CreateToiletSchema} longitude - The longitude of the toilet's location.
+ * @param {CreateToiletSchema} location - The location of the toilet.
+ * @param {CreateToiletSchema} handicapAvail - Whether the toilet has handicap facilities.
+ * @param {CreateToiletSchema} bidetAvail - Whether the toilet has a bidet.
+ * @param {CreateToiletSchema} showerAvail - Whether the toilet has a shower.
+ * @param {CreateToiletSchema} sanitiserAvail - Whether the toilet has a sanitiser.
+ * @param {CreateToiletSchema} rating - The rating of the toilet.
+ * 
+ * @returns {Promise<{ toilet: Toilet }>} - The created toilet details or an error message.
+ */
 toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
   const logger = c.get('logger')
   const { name, address, latitude, longitude, location, handicapAvail, bidetAvail, showerAvail, sanitiserAvail, rating } 
@@ -154,7 +218,7 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
   return c.json({ toilet: toilet }, 201)
 })
 
-  /**
+/**
  * Updates the details of an existing toilet specified by the toiletId.
  * 
  * Validates the request parameters and JSON body using defined schemas to ensure
@@ -166,8 +230,17 @@ toiletApi.post('/create', validator('json', createToiletSchema), async (c) => {
  * 
  * Logs the update operation and returns the updated toilet information upon success.
  * 
- * @param c - The context containing request and response objects, and logger.
- * @returns A JSON response with the updated toilet details or an error message.
+ * @param {Context} c - The Hono Context object.
+ * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to update.
+ * @param {UpdateToiletSchema} name - The name of the toilet.
+ * @param {UpdateToiletSchema} address - The address of the toilet.
+ * @param {UpdateToiletSchema} location - The location of the toilet.
+ * @param {UpdateToiletSchema} handicapAvail - Whether the toilet has handicap facilities.
+ * @param {UpdateToiletSchema} bidetAvail - Whether the toilet has a bidet.
+ * @param {UpdateToiletSchema} showerAvail - Whether the toilet has a shower.
+ * @param {UpdateToiletSchema} sanitiserAvail - Whether the toilet has a sanitiser.
+ * 
+ * @returns {Promise<{ toilet: Toilet }>} - The updated toilet details or an error message.
  */
 toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema), 
   validator('json', updateToiletSchema), async (c) => {  
@@ -206,6 +279,18 @@ toiletApi.patch('/details/:toiletId', validator('param', toiletIdParamSchema),
     return c.json({ toilet: updatedToilet }, 200)
 })
 
+/**
+ * Retrieves a list of toilets based on the provided IDs.
+ * 
+ * The request body is validated using the defined schema to ensure correct data types and structure.
+ * 
+ * Logs the retrieval operation and returns the list of toilets upon success.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {MultiToiletIdSchema} toiletIds - The array of toiletIds to fetch details for.
+ * 
+ * @returns {Promise<{ toilets: Toilet[] }>} - The list of toilets or an error message.
+ */
 toiletApi.post('/details', validator('json', multiToiletIdSchema), async (c) => {
   const logger = c.get('logger')
   const { toiletIds } = c.req.valid('json')
@@ -220,7 +305,18 @@ toiletApi.post('/details', validator('json', multiToiletIdSchema), async (c) => 
   return c.json({ toilets: toiletList }, 200)
 })
 
-// GET /api/toilets/:toiletId - Get a specific toilet
+/**
+ * Retrieves a specific toilet based on the provided ID.
+ * 
+ * The request parameters are validated using the defined schema to ensure correct data types and structure.
+ * 
+ * Logs the retrieval operation and returns the toilet information upon success.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to retrieve.
+ * 
+ * @returns {Promise<{ toilet: Toilet }>} - The toilet details or an error message.
+ */
 toiletApi.get('/details/:toiletId', validator('param', toiletIdParamSchema), async (c) => {
   const logger = c.get('logger')
   const { toiletId } = c.req.valid('param')
@@ -240,7 +336,18 @@ logger.info(`Toilet ${toiletId} fetched`)
 return c.json({ toilet }, 200)
 })
 
-// POST /api/toilets/report - Report a toilet
+/**
+ * Reports a specific toilet based on the provided ID.
+ * 
+ * The request parameters are validated using the defined schema to ensure correct data types and structure.
+ * 
+ * Logs the reporting operation and returns the toilet information upon success.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to report.
+ * 
+ * @returns {Promise<{ toilet: Toilet }>} - The toilet details or an error message.
+ */
 toiletApi.post('/report/:toiletId', validator('param', toiletIdParamSchema), async (c) => {
   const logger = c.get('logger')
   const { toiletId } = c.req.valid('param')
@@ -275,19 +382,21 @@ toiletApi.post('/report/:toiletId', validator('param', toiletIdParamSchema), asy
   return c.json({ message: 'Toilet reported', deleted: false }, 200)
 })
 
-  /**
-   * Handles GET requests to /api/toilets/nearby.
-   * 
-   * This endpoint takes the user's current location (latitude and longitude) and 
-   * an optional radius and limit, and returns the nearest toilets within the 
-   * specified radius, up to a maximum of the specified limit.
-   * 
-   * The response is a JSON object with a single key, 'toilets', which is an array 
-   * of toilet objects. Each toilet object contains the toilet's ID, name, address, 
-   * location (as a GeoJSON point), and distance from the user's current location.
-   * 
-   * The default radius is 5km and the default limit is 5.
-   */
+/**
+ * This endpoint takes the user's current location (latitude and longitude) and 
+ * an optional radius and limit, and returns the nearest toilets within the 
+ * specified radius, up to a maximum of the specified limit.
+ * 
+ * The default radius is 5km and the default limit is 5.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {NearbyToiletSchema} latitude - The latitude of the user's current location.
+ * @param {NearbyToiletSchema} longitude - The longitude of the user's current location.
+ * @param {NearbyToiletSchema} radius - The radius in kilometers to search for toilets.
+ * @param {NearbyToiletSchema} limit - The maximum number of toilets to return.
+ * 
+ * @returns {Promise<{ toilets: Toilet[] }>} - The list of toilets or an error message.
+ */
 toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
   const logger = c.get('logger')
   const { latitude, longitude, radius, limit } = c.req.valid('query')
@@ -312,6 +421,24 @@ toiletApi.get('/nearby', validator('query', nearbyToiletSchema), async (c) => {
   return c.json({ toilets: nearbyToilets }, 200)
 })
 
+/**
+ * Searches for toilets based on the provided query.
+ * 
+ * The request body is validated using the defined schema to ensure correct data types and structure.
+ * 
+ * Logs the search operation and returns the list of toilets upon success.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {SearchToiletSchema} query - The search query.
+ * @param {SearchToiletSchema} latitude - The latitude of the user's current location.
+ * @param {SearchToiletSchema} longitude - The longitude of the user's current location.
+ * @param {SearchToiletSchema} handicapAvail - Whether the toilet has handicap facilities.
+ * @param {SearchToiletSchema} bidetAvail - Whether the toilet has a bidet.
+ * @param {SearchToiletSchema} showerAvail - Whether the toilet has a shower.
+ * @param {SearchToiletSchema} sanitiserAvail - Whether the toilet has a sanitiser.
+ * 
+ * @returns {Promise<{ toilets: Toilet[] }>} - The list of toilets or an error message.
+ */
 toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
   const logger = c.get('logger')
   const { query, latitude, longitude, handicapAvail, bidetAvail, showerAvail, sanitiserAvail } = c.req.valid('json')
@@ -359,6 +486,20 @@ toiletApi.post('/search', validator('json', searchToiletSchema), async (c) => {
   return c.json({ toilets: searchToiletResults }, 200)
 })
 
+/**
+ * Retrieves navigation instructions to a specific toilet using the Apple MapKit API.
+ * 
+ * The request parameters are validated using the defined schema to ensure correct data types and structure.
+ * 
+ * Logs the navigation operation and returns the navigation instructions upon success.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to navigate to.
+ * @param {NavigateToiletSchema} latitude - The latitude of the user's current location.
+ * @param {NavigateToiletSchema} longitude - The longitude of the user's current location.
+ * 
+ * @returns {Promise<{ navigation: Navigation }>} - The navigation instructions or an error message.
+ */
 toiletApi.post('/navigate/:toiletId', validator('param', toiletIdParamSchema), 
 validator('json', navigateToiletSchema), async (c) => {
   const logger = c.get('logger')
@@ -386,11 +527,13 @@ validator('json', navigateToiletSchema), async (c) => {
     }
   )
   
+  /// Parse the response from MapKit into our own format
   const mkRoute: MKRoute = directionsResponse.data.routes[0]
   const mkSteps: MKStep[] = directionsResponse.data.steps
   const mkStepPaths: MKCoordinate[][] = directionsResponse.data.stepPaths
 
   const stepPathTransformed: LatLng[][] = mkStepPaths.map(stepPath => stepPath.map(coord => ({ lat: coord.latitude, lng: coord.longitude })))
+  /// Encode the step paths (LatLngs) into polyline strings for more efficient transmission and parsing on the frontend.
   const stepPathPolylines: string[] = stepPathTransformed.map(path => encode(path))
 
   const directions: RouteDirection[] = []
@@ -411,11 +554,14 @@ validator('json', navigateToiletSchema), async (c) => {
     y: number;
   }[] = stepPathTransformed.flat().map(coord => ({ x: coord.lng, y: coord.lat }))
 
+  /// Simplifies the points of the full route polyline while preserving the shape
   const overviewPolyline: string = encode(simplify(overviewPolylinePoints, 0.0001, false).map(coord => [coord.y, coord.x]))
 
+  /// Format the distance and duration
   const distanceString: string = formatDistance(mkRoute.distanceMeters)
   const durationString: string = formatDuration(mkRoute.durationSeconds)
 
+  /// Create the route object
   const route: Route = {
     overview_polyline: overviewPolyline,
     start_location: {
@@ -434,6 +580,19 @@ validator('json', navigateToiletSchema), async (c) => {
   return c.json({ route: route }, 200);
 })
 
+/**
+ * Retrieves the address from the given coordinates (reverse geocoding) using the Apple MapKit API.
+ * 
+ * The request body is validated using the defined schema to ensure correct data types and structure.
+ * 
+ * Logs the retrieval operation and returns the address upon success.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {GetAddressSchema} latitude - The latitude of the coordinates.
+ * @param {GetAddressSchema} longitude - The longitude of the coordinates.
+ * 
+ * @returns {Promise<{ address: string }>} - The address or an error message.
+ */
 toiletApi.post('/getAddress', validator('json', getAddressSchema), async (c) => {
   const logger = c.get('logger')
   const { latitude, longitude } = c.req.valid('json')
@@ -443,7 +602,21 @@ toiletApi.post('/getAddress', validator('json', getAddressSchema), async (c) => 
   return c.json({ address }, 200)
 })
 
-// PATCH /api/toilets/image/:toiletId - Update toilet image
+/**
+ * Updates the image of an existing toilet specified by the toiletId.
+ * 
+ * Validates the request parameters and form data using defined schemas to ensure
+ * correct data types and structure. The image is uploaded to an S3 bucket and
+ * the image token is updated in the database.
+ * 
+ * Logs the update operation and returns the updated toilet information upon success.
+ * 
+ * @param {Context} c - The Hono Context object.
+ * @param {ToiletIdParamSchema} toiletId - The ID of the toilet to update.
+ * @param {ImageUploadSchema} image - The image to upload.
+ * 
+ * @returns {Promise<{ toilet: Toilet }>} - The updated toilet details or an error message.
+ */
 toiletApi.patch('/image/:toiletId', 
   validator('param', toiletIdParamSchema),
   validator('form', imageUploadSchema),

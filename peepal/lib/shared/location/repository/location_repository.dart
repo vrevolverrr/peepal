@@ -4,43 +4,41 @@ import 'package:geolocator/geolocator.dart';
 import 'package:peepal/api/toilets/model/latlng.dart';
 
 abstract interface class LocationRepository {
+  /// Checks if the user has granted location permission.
+  ///
+  /// Returns a `Future` that resolves to a `bool` indicating whether the
+  /// user has granted location permission.
   Future<bool> checkPermission();
+
+  /// Requests location permission from the user.
+  ///
+  /// Returns a `Future` that resolves to a `bool` indicating whether the
+  /// user has granted location permission.
   Future<bool> requestPermission();
+
+  /// Retrieves the current location of the user.
+  ///
+  /// Returns a `Future` that resolves to a `PPLatLng` object representing
+  /// the current location of the user.
   Future<PPLatLng> getCurrentLocation();
+
+  /// Retrieves a stream of the user's location updates.
+  ///
+  /// Returns a `Stream` that emits `PPLatLng` objects representing the
+  /// user's location updates.
   Stream<PPLatLng> getLocationStream();
 
   factory LocationRepository() => LocationRepositoryImpl();
 }
 
-class MockLocationRepository implements LocationRepository {
-  @override
-  Future<bool> checkPermission() {
-    // TODO: implement checkPermission
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<PPLatLng> getCurrentLocation() {
-    // TODO: implement getCurrentLocation
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream<PPLatLng> getLocationStream() {
-    // TODO: implement getLocationStream
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> requestPermission() {
-    // TODO: implement requestPermission
-    throw UnimplementedError();
-  }
-}
-
+/// Concrete implementation of [LocationRepository] using the `geolocator` package.
 class LocationRepositoryImpl implements LocationRepository {
+  /// Internal flag to cache the location permission status.
   bool _hasPermission = false;
 
+  /// Cached stream of location updates from `geolocator`.
+  ///
+  /// Lazily initialized when [getLocationStream] is first called.
   Stream<PPLatLng>? _positionStream;
 
   @override

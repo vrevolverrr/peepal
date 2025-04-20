@@ -153,6 +153,39 @@ class _ToiletMapPageState extends State<ToiletMapPage>
             );
           },
         ),
+        BlocBuilder<ToiletsBloc, ToiletsState>(builder: (context, state) {
+          if (state is ToiletsStateLoading) {
+            return Positioned(
+              right: 20.0,
+              top: 85.0,
+              child: SafeArea(
+                child: Container(
+                  width: 40.0,
+                  height: 40.0,
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 4.0,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.5,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+
+          return const SizedBox.shrink();
+        }),
         ToiletSearchBar(),
         BlocBuilder<ToiletMapCubit, ToiletMapState>(builder: (context, state) {
           if (state.selectedToilet == null) {

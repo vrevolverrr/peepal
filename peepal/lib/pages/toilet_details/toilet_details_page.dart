@@ -12,7 +12,7 @@ import 'package:peepal/pages/favourites/bloc/favorites_bloc.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/rating_widget.dart';
 import 'package:peepal/pages/nearby_toilets/widgets/toilet_image_widget.dart';
 import 'package:peepal/pages/toilet_details/widgets/edit_toilet_modal.dart';
-import 'package:peepal/pages/toilet_details/widgets/report_toilet_modal.dart';
+import 'package:peepal/pages/toilet_details/widgets/report_modal.dart';
 import 'package:peepal/pages/toilet_details/widgets/review_card.dart';
 import 'package:peepal/pages/toilet_details/widgets/add_review_modal.dart';
 import 'package:peepal/shared/toilets/toilets_bloc.dart';
@@ -96,8 +96,10 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
 
     await showModalBottomSheet(
         context: context,
-        builder: (context) => ReportToiletModal(
+        builder: (context) => ReportModal(
             height: 400.0,
+            title: 'Report Toilet',
+            text: 'Are you sure you want to report the absence of this toilet?',
             onConfirm: () async {
               final bool shouldRemove =
                   await PPClient.toilets.reportToilet(toilet: _toilet);
@@ -125,6 +127,41 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                   ),
                 );
               }
+            }));
+  }
+
+  Future<void> _handleReportReview(PPReview review) async {
+    final BuildContext current = context;
+
+    await showModalBottomSheet(
+        context: context,
+        builder: (context) => ReportModal(
+            height: 400.0,
+            title: 'Report Review',
+            text:
+                'Are you sure you want to report this review for abusive language?',
+            onConfirm: () async {
+              final bool shouldRemove =
+                  await PPClient.reviews.reportReview(review: review);
+
+              if (shouldRemove) {
+                setState(() {
+                  _reviews.remove(review);
+                });
+              }
+
+              if (!current.mounted) {
+                return;
+              }
+
+              ScaffoldMessenger.of(current).showSnackBar(
+                SnackBar(
+                  content: Text(shouldRemove
+                      ? 'Review deleted successfully'
+                      : 'Review reported successfully'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
             }));
   }
 
@@ -383,9 +420,13 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                         return const CircularProgressIndicator();
                       }
 
-                      return _ToiletReviews(reviews: snapshot.data!);
+                      return _ToiletReviews(
+                        reviews: snapshot.data!,
+                        onReport: _handleReportReview,
+                      );
                     },
                   ),
+                  SizedBox(height: 80.0)
                 ],
               ),
             ),
@@ -405,7 +446,8 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
 
 class _ToiletReviews extends StatelessWidget {
   final List<PPReview> reviews;
-  const _ToiletReviews({required this.reviews});
+  final void Function(PPReview review) onReport;
+  const _ToiletReviews({required this.reviews, required this.onReport});
 
   @override
   Widget build(BuildContext context) {
@@ -419,7 +461,8 @@ class _ToiletReviews extends StatelessWidget {
         ),
         ...reviews.map((review) => Padding(
               padding: const EdgeInsets.only(bottom: 5.0),
-              child: ReviewCard(review: review),
+              child:
+                  ReviewCard(review: review, onReport: () => onReport(review)),
             ))
       ],
     );

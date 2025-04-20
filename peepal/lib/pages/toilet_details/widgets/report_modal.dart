@@ -3,24 +3,28 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:peepal/shared/widgets/pp_button.dart';
 
-class ReportToiletModal extends StatefulWidget {
+class ReportModal extends StatefulWidget {
   final double height;
+  final String title;
+  final String text;
 
   /// Callback for when thr `confirm` button is pressed. Do not include
   /// `Navigator.pop` here, it is called internally after `onConfirm` resolves.
   final FutureOr<void> Function() onConfirm;
 
-  const ReportToiletModal({
+  const ReportModal({
     super.key,
     required this.height,
     required this.onConfirm,
+    required this.title,
+    required this.text,
   });
 
   @override
-  State<ReportToiletModal> createState() => _ReportToiletModalState();
+  State<ReportModal> createState() => _ReportModalState();
 }
 
-class _ReportToiletModalState extends State<ReportToiletModal> {
+class _ReportModalState extends State<ReportModal> {
   bool _isLoading = false;
 
   @override
@@ -51,7 +55,7 @@ class _ReportToiletModalState extends State<ReportToiletModal> {
                 padding: const EdgeInsets.only(
                     left: 16.0, right: 16.0, bottom: 16.0, top: 10.0),
                 child: Text(
-                  'Report Toilet',
+                  widget.title,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
@@ -71,7 +75,7 @@ class _ReportToiletModalState extends State<ReportToiletModal> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
-              "Are you sure you want to report the absence of this toilet?",
+              widget.text,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
             ),

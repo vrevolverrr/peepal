@@ -44,6 +44,8 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
   /// duplicates.
   void _onFetchNearby(
       ToiletEventFetchNearby event, Emitter<ToiletsState> emit) async {
+    emit(ToiletsStateLoading(
+        toilets: state.toilets, searchResults: state.searchResults));
     try {
       final List<PPToilet> toilets = await PPClient.toilets.getNearbyToilets(
         location: event.location,
@@ -66,6 +68,8 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
   /// Updates the state by merging the newly fetched toilets.
   void _onFetchToiletById(
       ToiletEventFetchToiletById event, Emitter<ToiletsState> emit) async {
+    emit(ToiletsStateLoading(
+        toilets: state.toilets, searchResults: state.searchResults));
     try {
       final List<String> filteredIds = event.toiletIds
           .where((id) => !state.toilets.any((toilet) => toilet.id == id))
@@ -92,6 +96,8 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletsState> {
   /// Updates the state with both the merged list of all toilets (including search results)
   /// and the specific search results.
   void _onSearch(ToiletEventSearch event, Emitter<ToiletsState> emit) async {
+    emit(ToiletsStateLoading(
+        toilets: state.toilets, searchResults: state.searchResults));
     try {
       final List<PPToilet> toilets = await PPClient.toilets.searchToilets(
         query: event.query,

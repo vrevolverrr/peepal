@@ -48,6 +48,14 @@ final class ToiletsStateInitial extends ToiletsState {
   const ToiletsStateInitial();
 }
 
+/// The state of the toilets page when the toilets are loading.
+final class ToiletsStateLoading extends ToiletsState {
+  const ToiletsStateLoading({
+    super.toilets = const [],
+    super.searchResults = const [],
+  });
+}
+
 /// The state of the toilets page when the toilets are loaded.
 final class ToiletStateLoaded extends ToiletsState {
   const ToiletStateLoaded({

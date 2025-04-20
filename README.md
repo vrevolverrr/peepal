@@ -11,12 +11,13 @@ Peepal is a modern toilet finder application that helps users locate nearby toil
 
 ### Backend
 - **Framework**: Hono (TypeScript)
-- **Database**: PostgreSQL with Drizzle ORM
-- **Authentication**: JWT
-- **Image Storage**: MinIO
-- **Testing**: Vitest
-- **Validation**: Zod
-- **API Documentation**: Swagger/OpenAPI
+- **Database**: PostgreSQL (PostGIS) with Drizzle ORM
+- **Authentication**: JWT (JSON Web Tokens)
+- **Image Storage**: MinIO (Object Storage)
+- **Testing**: Vitest (Unit Testing)
+- **Validation**: Zod (Schema Validation)
+- **Containerization**: Docker (Dockerfile)
+- **Deployment**: GitHub Actions + Sevalla (CI/CD)
 
 ### Frontend
 - **Framework**: Flutter
@@ -80,14 +81,14 @@ Peepal is a modern toilet finder application that helps users locate nearby toil
 ## Setup Instructions
 
 ### Backend Setup
-Refer to [README.md](https://github.com/softwarelab3/2006-FDAB-P1/blob/main/backend/README.md) in backend directory.
+Refer to [README.md](https://github.com/softwarelab3/2006-FDAB-P1/blob/main/backend/README.md) in backend directory for guide on how to setup the backend application.
 
 3. API Endpoints
    - `/api/auth/*` - User authentication
-   - `/api/toilets/*` - Toilet management
-   - `/api/reviews/*` - Review management
-   - `/api/favorites/*` - Favorites management
-   - `/api/images/*` - Image upload and retrieval
+   - `/api/toilets/*` - Toilet management (Protected)
+   - `/api/reviews/*` - Review management (Protected)
+   - `/api/favorites/*` - Favorites management (Protected)
+   - `/api/images/*` - Image upload and retrieval (Protected)
 
 ### Frontend Setup
 1. Prerequisites
@@ -99,31 +100,40 @@ Refer to [README.md](https://github.com/softwarelab3/2006-FDAB-P1/blob/main/back
 ```bash
 cd peepal
 flutter pub get
-# For iOS: cd ios && pod install
 flutter run
 ```
+
+3. By default, the PeePal app will connect to the production backend deployed on Sevalla. To connect to the development backend, you will need to set the `kDebugMode` flag to `true` in `main.dart` to connect to `localhost:3000` or modify the `baseUrl` in the `lib/api/client.dart` file.
 
 ## API Documentation
 
 ### Authentication
-- POST `/api/auth/login` - Login user
-- POST `/api/auth/register` - Register new user
+- POST `/auth/login` - Login with email and password
+- POST `/auth/signup` - Register new user
 
 ### Toilets
-- GET `/api/toilets/nearby` - Get nearby toilets
+- GET `/api/toilets/` - Health check for toilets endpoint
 - POST `/api/toilets/create` - Create new toilet
-- POST `/api/toilets/report/:id` - Report a toilet
+- PATCH `/api/toilets/details/:toiletId` - Update toilet details
+- GET `/api/toilets/details/:toiletId` - Get toilet details
+- POST `/api/toilets/report/:toiletId` - Report a toilet
+- POST `/api/toilets/nearby` - Get nearby toilets with filtering
+- POST `/api/toilets/getAddress` - Get address from coordinates
+- PATCH `/api/toilets/image/:toiletId` - Update toilet image
 
 ### Reviews
-- POST `/api/reviews/create` - Create review
-- PATCH `/api/reviews/edit/:id` - Edit review
-- POST `/api/reviews/report/:id` - Report review
-- DELETE `/api/reviews/delete/:id` - Delete review
+- GET `/api/reviews/` - Health check for reviews endpoint
+- POST `/api/reviews/create` - Create a new review
+- PATCH `/api/reviews/:reviewId` - Update an existing review
+- DELETE `/api/reviews/:reviewId` - Delete a review
+- POST `/api/reviews/report/:reviewId` - Report a review
+- GET `/api/reviews/toilet/:toiletId` - Get reviews for a toilet
 
 ### Favorites
-- POST `/api/favorites/add/:id` - Add to favorites
-- DELETE `/api/favorites/remove/:id` - Remove from favorites
+- GET `/api/favorites/` - Health check for favorites endpoint
 - GET `/api/favorites/me` - Get user's favorites
+- POST `/api/favorites/add/:toiletId` - Add to favorites
+- DELETE `/api/favorites/remove/:toiletId` - Remove from favorites
 
 ## External APIs & Services
 
@@ -144,18 +154,3 @@ flutter run
 - Rate limiting for API endpoints
 - Secure file uploads
 
-## Testing Strategy
-- Unit tests for business logic
-- Integration tests for API endpoints
-- E2E tests for critical flows
-- Test coverage for edge cases
-
-## Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-MIT License

@@ -416,6 +416,32 @@ class _ToiletDetailsPageState extends State<ToiletDetailsPage> {
                   FutureBuilder(
                     future: _fetchReviews(),
                     builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Failed to load reviews'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.close,
+                              size: 80.0,
+                              color: Colors.grey.shade300,
+                            ),
+                            SizedBox(height: 8.0),
+                            Text("Error fetching reviews",
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade700)),
+                          ],
+                        );
+                      }
+
                       if (!snapshot.hasData) {
                         return const CircularProgressIndicator();
                       }

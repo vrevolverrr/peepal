@@ -40,11 +40,7 @@ class NearbyToiletsPageState extends State<NearbyToiletsPage>
   void _fetchToilets(LocationState state) {
     if (state is LocationStateWithLocation) {
       toiletBloc.add(ToiletEventFetchNearby(location: state.location));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-              Text("Unable to fetch nearby toilets without location access")));
-    }
+    } else {}
   }
 
   @override

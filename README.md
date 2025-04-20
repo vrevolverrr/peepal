@@ -82,6 +82,11 @@ Peepal is a modern toilet finder application that helps users locate nearby toil
    - Custom widgets for specific features
    - Responsive design for different screen sizes
 
+3. **Repository Pattern**
+   - Centralized data access
+   - Abstracts data sources
+   - Handles data transformations
+
 ## SOLID Principles Implementation
 
 ### Single Responsibility

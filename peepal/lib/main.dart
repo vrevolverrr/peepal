@@ -9,6 +9,7 @@ import 'package:peepal/pages/app/app.dart';
 import 'package:peepal/shared/auth/auth_bloc.dart';
 
 /// Global flag to enable/disable debug-specific behaviors.
+/// Set this flag to true if using local development server for backend.
 bool kDebugMode = false;
 
 /// The main entry point of the PeePal application.

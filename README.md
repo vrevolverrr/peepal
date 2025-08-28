@@ -27,16 +27,16 @@ https://github.com/user-attachments/assets/ea3afcef-89ea-4ca2-b3c4-63844832a685
 
 ---
 
-## What Makes This Project Special
+## Project Features 
 
-### **Advanced Geospatial Computing**
+### **Geospatial Indexing**
 - **PostGIS integration** for efficient spatial queries and indexing
 - **Real-time location processing** with radius-based toilet discovery
 - **Geocoding & reverse geocoding** for address resolution
 - **Route optimization** using Apple MapKit APIs
 
 ### **Production-Grade Architecture**
-- **Microservices design** with clear separation of concerns
+- **RESTful API design** with clear separation of concerns
 - **Type-safe APIs** with comprehensive Zod validation
 - **JWT-based authentication** with secure password hashing
 - **Auto-scaling database** with proper indexing and constraints
@@ -64,17 +64,17 @@ https://github.com/user-attachments/assets/ea3afcef-89ea-4ca2-b3c4-63844832a685
 ```typescript
 Framework       │ Hono (TypeScript) - High-performance web framework
 Database        │ PostgreSQL + PostGIS for geospatial data
-ORM            │ Drizzle ORM - Type-safe database operations  
-Authentication │ JWT with bcrypt password hashing
-File Storage   │ MinIO (S3-compatible) object storage
-Testing        │ Vitest for unit & integration testing
-Validation     │ Zod schemas for runtime type checking
-Deployment     │ Docker + GitHub Actions CI/CD
+ORM             │ Drizzle ORM - Type-safe database operations  
+Authentication  │ JWT with bcrypt password hashing
+File Storage    │ MinIO (S3-compatible) object storage
+Testing         │ Vitest for unit & integration testing
+Validation      │ Zod schemas for runtime type checking
+Deployment      │ Docker + GitHub Actions CI/CD
 ```
 
 ### **Frontend Architecture**
 ```dart
-Framework       │ Flutter (Dart) - Cross-platform development
+Framework      │ Flutter (Dart) - Cross-platform development
 State Mgmt     │ BLoC Pattern - Reactive programming
 Maps           │ Apple Maps (MapKit) - Native iOS integration
 UI Components  │ Custom Material Design + Cupertino widgets

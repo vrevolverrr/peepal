@@ -10,6 +10,10 @@
 
 ---
 
+
+https://github.com/user-attachments/assets/ea3afcef-89ea-4ca2-b3c4-63844832a685
+
+
 ## Problem & Solution
 
 **The Challenge**: Finding accessible, clean public toilets in urban environments is a universal problem, especially for travelers, elderly, disabled individuals, and families with young children.

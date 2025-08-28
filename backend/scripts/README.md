@@ -1,0 +1,1 @@
+This folder contains scripts to fetch and index toilet data across Singapore using the Google Nearby Search API and Google Places API. The data has been excluded from this repository. Contact me at [bryansoong35@gmail.com](bryansoong35@gmail.com) to get the data.

@@ -5,3 +5,4 @@ dist/
 .docker.env
 
 scripts/downloaded_images/
+scripts/data/

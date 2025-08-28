@@ -1,4 +1,4 @@
-# PeePal 🚽 - Full Stack Toilet Locator and Navigation App
+# PeePal - Full Stack Toilet Locator and Navigation App
 
 [![Live Demo](https://img.shields.io/badge/🌐%20Live%20Demo-Visit%20App-blue?style=for-the-badge)](https://youtu.be/hT4hswhUsaA)
 [![Backend Status](https://img.shields.io/badge/🚀%20Backend-Production%20Ready-success?style=for-the-badge)](https://peepal-backend-deployment-z0st0.kinsta.app/)
@@ -10,7 +10,7 @@
 
 ---
 
-## 🎯 Problem & Solution
+## Problem & Solution
 
 **The Challenge**: Finding accessible, clean public toilets in urban environments is a universal problem, especially for travelers, elderly, disabled individuals, and families with young children.
 
@@ -23,29 +23,29 @@
 
 ---
 
-## 🏆 What Makes This Project Special
+## What Makes This Project Special
 
-### 🚀 **Advanced Geospatial Computing**
+### **Advanced Geospatial Computing**
 - **PostGIS integration** for efficient spatial queries and indexing
 - **Real-time location processing** with radius-based toilet discovery
 - **Geocoding & reverse geocoding** for address resolution
 - **Route optimization** using Apple MapKit APIs
 
-### 🔧 **Production-Grade Architecture**
+### **Production-Grade Architecture**
 - **Microservices design** with clear separation of concerns
 - **Type-safe APIs** with comprehensive Zod validation
 - **JWT-based authentication** with secure password hashing
 - **Auto-scaling database** with proper indexing and constraints
 - **Docker containerization** with multi-stage builds
 
-### 📱 **Modern Mobile Development**
+### **Modern Mobile Development**
 - **BLoC pattern** for clean state management architecture
 - **Repository pattern** for data abstraction
 - **Custom UI components** with Material Design principles
 - **Responsive design** across different screen sizes
 - **Real-time updates** with optimistic UI patterns
 
-### 🛡️ **Enterprise Security Standards**
+### **Enterprise Security Standards**
 - **bcrypt password hashing** with secure salt generation
 - **JWT token management** with proper expiration
 - **Input sanitization** and SQL injection prevention
@@ -54,45 +54,45 @@
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack & Architecture
 
 ### **Backend Infrastructure**
 ```typescript
-🌐 Framework       │ Hono (TypeScript) - High-performance web framework
-🗄️ Database        │ PostgreSQL + PostGIS for geospatial data
-🔍 ORM            │ Drizzle ORM - Type-safe database operations  
-🔐 Authentication │ JWT with bcrypt password hashing
-📁 File Storage   │ MinIO (S3-compatible) object storage
-✅ Testing        │ Vitest for unit & integration testing
-📋 Validation     │ Zod schemas for runtime type checking
-🐳 Deployment     │ Docker + GitHub Actions CI/CD
+Framework       │ Hono (TypeScript) - High-performance web framework
+Database        │ PostgreSQL + PostGIS for geospatial data
+ORM            │ Drizzle ORM - Type-safe database operations  
+Authentication │ JWT with bcrypt password hashing
+File Storage   │ MinIO (S3-compatible) object storage
+Testing        │ Vitest for unit & integration testing
+Validation     │ Zod schemas for runtime type checking
+Deployment     │ Docker + GitHub Actions CI/CD
 ```
 
 ### **Frontend Architecture**
 ```dart
-📱 Framework       │ Flutter (Dart) - Cross-platform development
-🎯 State Mgmt     │ BLoC Pattern - Reactive programming
-🗺️ Maps           │ Apple Maps (MapKit) - Native iOS integration
-🎨 UI Components  │ Custom Material Design + Cupertino widgets
-🔄 HTTP Client    │ Dio - Powerful HTTP client with interceptors
-💾 Local Storage  │ SharedPreferences for caching
+Framework       │ Flutter (Dart) - Cross-platform development
+State Mgmt     │ BLoC Pattern - Reactive programming
+Maps           │ Apple Maps (MapKit) - Native iOS integration
+UI Components  │ Custom Material Design + Cupertino widgets
+HTTP Client    │ Dio - Powerful HTTP client with interceptors
+Local Storage  │ SharedPreferences for caching
 ```
 
 ### **External Integrations**
 ```
-🗺️ Apple MapKit API    │ Real-time location & navigation services
-🌍 Google Maps API     │ Additional geocoding capabilities  
-🖼️ MinIO Storage      │ Scalable image upload & processing
-📍 Geolocator         │ GPS positioning with high accuracy
+Apple MapKit API    │ Real-time location & navigation services
+Google Maps API     │ Additional geocoding capabilities  
+MinIO Storage      │ Scalable image upload & processing
+Geolocator         │ GPS positioning with high accuracy
 ```
 
 ---
 
-## 🏗️ System Architecture & Design Patterns
+## System Architecture & Design Patterns
 
 ### **Backend Architecture Highlights**
 
-#### 🎯 **Resource-Oriented API Design**
+#### **Resource-Oriented API Design**
 ```typescript
 // Clean RESTful endpoints with semantic HTTP methods
 GET    /api/toilets/nearby     // Geospatial search with filters
@@ -101,12 +101,12 @@ PATCH  /api/toilets/:id        // Update existing toilet
 DELETE /api/favorites/:id      // Remove from favorites
 ```
 
-#### 🔄 **Middleware Pipeline**
+#### **Middleware Pipeline**
 ```typescript
 Request → CORS → Logger → Validator → Auth → Route Handler → Response
 ```
 
-#### 🗄️ **Database Schema Excellence**
+#### **Database Schema Excellence**
 ```sql
 -- Geospatial indexing for performance
 CREATE INDEX toilets_location_idx ON toilets USING GIST(location);
@@ -116,7 +116,7 @@ ALTER TABLE reviews ADD CONSTRAINT fk_toilet
   FOREIGN KEY (toilet_id) REFERENCES toilets(id);
 ```
 
-#### 🔐 **JWT Authentication Flow**
+#### **JWT Authentication Flow**
 ```typescript
 // Secure token generation with user context
 const token = jwt.sign({ userId, email }, SECRET, { 
@@ -127,7 +127,7 @@ const token = jwt.sign({ userId, email }, SECRET, {
 
 ### **Frontend Architecture Excellence**
 
-#### 🎯 **BLoC State Management**
+#### **BLoC State Management**
 ```dart
 // Clean separation of business logic and UI
 class ToiletsBloc extends Bloc<ToiletEvent, ToiletState> {
@@ -138,7 +138,7 @@ class ToiletsBloc extends Bloc<ToiletEvent, ToiletState> {
 }
 ```
 
-#### 📱 **Widget Architecture**
+#### **Widget Architecture**
 ```dart
 // Reusable, composable UI components
 class ToiletCard extends StatelessWidget {
@@ -151,30 +151,30 @@ class ToiletCard extends StatelessWidget {
 
 ---
 
-## 🎯 Key Technical Achievements
+## Key Technical Achievements
 
-### **🚀 Performance & Scalability**
+### **Performance & Scalability**
 - **Spatial indexing** reduces query time from seconds to milliseconds
 - **Efficient state management** with BLoC pattern prevents unnecessary rebuilds
 - **Image optimization** with automatic resizing and compression
 - **Database connection pooling** for high concurrent user support
 - **Responsive caching** strategies for offline functionality
 
-### **🔍 Advanced Geospatial Features**
+### **Advanced Geospatial Features**
 - **PostGIS spatial queries** for accurate distance calculations
 - **Real-time location tracking** with GPS accuracy optimization
 - **Dynamic radius search** with customizable distance filters
 - **Route calculation** with turn-by-turn navigation
 - **Address geocoding** for human-readable location display
 
-### **🛡️ Security & Data Integrity**
+### **Security & Data Integrity**
 - **Automatic content moderation** with report-based deletion (3+ reports)
 - **SQL injection prevention** through parameterized queries
 - **Password security** with industry-standard bcrypt hashing
 - **Input validation** at API boundary with Zod schemas
 - **Secure file uploads** with type validation and virus scanning
 
-### **📊 Smart Data Management**
+### **Smart Data Management**
 - **Crowdsourced data quality** through community reviews
 - **Automated cleanup** of stale or reported content  
 - **Review aggregation** with weighted rating calculations
@@ -183,9 +183,9 @@ class ToiletCard extends StatelessWidget {
 
 ---
 
-## 🔧 Development Quality & Best Practices
+## Development Quality & Best Practices
 
-### **✅ Testing & Quality Assurance**
+### **Testing & Quality Assurance**
 ```typescript
 // Comprehensive test coverage
 ├── Unit Tests        │ Business logic validation
@@ -194,20 +194,20 @@ class ToiletCard extends StatelessWidget {
 └── Database Tests    │ Data integrity verification
 ```
 
-### **🚀 CI/CD Pipeline**
+### **CI/CD Pipeline**
 ```yaml
 # Automated deployment workflow
 Build → Test → Security Scan → Deploy → Health Check → Rollback Ready
 ```
 
-### **📋 Code Quality Standards**
+### **Code Quality Standards**
 - **TypeScript strict mode** for compile-time safety
 - **ESLint & Prettier** for consistent code formatting
 - **Conventional commits** for clear git history
 - **Code review process** with PR templates
 - **Documentation** with inline comments and README
 
-### **🔐 Security Best Practices**
+### **Security Best Practices**
 - **Environment variable management** for sensitive data
 - **CORS configuration** for controlled access
 - **Rate limiting** to prevent abuse
@@ -216,27 +216,27 @@ Build → Test → Security Scan → Deploy → Health Check → Rollback Ready
 
 ---
 
-## 🎨 Key Features Showcase
+## Key Features Showcase
 
-### **🔍 Intelligent Search & Discovery**
+### **Intelligent Search & Discovery**
 - Find toilets within customizable radius (100m - 5km)
 - Advanced filtering by amenities and accessibility features
 - Real-time availability and crowd level indicators
 - Smart sorting by distance, rating, and user preferences
 
-### **👥 Community-Driven Platform**
+### **Community-Driven Platform**
 - User-generated reviews with photo uploads
 - Star ratings with weighted algorithms
 - Community moderation through reporting system
 - Crowdsourced toilet location submissions
 
-### **🧭 Navigation & Accessibility**
+### **Navigation & Accessibility**
 - Turn-by-turn walking directions
 - Wheelchair accessibility indicators
 - Public transport integration
 - Offline map caching for areas with poor connectivity
 
-### **💾 Personalization & Sync**
+### **Personalization & Sync**
 - Personal favorites list with cloud sync
 - User preference learning for better recommendations  
 - Cross-device data synchronization
@@ -244,7 +244,7 @@ Build → Test → Security Scan → Deploy → Health Check → Rollback Ready
 
 ---
 
-## 🏃‍♂️ Quick Start Guide
+## Quick Start Guide
 
 ### **Backend Setup**
 ```bash
@@ -284,15 +284,15 @@ flutter build ios
 
 ---
 
-## 📚 API Documentation
+## API Documentation
 
-### **🔐 Authentication Endpoints**
+### **Authentication Endpoints**
 ```http
 POST /auth/signup    # User registration
 POST /auth/login     # User authentication
 ```
 
-### **🚽 Toilet Management**
+### **Toilet Management**
 ```http
 POST /api/toilets/nearby      # Geospatial search
 POST /api/toilets/create      # Add new toilet
@@ -301,7 +301,7 @@ PATCH /api/toilets/:id        # Update toilet info
 POST /api/toilets/report/:id  # Report toilet issue
 ```
 
-### **⭐ Reviews & Ratings**
+### **Reviews & Ratings**
 ```http
 POST /api/reviews/create      # Add review
 GET  /api/reviews/toilet/:id  # Get toilet reviews
@@ -310,7 +310,7 @@ DELETE /api/reviews/:id       # Delete review
 POST /api/reviews/report/:id  # Report inappropriate review
 ```
 
-### **❤️ User Favorites**
+### **User Favorites**
 ```http
 GET  /api/favorites/me        # Get user favorites
 POST /api/favorites/add/:id   # Add to favorites
@@ -319,7 +319,7 @@ DELETE /api/favorites/remove/:id # Remove favorite
 
 ---
 
-## 🌟 Technical Highlights for Developers
+## Technical Highlights for Developers
 
 ### **Why This Architecture Matters**
 
@@ -341,18 +341,18 @@ DELETE /api/favorites/remove/:id # Remove favorite
 
 ---
 
-## 🎯 Future Roadmap
+## Future Roadmap
 
-- **🤖 AI-Powered Recommendations** using machine learning
-- **🌍 Multi-Language Support** for international users
-- **📱 Progressive Web App** for broader accessibility  
-- **🔄 Real-time Updates** with WebSocket integration
-- **📊 Analytics Dashboard** for usage insights
-- **🎮 Gamification** with user achievement system
+- **AI-Powered Recommendations** using machine learning
+- **Multi-Language Support** for international users
+- **Progressive Web App** for broader accessibility  
+- **Real-time Updates** with WebSocket integration
+- **Analytics Dashboard** for usage insights
+- **Gamification** with user achievement system
 
 ---
 
-## 👨‍💻 About This Project
+## About This Project
 
 This project demonstrates expertise in **full-stack development**, **system architecture**, **database design**, **mobile development**, and **DevOps practices**. Built with production-ready code quality, comprehensive testing, and enterprise security standards.
 
@@ -372,7 +372,7 @@ This project demonstrates expertise in **full-stack development**, **system arch
 
 <div align="center">
 
-**Built with ❤️ by Bryan Soong**
+**Built by Bryan Soong, Adam Soh, Joyce Lee, Liew Jia Wei, Joshua Tan**
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/softwarelab3)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](#)

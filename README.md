@@ -1,6 +1,6 @@
 # PeePal - Full Stack Toilet Locator and Navigation App
 
-[![Live Demo](https://img.shields.io/badge/🌐%20Live%20Demo-Visit%20App-blue?style=for-the-badge)](https://youtu.be/hT4hswhUsaA)
+[![Live Demo](https://img.shields.io/badge/🌐%20Live%20Demo-Youtube-blue?style=for-the-badge)](https://youtu.be/hT4hswhUsaA)
 [![Backend Status](https://img.shields.io/badge/🚀%20Backend-Production%20Ready-success?style=for-the-badge)](https://peepal-backend-deployment-z0st0.kinsta.app/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)

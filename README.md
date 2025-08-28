@@ -374,9 +374,6 @@ This project demonstrates expertise in **full-stack development**, **system arch
 
 **Built by Bryan Soong, Adam Soh, Joyce Lee, Liew Jia Wei, Joshua Tan**
 
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/softwarelab3)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](#)
-
 *Transforming everyday problems into elegant technical solutions*
 
 </div>
